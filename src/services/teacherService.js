@@ -1,0 +1,173 @@
+import http from "../services/httpService";
+import { url } from "../config.json";
+import auth from "./authService";
+
+const teacherStudentApiEndpoint = url + "/teacher/student";
+const teacherCourseApiEndpoint = url + "/teacher/course";
+const teacherExamApiEndpoint = url + "/schedule/exams";
+const teacherTimetableEndpoint = url + "/student/timetable";
+const teacherProfileEndpoint = url + "/teacher/update";
+const teacherPostMarkEndpoint = url + "/teacher/post-mark";
+const adminEndpoint = url + "/admin/auth";
+const teacherAccountConfirmation = url + "/teacher/auth";
+const teacherAssignment = url + "/teacher/assignment";
+
+export function addStudent(student) {
+  if (student._id) {
+    const body = { ...student };
+    delete body._id;
+    return http.put(teacherStudentApiEndpoint + "/update/" + student._id, body);
+  }
+  return http.post(teacherStudentApiEndpoint, student);
+}
+
+export function getStudents() {
+  return http.get(teacherStudentApiEndpoint);
+}
+
+export function addCourse(subject) {
+  if (subject._id) {
+    const body = { ...subject };
+    delete body._id;
+    return http.put(teacherCourseApiEndpoint + "/" + subject._id, body);
+  }
+  return http.post(teacherCourseApiEndpoint, subject);
+}
+
+export function getCourses() {
+  if (auth.getCurrentUser().isTeacher)
+    return http.get(teacherCourseApiEndpoint);
+  if (auth.getCurrentUser().isAdmin)
+    return http.get(teacherCourseApiEndpoint + "/admin");
+}
+
+export function getCourse(id) {
+  return http.get(teacherCourseApiEndpoint + "/" + id);
+}
+
+export function getCourseByID(id) {
+  return http.get(teacherCourseApiEndpoint + "/byID/" + id);
+}
+
+export function removeStudent(id) {
+  return http.delete(teacherStudentApiEndpoint + "/delete/" + id);
+}
+
+export function getStudent(clas) {
+  return http.get(teacherStudentApiEndpoint + "/" + clas);
+}
+
+export function moveTerm(body) {
+  return http.put(teacherStudentApiEndpoint + "/next-term", body);
+}
+
+export function moveYear(yearInfo) {
+  return http.put(teacherStudentApiEndpoint + "/next-year", yearInfo);
+}
+
+export function getOneStudent(id) {
+  return http.get(teacherStudentApiEndpoint + "/ID/" + id);
+}
+
+export function scheduleExam(exam) {
+  if (exam._id) {
+    const body = { ...exam };
+    delete body._id;
+    return http.put(teacherExamApiEndpoint + "/" + exam._id, body);
+  }
+  return http.post(teacherExamApiEndpoint, exam);
+}
+
+export function getExams() {
+  if (auth.getCurrentUser().isAdmin)
+    return http.get(teacherExamApiEndpoint + "/admin");
+  if (auth.getCurrentUser().isTeacher)
+    return http.get(teacherExamApiEndpoint + "/teacher");
+  if (auth.getCurrentUser().isStudent)
+    return http.get(teacherExamApiEndpoint + "/student");
+}
+
+export function getExam(id) {
+  return http.get(teacherExamApiEndpoint + "/" + id);
+}
+
+export function removeExam(id) {
+  return http.delete(teacherExamApiEndpoint + "/" + id);
+}
+
+export function removeSubject(id) {
+  return http.delete(teacherCourseApiEndpoint + "/" + id);
+}
+
+export function addTimetable(timetable) {
+  if (timetable._id) {
+    const body = { ...timetable };
+    delete body._id;
+    return http.put(teacherTimetableEndpoint + "/" + timetable._id, body);
+  }
+  return http.post(teacherTimetableEndpoint, timetable);
+}
+
+export function getTimetable() {
+  if (auth.getCurrentUser().isAdmin)
+    return http.get(teacherTimetableEndpoint + "/admin");
+  if (auth.getCurrentUser().isTeacher)
+    return http.get(teacherTimetableEndpoint + "/teacher");
+  if (auth.getCurrentUser().isStudent)
+    return http.get(teacherTimetableEndpoint + "/student");
+}
+
+export function getATimetable(id) {
+  return http.get(teacherTimetableEndpoint + "/" + id);
+}
+
+export function removeTimetable(id) {
+  return http.delete(teacherTimetableEndpoint + "/" + id);
+}
+
+export function completeProfile(profile) {
+  return http.put(teacherProfileEndpoint + "/me", profile);
+}
+
+export function updateExamStatus(exam) {
+  return http.put(teacherExamApiEndpoint + "/status/" + exam._id, exam);
+}
+
+export function getUser(id) {
+  if (auth.getCurrentUser().isAdmin) return http.get(adminEndpoint + "/" + id);
+}
+
+export function postMark(reg_num, mark) {
+  return http.post(teacherPostMarkEndpoint + "/" + reg_num, mark);
+}
+
+export function confirmAccount(confirmationInfo) {
+  return http.post(
+    teacherAccountConfirmation + "/confirm-account",
+    confirmationInfo
+  );
+}
+
+export function resetPassword(username) {
+  return http.post(teacherAccountConfirmation + "/reset-password", username);
+}
+
+export function postAssignment(assignment) {
+  return http.post(teacherAssignment, assignment);
+}
+
+export function getTeacherAssignment(id) {
+  return http.get(teacherAssignment + "/" + id);
+}
+
+export function getStudentAssignment(id) {
+  return http.get(teacherAssignment + "/student/" + id);
+}
+
+export function getAllStudentAssignment() {
+  return http.get(teacherAssignment);
+}
+
+export function removeAssignment(id) {
+  return http.delete(teacherAssignment + "/" + id);
+}
