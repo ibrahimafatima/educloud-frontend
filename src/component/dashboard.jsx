@@ -42,6 +42,7 @@ import { pusherChannel } from "../reusableFunctions/pusher";
 import StudentPromotion from "./studentsPromotion";
 import NewPromotion from "./newPromotion";
 import NewTerm from "./newTerm";
+import TeacherEndYear from "./teacherEndYear";
 import AllAssignment from "./allAssignment";
 import FeesReporting from "./feesReporting";
 import AdminEndYear from "./adminEndYear";
@@ -183,6 +184,7 @@ class Dashboard extends Component {
                 <Route path="/print-fees-report" component={PrintFeesReport} />
                 <Route path="/discussion/:id" component={Discussion} />
                 <Route path="/admin-end-year" component={AdminEndYear} />
+                <Route path="/teacher-end-year" component={TeacherEndYear} />
                 <Route
                   path="/chat"
                   render={(props) => (

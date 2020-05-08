@@ -61,6 +61,14 @@ export function moveTerm(body) {
   return http.put(teacherStudentApiEndpoint + "/next-term", body);
 }
 
+export function updateYearMark() {
+  return http.put(teacherPostMarkEndpoint);
+}
+
+export function updateYearAssignment() {
+  return http.put(teacherAssignment + "/next-year");
+}
+
 export function moveYear(yearInfo) {
   return http.put(teacherStudentApiEndpoint + "/next-year", yearInfo);
 }

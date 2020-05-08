@@ -225,7 +225,7 @@ class TeacherSidebar extends Component {
                 />
               </ul>
             </li>
-            {auth.getCurrentUser().className && (
+            {auth.getCurrentUser().className !== "None" && (
               <SidebarModule
                 expandClass="nav-item"
                 toggleSidebar={toggleSidebar}
@@ -234,12 +234,12 @@ class TeacherSidebar extends Component {
                 title="Promote Student"
               />
             )}
-            {auth.getCurrentUser().className && (
+            {auth.getCurrentUser().className !== "None" && (
               <SidebarModule
                 expandClass="nav-item"
                 toggleSidebar={toggleSidebar}
                 logo={GiClosedDoors}
-                link="teacher-end-year"
+                link="/teacher-end-year"
                 title="End of Year"
               />
             )}
