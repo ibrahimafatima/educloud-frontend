@@ -1,16 +1,15 @@
 import http from "../services/httpService";
-import { url } from "../config.json";
 import auth from "./authService";
 
-const teacherStudentApiEndpoint = url + "/teacher/student";
-const teacherCourseApiEndpoint = url + "/teacher/course";
-const teacherExamApiEndpoint = url + "/schedule/exams";
-const teacherTimetableEndpoint = url + "/student/timetable";
-const teacherProfileEndpoint = url + "/teacher/update";
-const teacherPostMarkEndpoint = url + "/teacher/post-mark";
-const adminEndpoint = url + "/admin/auth";
-const teacherAccountConfirmation = url + "/teacher/auth";
-const teacherAssignment = url + "/teacher/assignment";
+const teacherStudentApiEndpoint = "/teacher/student";
+const teacherCourseApiEndpoint = "/teacher/course";
+const teacherExamApiEndpoint = "/schedule/exams";
+const teacherTimetableEndpoint = "/student/timetable";
+const teacherProfileEndpoint = "/teacher/update";
+const teacherPostMarkEndpoint = "/teacher/post-mark";
+const adminEndpoint = "/admin/auth";
+const teacherAccountConfirmation = "/teacher/auth";
+const teacherAssignment = "/teacher/assignment";
 
 export function addStudent(student) {
   if (student._id) {

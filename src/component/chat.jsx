@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import ChatList from "./reusableComponent/chatList";
 import ChatBox from "./reusableComponent/chatBox";
-import { Offline, Online } from "react-detect-offline";
 
 class Chat extends Component {
   render() {
@@ -25,18 +24,12 @@ class Chat extends Component {
             Educloud Chat - {this.props.match.params.id} Group
           </h2>
           <ChatList chats={chats} />
-          <Online>
-            <ChatBox
-              message={message}
-              handleTextChange={onTextChange}
-              handleClick={onClick}
-            />
-          </Online>
-        </div>
-        <div style={{ marginTop: "20px" }}>
-          <Offline>
-            <i style={{ color: "red" }}>Turn on your Internet connection ...</i>
-          </Offline>
+
+          <ChatBox
+            message={message}
+            handleTextChange={onTextChange}
+            handleClick={onClick}
+          />
         </div>
       </React.Fragment>
     );

@@ -3,7 +3,6 @@ import ChatList from "./reusableComponent/chatList";
 import ChatBox from "./reusableComponent/chatBox";
 import { getDiscussions, saveDiscussions } from "../services/studentService";
 import auth from "../services/authService";
-import { Offline, Online } from "react-detect-offline";
 import { pusherChannel } from "../reusableFunctions/pusher";
 
 class Discussion extends Component {
@@ -75,18 +74,12 @@ class Discussion extends Component {
             Educloud Chat - {this.props.match.params.id} Group
           </h2>
           <ChatList chats={this.state.chats} />
-          <Online>
-            <ChatBox
-              message={this.state.message}
-              handleTextChange={this.handleTextChange}
-              handleClick={this.handleClick}
-            />
-          </Online>
-        </div>
-        <div style={{ marginTop: "20px" }}>
-          <Offline>
-            <i style={{ color: "red" }}>Turn on your Internet connection ...</i>
-          </Offline>
+
+          <ChatBox
+            message={this.state.message}
+            handleTextChange={this.handleTextChange}
+            handleClick={this.handleClick}
+          />
         </div>
       </React.Fragment>
     );

@@ -1,10 +1,9 @@
 import http from "../services/httpService";
-import { url } from "../config.json";
 import jwtDecode from "jwt-decode";
 
-const adminApiEndpoint = url + "/admin/auth/login";
-const teacherApiEndpoint = url + "/teacher/auth/login";
-const studentApiEndpoint = url + "/student/auth/login";
+const adminApiEndpoint = "/admin/auth/login";
+const teacherApiEndpoint = "/teacher/auth/login";
+const studentApiEndpoint = "/student/auth/login";
 
 export function adminLogin(admin) {
   return http.post(adminApiEndpoint, admin);

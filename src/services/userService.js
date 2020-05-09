@@ -1,8 +1,7 @@
 import http from "./httpService";
-import { url } from "../config.json";
 
-const teacherApiEndpoint = url + "/teacher/auth/register";
-const studentApiEndpoint = url + "/student/auth/register";
+const teacherApiEndpoint = "/teacher/auth/register";
+const studentApiEndpoint = "/student/auth/register";
 
 export function registerTeacher(teacher) {
   return http.post(teacherApiEndpoint, teacher);

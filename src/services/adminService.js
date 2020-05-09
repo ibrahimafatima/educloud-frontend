@@ -1,17 +1,16 @@
 import http from "./httpService";
-import { url } from "../config.json";
 
-const adminAddTerm = url + "/term";
-const adminAddClasse = url + "/classe";
-const adminAddLevel = url + "/level";
-const adminAddClassEndpoint = url + "/add/class";
-const adminAddTeacherEndpoint = url + "/admin/teacher";
-const adminStudentEndpoint = url + "/teacher/student";
-const adminPaymentEndpoint = url + "/admin/payment";
-const adminEventEndpoint = url + "/admin/event";
-const adminExamEndpoint = url + "/schedule/exams";
-const adminBookEndpoint = url + "/books";
-const adminAccountConfirmation = url + "/admin/auth";
+const adminAddTerm = "/term";
+const adminAddClasse = "/classe";
+const adminAddLevel = "/level";
+const adminAddClassEndpoint = "/add/class";
+const adminAddTeacherEndpoint = "/admin/teacher";
+const adminStudentEndpoint = "/teacher/student";
+const adminPaymentEndpoint = "/admin/payment";
+const adminEventEndpoint = "/admin/event";
+const adminExamEndpoint = "/schedule/exams";
+const adminBookEndpoint = "/books";
+const adminAccountConfirmation = "/admin/auth";
 
 export function addClass(classe) {
   if (classe._id) {

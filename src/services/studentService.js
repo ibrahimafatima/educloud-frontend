@@ -1,14 +1,13 @@
 import http from "./httpService";
-import { url } from "../config.json";
 
-const studentProfile = url + "/teacher/student";
-const studentProfileUpdate = url + "/student/profile";
-const studentCourse = url + "/teacher/course";
-const studentMark = url + "/teacher/post-mark";
-const studentAccountConfirmation = url + "/student/auth";
-const studentBirthday = url + "/student/birthday";
-const studentChat = url + "/student/message";
-const discussion = url + "/discussion";
+const studentProfile = "/teacher/student";
+const studentProfileUpdate = "/student/profile";
+const studentCourse = "/teacher/course";
+const studentMark = "/teacher/post-mark";
+const studentAccountConfirmation = "/student/auth";
+const studentBirthday = "/student/birthday";
+const studentChat = "/student/message";
+const discussion = "/discussion";
 
 export function getStudent(id) {
   return http.get(studentProfile + "/reg/" + id);

@@ -2,6 +2,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import logger from "./logService";
 
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+
 axios.defaults.headers.common["x-auth-token"] = localStorage.getItem("token");
 
 axios.interceptors.response.use(null, (error) => {

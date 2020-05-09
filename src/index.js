@@ -16,6 +16,8 @@ import "./index.css";
 
 logger.init();
 
+console.log("SUPERMAN", process.env.REACT_APP_NAME);
+
 ReactDOM.render(
   <BrowserRouter>
     <App />

@@ -4,7 +4,6 @@ import Joi from "joi-browser";
 import { toast } from "react-toastify";
 import { moveYear } from "../services/teacherService";
 import { getClasses, getTerms } from "../services/adminService";
-import auth from "../services/authService";
 
 class NewPromotion extends Form {
   state = {
