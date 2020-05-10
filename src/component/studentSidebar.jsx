@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import sidebarLogo from "../images/sidebar_logo.png";
+import sidebarLogo from "../images/sidebar_logo.jpeg";
 import Auth from "../services/authService";
 import { MdInsertInvitation } from "react-icons/md";
 import {
