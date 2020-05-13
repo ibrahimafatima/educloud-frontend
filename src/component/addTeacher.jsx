@@ -9,16 +9,14 @@ class AddTeacher extends Form {
   state = {
     data: { teacherID: "", username: "", className: "" },
     classInCharge: [], //CLASSNAME HERE IS CLASS IN CHARGE
-    error: {}
+    error: {},
   };
 
   schema = {
     _id: Joi.string(),
     teacherID: Joi.string().required(),
-    username: Joi.string()
-      .min(3)
-      .required(),
-    className: Joi.string()
+    username: Joi.string().min(3).required(),
+    className: Joi.string(),
   };
 
   async componentDidMount() {
@@ -32,7 +30,7 @@ class AddTeacher extends Form {
         _id: teacher._id,
         username: teacher.username,
         teacherID: teacher.teacherID,
-        className: teacher.className
+        className: teacher.className,
       };
 
       this.setState({ data });
@@ -47,7 +45,7 @@ class AddTeacher extends Form {
     try {
       await addTeacher(this.state.data);
       this.setState({
-        data: { teacherID: "", username: "", className: "" }
+        data: { teacherID: "", username: "", className: "" },
       });
       toast.success("Teacher successfully added...");
     } catch (ex) {
@@ -56,8 +54,9 @@ class AddTeacher extends Form {
         (ex.response.status === 400 || ex.response.status === 403)
       ) {
         const error = { ...this.state.error };
-        error.teacherID = ex.response.data;
+        error.username = ex.response.data;
         this.setState({ error });
+        toast("Teacher ID cannot be updated...");
       }
     }
   };

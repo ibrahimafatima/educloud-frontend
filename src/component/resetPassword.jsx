@@ -9,18 +9,16 @@ import { toast } from "react-toastify";
 class ResetPassword extends Form {
   state = {
     data: { password: "", passwordAgain: "" },
-    error: {}
+    error: {},
   };
 
   schema = {
-    password: Joi.string()
-      .min(8)
-      .required()
-      .label("Password"),
-    passwordAgain: Joi.ref("password")
+    password: Joi.string().min(8).required().label("Password"),
+    passwordAgain: Joi.ref("password"),
   };
 
   componentDidMount() {
+    console.log(this.props.history.goBack);
     const username = localStorage.getItem("username");
     if (!username) this.props.history.goBack();
   }
@@ -31,7 +29,7 @@ class ResetPassword extends Form {
       const username = localStorage.getItem("username");
       const { data: result } = await resetPassword({
         username: username,
-        password: data.password
+        password: data.password,
       });
       if (result === "Ok") {
         toast.success("Password successfully reset, Login now.");
