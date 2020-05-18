@@ -88,7 +88,7 @@ class AddExams extends Form {
         (ex.response.status === 400 || ex.response.status === 401)
       ) {
         const error = { ...this.state.error };
-        error.subject = ex.response.data;
+        error.schedule_time = ex.response.data;
         this.setState({ error });
       }
     }
@@ -126,7 +126,7 @@ class AddExams extends Form {
                 </div>
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
                   <label>Class *</label>
-                  {this.renderSelect("className", this.state.classes)}
+                  {this.renderSelect("className", ["", ...this.state.classes])}
                 </div>
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
                   <label>Exam Schedule Date *</label>

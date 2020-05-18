@@ -22,7 +22,7 @@ export function getCourses(id) {
 }
 
 export function getMarks(id) {
-  return http.get(studentMark + "/" + id);
+  return http.get(studentMark + "/get/" + id);
 }
 
 export function getMark(id) {
@@ -30,7 +30,7 @@ export function getMark(id) {
 }
 
 export function removeMark(id) {
-  return http.delete(studentMark + "/" + id);
+  return http.delete(studentMark + "/delete/" + id);
 }
 
 export function confirmAccount(confirmationInfo) {

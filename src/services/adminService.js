@@ -16,7 +16,7 @@ export function addClass(classe) {
   if (classe._id) {
     const body = { ...classe };
     delete body._id;
-    return http.put(adminAddClassEndpoint + "/" + classe._id, body);
+    return http.put(adminAddClassEndpoint + "/update/" + classe._id, body);
   }
   return http.post(adminAddClassEndpoint, classe);
 }
@@ -38,20 +38,20 @@ export function getClasses() {
 }
 
 export function getClass(id) {
-  return http.get(adminAddClassEndpoint + "/" + id);
+  return http.get(adminAddClassEndpoint + "/get/" + id);
 }
 
 export function addTeacher(teacher) {
   if (teacher._id) {
     const body = { ...teacher };
     delete body._id;
-    return http.put(adminAddTeacherEndpoint + "/" + teacher._id, body);
+    return http.put(adminAddTeacherEndpoint + "/update/" + teacher._id, body);
   }
   return http.post(adminAddTeacherEndpoint, teacher);
 }
 
 export function getTeacher(id) {
-  return http.get(adminAddTeacherEndpoint + "/" + id);
+  return http.get(adminAddTeacherEndpoint + "/get/" + id);
 }
 
 export function getATeacher(id) {
@@ -67,11 +67,11 @@ export function getTeachers() {
 }
 
 export function removeClass(id) {
-  return http.delete(adminAddClassEndpoint + "/" + id);
+  return http.delete(adminAddClassEndpoint + "/delete/" + id);
 }
 
 export function removeTeacher(id) {
-  return http.delete(adminAddTeacherEndpoint + "/" + id);
+  return http.delete(adminAddTeacherEndpoint + "/delete/" + id);
 }
 
 export function getStudents() {
@@ -83,7 +83,7 @@ export function payFee(paymentDetails) {
 }
 
 export function getPayment(id) {
-  return http.get(adminPaymentEndpoint + "/" + id);
+  return http.get(adminPaymentEndpoint + "/get/" + id);
 }
 
 export function getPaymentDetails(id) {
@@ -94,11 +94,15 @@ export function updatePaymentYear() {
   return http.put(adminPaymentEndpoint + "/next-year");
 }
 
+export function updateExamYear() {
+  return http.put(adminExamEndpoint + "/next-year");
+}
+
 export function addToNoticeBoard(notice) {
   if (notice._id) {
     const body = { ...notice };
     delete body._id;
-    return http.put(adminEventEndpoint + "/" + notice._id, body);
+    return http.put(adminEventEndpoint + "/update/" + notice._id, body);
   }
   return http.post(adminEventEndpoint, notice);
 }
@@ -108,11 +112,11 @@ export function getNoticeBoard() {
 }
 
 export function getANotice(id) {
-  return http.get(adminEventEndpoint + "/" + id);
+  return http.get(adminEventEndpoint + "/get/" + id);
 }
 
 export function removeNotice(id) {
-  return http.delete(adminEventEndpoint + "/" + id);
+  return http.delete(adminEventEndpoint + "/delete/" + id);
 }
 
 export function getAllExam() {
@@ -123,7 +127,7 @@ export function addBook(book) {
   if (book._id) {
     const body = { ...book };
     delete body._id;
-    return http.put(adminBookEndpoint + "/" + book._id, body);
+    return http.put(adminBookEndpoint + "/update/" + book._id, body);
   }
   return http.post(adminBookEndpoint, book);
 }
@@ -133,11 +137,11 @@ export function getBooks() {
 }
 
 export function removeBook(id) {
-  return http.delete(adminBookEndpoint + "/" + id);
+  return http.delete(adminBookEndpoint + "/delete/" + id);
 }
 
 export function getBook(id) {
-  return http.get(adminBookEndpoint + "/" + id);
+  return http.get(adminBookEndpoint + "/get/" + id);
 }
 
 export function confirmAccount(confirmationInfo) {

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { TiWarning } from "react-icons/ti";
 import { GoSmiley } from "react-icons/go";
-import { updatePaymentYear } from "../services/adminService";
+import { updatePaymentYear, updateExamYear } from "../services/adminService";
 import { toast } from "react-toastify";
 
 class AdminEndYear extends Component {
@@ -12,6 +12,7 @@ class AdminEndYear extends Component {
   handleClick = async () => {
     try {
       await updatePaymentYear();
+      await updateExamYear();
       this.setState({ bit: 1 });
       toast.success("End of year successfully made. Enjoy the holidays.");
     } catch (ex) {

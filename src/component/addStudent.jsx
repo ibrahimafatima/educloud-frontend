@@ -3,12 +3,14 @@ import Joi from "joi-browser";
 import Form from "./reusableComponent/form";
 import { addStudent, getOneStudent } from "../services/teacherService";
 import { getTerms } from "../services/adminService";
+import Loader from "react-loader-spinner";
 import { toast } from "react-toastify";
 
 class AddStudent extends Form {
   state = {
     data: { registration_number: "", class_name: "", term: "", name: "" },
     term: [],
+    loading: true,
     error: {},
   };
 
@@ -17,13 +19,16 @@ class AddStudent extends Form {
     name: Joi.string().min(3).max(25).required().label("Name"),
     registration_number: Joi.string().required().label("Registration number"),
     class_name: Joi.string().max(12).required().label("Class name"),
-    term: Joi.string().max(10).required().label("Term"),
+    term: Joi.string().max(30).required().label("Term"),
   };
 
   async componentDidMount() {
     const { data: term } = await getTerms();
     this.setState({ term });
-    if (this.props.location.pathname === "/add-student/new") return;
+    if (this.props.location.pathname === "/add-student/new") {
+      this.setState({ loading: false });
+      return;
+    }
     try {
       const { data: student } = await getOneStudent(this.props.match.params.id);
       const data = {
@@ -33,7 +38,7 @@ class AddStudent extends Form {
         term: student.term,
         name: student.name,
       };
-      this.setState({ data });
+      this.setState({ data, loading: false });
     } catch (ex) {
       if (ex.response && ex.response.status === 404)
         return this.props.history.replace("/not-found");
@@ -48,20 +53,31 @@ class AddStudent extends Form {
       });
       toast.success("Student added successfully...");
     } catch (ex) {
-      if (
-        ex.response &&
-        (ex.response.status === 400 || ex.response.status === 401)
-      ) {
+      if (ex.response && ex.response.status === 401) {
         toast(`You can only add student in ${this.props.user.className}`);
         const error = { ...this.state.error };
         error.registration_number = ex.response.data;
+        this.setState({ error });
+      }
+      if (ex.response && ex.response.status === 400) {
+        toast(ex.response.data);
+        const error = { ...this.state.error };
+        error.class_name = ex.response.data;
         this.setState({ error });
       }
     }
   };
 
   render() {
-    return (
+    return this.state.loading ? (
+      <Loader
+        type="Oval"
+        color="#042954"
+        height={100}
+        width={100}
+        timeout={10000} //3 secs
+      />
+    ) : (
       <div className="card height-auto">
         <div className="card-body">
           <div className="heading-layout1">

@@ -73,7 +73,7 @@ class AddAssignment extends Form {
                 </div>
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
                   <label>Class *</label>
-                  {this.renderSelect("className", this.state.classes)}
+                  {this.renderSelect("className", ["", ...this.state.classes])}
                 </div>
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
                   <label>Submit Date *</label>

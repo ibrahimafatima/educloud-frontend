@@ -28,7 +28,7 @@ export function addCourse(subject) {
   if (subject._id) {
     const body = { ...subject };
     delete body._id;
-    return http.put(teacherCourseApiEndpoint + "/" + subject._id, body);
+    return http.put(teacherCourseApiEndpoint + "/update/" + subject._id, body);
   }
   return http.post(teacherCourseApiEndpoint, subject);
 }
@@ -41,7 +41,7 @@ export function getCourses() {
 }
 
 export function getCourse(id) {
-  return http.get(teacherCourseApiEndpoint + "/" + id);
+  return http.get(teacherCourseApiEndpoint + "/teacherID/" + id);
 }
 
 export function getCourseByID(id) {
@@ -53,7 +53,7 @@ export function removeStudent(id) {
 }
 
 export function getStudent(clas) {
-  return http.get(teacherStudentApiEndpoint + "/" + clas);
+  return http.get(teacherStudentApiEndpoint + "/classname/" + clas);
 }
 
 export function moveTerm(body) {
@@ -61,7 +61,7 @@ export function moveTerm(body) {
 }
 
 export function updateYearMark() {
-  return http.put(teacherPostMarkEndpoint);
+  return http.put(teacherPostMarkEndpoint + "/next-year");
 }
 
 export function updateYearAssignment() {
@@ -80,7 +80,7 @@ export function scheduleExam(exam) {
   if (exam._id) {
     const body = { ...exam };
     delete body._id;
-    return http.put(teacherExamApiEndpoint + "/" + exam._id, body);
+    return http.put(teacherExamApiEndpoint + "/update/" + exam._id, body);
   }
   return http.post(teacherExamApiEndpoint, exam);
 }
@@ -95,22 +95,25 @@ export function getExams() {
 }
 
 export function getExam(id) {
-  return http.get(teacherExamApiEndpoint + "/" + id);
+  return http.get(teacherExamApiEndpoint + "/get/" + id);
 }
 
 export function removeExam(id) {
-  return http.delete(teacherExamApiEndpoint + "/" + id);
+  return http.delete(teacherExamApiEndpoint + "/delete/" + id);
 }
 
 export function removeSubject(id) {
-  return http.delete(teacherCourseApiEndpoint + "/" + id);
+  return http.delete(teacherCourseApiEndpoint + "/delete/" + id);
 }
 
 export function addTimetable(timetable) {
   if (timetable._id) {
     const body = { ...timetable };
     delete body._id;
-    return http.put(teacherTimetableEndpoint + "/" + timetable._id, body);
+    return http.put(
+      teacherTimetableEndpoint + "/update/" + timetable._id,
+      body
+    );
   }
   return http.post(teacherTimetableEndpoint, timetable);
 }
@@ -125,11 +128,11 @@ export function getTimetable() {
 }
 
 export function getATimetable(id) {
-  return http.get(teacherTimetableEndpoint + "/" + id);
+  return http.get(teacherTimetableEndpoint + "/timetable/" + id);
 }
 
 export function removeTimetable(id) {
-  return http.delete(teacherTimetableEndpoint + "/" + id);
+  return http.delete(teacherTimetableEndpoint + "/delete/" + id);
 }
 
 export function completeProfile(profile) {
@@ -164,7 +167,7 @@ export function postAssignment(assignment) {
 }
 
 export function getTeacherAssignment(id) {
-  return http.get(teacherAssignment + "/" + id);
+  return http.get(teacherAssignment + "/teacherID/" + id);
 }
 
 export function getStudentAssignment(id) {
@@ -176,5 +179,5 @@ export function getAllStudentAssignment() {
 }
 
 export function removeAssignment(id) {
-  return http.delete(teacherAssignment + "/" + id);
+  return http.delete(teacherAssignment + "/delete/" + id);
 }

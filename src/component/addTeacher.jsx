@@ -56,7 +56,7 @@ class AddTeacher extends Form {
         const error = { ...this.state.error };
         error.username = ex.response.data;
         this.setState({ error });
-        toast("Teacher ID cannot be updated...");
+        toast(ex.response.data);
       }
     }
   };

@@ -205,26 +205,7 @@ class TeacherSidebar extends Component {
                 />
               </ul>
             </li>
-            <li className={iconClass} onClick={onSidebarExpand}>
-              <span className="nav-link cur">
-                <i>
-                  <FaChalkboardTeacher color="#ffa501" />{" "}
-                </i>
-                <span>Notice Board</span>
-              </span>
-              <ul
-                className={menuClass}
-                style={{
-                  display: isSidebarExpanded ? "block" : "none",
-                }}
-              >
-                <SidebarSubModule
-                  link="/all-notice"
-                  title="All Notice"
-                  toggleSidebar={toggleSidebar}
-                />
-              </ul>
-            </li>
+
             {auth.getCurrentUser().className !== "None" && (
               <SidebarModule
                 expandClass="nav-item"

@@ -6,7 +6,7 @@ import { getClasses } from "../services/adminService";
 import {
   addTimetable,
   getCourses,
-  getATimetable
+  getATimetable,
 } from "../services/teacherService";
 import { toast } from "react-toastify";
 
@@ -22,7 +22,7 @@ class AddTimetable extends Form {
       "Wednesday",
       "Thursday",
       "Friday",
-      "Saturday"
+      "Saturday",
     ],
     time: [
       "00:00 AM",
@@ -36,28 +36,21 @@ class AddTimetable extends Form {
       "9:30 AM",
       "10:00 AM",
       "10:30 AM",
-      "11:00 AM"
+      "11:00 AM",
     ],
-    error: {}
+    error: {},
   };
 
   schema = {
     _id: Joi.string(),
-    className: Joi.string()
-      .min(3)
-      .max(12)
-      .required()
-      .label("Class name"),
-    name: Joi.string()
-      .max(20)
-      .required()
-      .label("Subject"),
+    className: Joi.string().min(3).max(12).required().label("Class name"),
+    name: Joi.string().max(20).required().label("Subject"),
     day: Joi.string()
 
       .required()
       .label("Day"),
     startTime: Joi.string().required(),
-    endTime: Joi.string().required()
+    endTime: Joi.string().required(),
   };
 
   async componentDidMount() {
@@ -75,7 +68,7 @@ class AddTimetable extends Form {
         name: timetable.name,
         day: timetable.day,
         startTime: timetable.startTime,
-        endTime: timetable.endTime
+        endTime: timetable.endTime,
       };
       this.setState({ data });
     } catch (ex) {
@@ -89,7 +82,7 @@ class AddTimetable extends Form {
     try {
       await addTimetable(this.state.data);
       this.setState({
-        data: { className: "", name: "", day: "", startTime: "", endTime: "" }
+        data: { className: "", name: "", day: "", startTime: "", endTime: "" },
       });
       toast.success("Timetable updated successfully...");
     } catch (ex) {
@@ -126,11 +119,11 @@ class AddTimetable extends Form {
               <div className="row">
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
                   <label>Class name *</label>
-                  {this.renderSelect("className", classe)}
+                  {this.renderSelect("className", ["", ...classe])}
                 </div>
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
                   <label>Subject *</label>
-                  {this.renderSelect("name", subject)}
+                  {this.renderSelect("name", ["", ...subject])}
                 </div>
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
                   <label>Day *</label>

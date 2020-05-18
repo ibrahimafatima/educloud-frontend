@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import logger from "./services/logService";
 import * as serviceWorker from "./serviceWorker";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import "../src/styleSheet/App.min.css";
 import "../src/styleSheet/edustyle.css";
 import "../src/styleSheet/responsive.css";
