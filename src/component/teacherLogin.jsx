@@ -8,28 +8,20 @@ import { NavLink } from "react-router-dom";
 class TeacherLogin extends Form {
   state = {
     data: { username: "", teacherID: "", password: "" },
-    error: {}
+    error: {},
   };
 
   schema = {
-    username: Joi.string()
-      .min(3)
-      .max(12)
-      .required()
-      .label("Username"),
-    teacherID: Joi.string()
-      .required()
-      .label("TeacherID"),
-    password: Joi.string()
-      .min(8)
-      .required()
-      .label("Password")
+    username: Joi.string().min(3).max(12).required().label("Username"),
+    teacherID: Joi.string().required().label("TeacherID"),
+    password: Joi.string().min(8).required().label("Password"),
   };
 
   doSubmit = async () => {
     try {
       const { data: jwt } = await teacherLogin(this.state.data);
       localStorage.setItem("token", jwt);
+      localStorage.removeItem("restored");
       window.location = "/dashboard";
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
@@ -50,10 +42,17 @@ class TeacherLogin extends Form {
               <div className="login-reg-bg">
                 <div className="log-reg-area sign">
                   <h2 className="log-title">Login</h2>
-                  <p className="subtitle">
-                    Don't have an account yet ?{" "}
-                    <NavLink to="/teacher-registration">Register</NavLink>
+                  <p>
+                    {localStorage.getItem("restored")
+                      ? "Now you can login with the restored password"
+                      : null}{" "}
                   </p>
+                  {localStorage.getItem("restored") ? null : (
+                    <p className="subtitle">
+                      Don't have an account yet ?{" "}
+                      <NavLink to="/teacher-registration">Register</NavLink>
+                    </p>
+                  )}
                   <form onSubmit={this.handleSubmit}>
                     {this.renderInput("Username", "username", "text")}
                     {this.renderInput("TeacherId", "teacherID", "text")}

@@ -7,7 +7,6 @@ import {
   FaBuromobelexperte,
   FaBook,
   FaBookReader,
-  FaChalkboardTeacher,
 } from "react-icons/fa";
 import { GiClosedDoors } from "react-icons/gi";
 import { MdInsertInvitation } from "react-icons/md";

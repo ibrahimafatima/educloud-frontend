@@ -9,15 +9,12 @@ import { toast } from "react-toastify";
 class ResetTeacherPassword extends Form {
   state = {
     data: { password: "", passwordAgain: "" },
-    error: {}
+    error: {},
   };
 
   schema = {
-    password: Joi.string()
-      .min(8)
-      .required()
-      .label("Password"),
-    passwordAgain: Joi.ref("password")
+    password: Joi.string().min(8).required().label("Password"),
+    passwordAgain: Joi.ref("password"),
   };
 
   componentDidMount() {
@@ -31,11 +28,12 @@ class ResetTeacherPassword extends Form {
       const username = localStorage.getItem("username");
       const { data: result } = await resetPassword({
         username: username,
-        password: data.password
+        password: data.password,
       });
       if (result === "Ok") {
         toast.success("Password successfully reset, Login now.");
         localStorage.removeItem("username");
+        localStorage.setItem("restored", "true");
         window.location = "teacher-login";
       }
     } catch (ex) {

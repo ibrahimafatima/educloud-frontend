@@ -8,28 +8,20 @@ import { NavLink } from "react-router-dom";
 class AdminLogin extends Form {
   state = {
     data: { username: "", schoolSecretKey: "", password: "" },
-    error: {}
+    error: {},
   };
 
   schema = {
-    username: Joi.string()
-      .label("Username")
-      .min(3)
-      .max(12)
-      .required(),
-    schoolSecretKey: Joi.string()
-      .required()
-      .label("School Secret Key"),
-    password: Joi.string()
-      .min(8)
-      .required()
-      .label("Password")
+    username: Joi.string().label("Username").min(3).max(12).required(),
+    schoolSecretKey: Joi.string().required().label("School Secret Key"),
+    password: Joi.string().min(8).required().label("Password"),
   };
 
   doSubmit = async () => {
     try {
       const { data: jwt } = await adminLogin(this.state.data);
       localStorage.setItem("token", jwt);
+      localStorage.removeItem("restored");
       window.location = "dashboard";
     } catch (ex) {
       if (ex.response && ex.response.status === 404) {
@@ -51,7 +43,9 @@ class AdminLogin extends Form {
                 <div className="log-reg-area sign">
                   <h2>School Admin Login</h2>
                   <p className="subtitle">
-                    The Login button will be enabled on valid credentials
+                    {localStorage.getItem("restored")
+                      ? "You can now Login with the restored password"
+                      : "The Login button will be enabled on valid credentials"}
                   </p>
                   <form onSubmit={this.handleSubmit}>
                     {this.renderInput("Username", "username", "text")}

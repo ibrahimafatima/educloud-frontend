@@ -34,6 +34,7 @@ class ResetPassword extends Form {
       if (result === "Ok") {
         toast.success("Password successfully reset, Login now.");
         localStorage.removeItem("username");
+        localStorage.setItem("restored", "true");
         window.location = "admin-login";
       }
     } catch (ex) {

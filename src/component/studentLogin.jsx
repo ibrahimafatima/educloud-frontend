@@ -8,17 +8,12 @@ import { NavLink } from "react-router-dom";
 class StudentLogin extends Form {
   state = {
     data: { registration_number: "", password: "" },
-    error: {}
+    error: {},
   };
 
   schema = {
-    registration_number: Joi.string()
-      .required()
-      .label("Registration number"),
-    password: Joi.string()
-      .min(8)
-      .required()
-      .label("Password")
+    registration_number: Joi.string().required().label("Registration number"),
+    password: Joi.string().min(8).required().label("Password"),
   };
 
   doSubmit = async () => {
@@ -29,6 +24,7 @@ class StudentLogin extends Form {
         data.password
       );
       localStorage.setItem("token", jwt);
+      localStorage.removeItem("restored");
       window.location = "/dashboard";
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
@@ -49,10 +45,17 @@ class StudentLogin extends Form {
               <div className="login-reg-bg">
                 <div className="log-reg-area sign">
                   <h2 className="log-title">School Student Login</h2>
-                  <p className="subtitle">
-                    Don't have an account ?{" "}
-                    <NavLink to="/student-registration">Register</NavLink>
+                  <p>
+                    {localStorage.getItem("restored")
+                      ? "Now you can login with the restored password"
+                      : null}{" "}
                   </p>
+                  {localStorage.getItem("restored") ? null : (
+                    <p className="subtitle">
+                      Don't have an account ?{" "}
+                      <NavLink to="/student-registration">Register</NavLink>
+                    </p>
+                  )}
                   <form onSubmit={this.handleSubmit}>
                     {this.renderInput(
                       "Registration_number",

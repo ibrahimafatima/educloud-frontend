@@ -16,6 +16,7 @@ class ChatList extends Component {
 
   render() {
     const { chats } = this.props;
+    const user = auth.getCurrentUser().username;
     return (
       <div style={{ height: "400px", overflow: "auto" }}>
         <div id="output">
@@ -23,19 +24,17 @@ class ChatList extends Component {
             <p
               key={chat.timestamp}
               style={{
-                textAlign:
-                  chat.sender === auth.getCurrentUser().username
-                    ? "left"
-                    : "right",
+                textAlign: chat.sender === user ? "left" : "right",
                 padding: "14px 0px",
                 margin: "0px 20px",
+                marginLeft: chat.sender === user ? "20px" : "40px",
                 color: "#555",
                 borderBottom: "1px solid #e9e9e9",
               }}
             >
               <strong
                 style={{
-                  color: "#575ed8",
+                  color: chat.sender === user ? "#575ed8" : "#FFA601",
                 }}
               >
                 {chat.sender} :{" "}
