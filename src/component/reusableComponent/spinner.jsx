@@ -3,7 +3,7 @@ import Loader from "react-loader-spinner";
 
 const Spinner = () => {
   return (
-    <div className="loader">
+    <div className="loader" style={{ zIndex: 100, marginBottom: "80px" }}>
       <Loader
         type="Oval"
         color="#042954"
