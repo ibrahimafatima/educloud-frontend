@@ -9,6 +9,7 @@ import {
   getATimetable,
 } from "../services/teacherService";
 import { toast } from "react-toastify";
+import Spinner from "./reusableComponent/spinner";
 
 class AddTimetable extends Form {
   state = {
@@ -38,6 +39,7 @@ class AddTimetable extends Form {
       "10:30 AM",
       "11:00 AM",
     ],
+    loading: true,
     error: {},
   };
 
@@ -57,7 +59,10 @@ class AddTimetable extends Form {
     const { data: classe } = await getClasses();
     const { data: subject } = await getCourses();
     this.setState({ classe, subject });
-    if (this.props.location.pathname === "/add-timetable/new") return;
+    if (this.props.location.pathname === "/add-timetable/new") {
+      this.setState({ loading: false });
+      return;
+    }
     try {
       const { data: timetable } = await getATimetable(
         this.props.match.params.id
@@ -70,7 +75,7 @@ class AddTimetable extends Form {
         startTime: timetable.startTime,
         endTime: timetable.endTime,
       };
-      this.setState({ data });
+      this.setState({ data, loading: false });
     } catch (ex) {
       if (ex.response && ex.response.status === 404) {
         return this.props.history.replace("/not-found");
@@ -97,7 +102,9 @@ class AddTimetable extends Form {
   render() {
     const { classe, subject, day, time } = this.state;
     const { location } = this.props;
-    return (
+    return this.state.loading ? (
+      <Spinner />
+    ) : (
       <React.Fragment>
         <div>
           <h4>

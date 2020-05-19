@@ -10,13 +10,15 @@ import { toast } from "react-toastify";
 class TeacherEndYear extends Component {
   state = {
     bit: 0,
+    loading: false,
   };
 
   handleClick = async () => {
     try {
+      this.setState({ loading: true });
       await updateYearAssignment();
       await updateYearMark();
-      this.setState({ bit: 1 });
+      this.setState({ bit: 1, loading: false });
       toast.success("End of year successfully made. Enjoy the holidays!");
     } catch (ex) {
       toast.error(ex.response.data);

@@ -4,11 +4,13 @@ import { getClasses, addTeacher, getATeacher } from "../services/adminService";
 import Joi from "joi-browser";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import Spinner from "./reusableComponent/spinner";
 
 class AddTeacher extends Form {
   state = {
     data: { teacherID: "", username: "", className: "" },
     classInCharge: [], //CLASSNAME HERE IS CLASS IN CHARGE
+    loading: true,
     error: {},
   };
 
@@ -23,7 +25,10 @@ class AddTeacher extends Form {
     const { data } = await getClasses();
     this.setState({ classInCharge: data });
 
-    if (this.props.location.pathname === "/add-teacher/new") return;
+    if (this.props.location.pathname === "/add-teacher/new") {
+      this.setState({ loading: false });
+      return;
+    }
     try {
       const { data: teacher } = await getATeacher(this.props.match.params.id);
       const data = {
@@ -33,7 +38,7 @@ class AddTeacher extends Form {
         className: teacher.className,
       };
 
-      this.setState({ data });
+      this.setState({ data, loading: false });
     } catch (ex) {
       if (ex.response && ex.response.status === 404) {
         return this.props.history.replace("/not-found");
@@ -63,7 +68,9 @@ class AddTeacher extends Form {
 
   render() {
     const { location } = this.props;
-    return (
+    return this.state.loading ? (
+      <Spinner />
+    ) : (
       <React.Fragment>
         <div>
           <h4>

@@ -4,22 +4,40 @@ import Form from "./reusableComponent/form";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { addToNoticeBoard, getANotice } from "../services/adminService";
+import Spinner from "./reusableComponent/spinner";
 
 class AddToNoticeBoard extends Form {
   state = {
     data: { event_date: "", event_message: "" },
-    error: {}
+    loading: true,
+    error: {},
   };
 
   schema = {
     _id: Joi.string(),
-    event_date: Joi.string()
-      .required()
-      .label("Event date"),
-    event_message: Joi.string()
-      .required()
-      .label("Event message")
+    event_date: Joi.string().required().label("Event date"),
+    event_message: Joi.string().required().label("Event message"),
   };
+
+  async componentDidMount() {
+    if (this.props.location.pathname === "/notice-board/new") {
+      this.setState({ loading: false });
+      return;
+    }
+    try {
+      const { data: notice } = await getANotice(this.props.match.params.id);
+      const data = {
+        _id: notice._id,
+        event_date: notice.event_date,
+        event_message: notice.event_message,
+      };
+      this.setState({ data, loading: false });
+    } catch (ex) {
+      if (ex.response && ex.response.status === 404) {
+        return this.props.history.replace("/not-found");
+      }
+    }
+  }
 
   doSubmit = async () => {
     try {
@@ -35,25 +53,10 @@ class AddToNoticeBoard extends Form {
     }
   };
 
-  async componentDidMount() {
-    if (this.props.location.pathname === "/notice-board/new") return;
-    try {
-      const { data: notice } = await getANotice(this.props.match.params.id);
-      const data = {
-        _id: notice._id,
-        event_date: notice.event_date,
-        event_message: notice.event_message
-      };
-      this.setState({ data });
-    } catch (ex) {
-      if (ex.response && ex.response.status === 404) {
-        return this.props.history.replace("/not-found");
-      }
-    }
-  }
-
   render() {
-    return (
+    return this.state.loading ? (
+      <Spinner />
+    ) : (
       <React.Fragment>
         <div>
           <h4>

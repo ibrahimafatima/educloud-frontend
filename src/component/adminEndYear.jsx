@@ -3,17 +3,20 @@ import { TiWarning } from "react-icons/ti";
 import { GoSmiley } from "react-icons/go";
 import { updatePaymentYear, updateExamYear } from "../services/adminService";
 import { toast } from "react-toastify";
+import Spinner from "./reusableComponent/spinner";
 
 class AdminEndYear extends Component {
   state = {
     bit: 0,
+    loading: false,
   };
 
   handleClick = async () => {
     try {
+      this.setState({ loading: true });
       await updatePaymentYear();
       await updateExamYear();
-      this.setState({ bit: 1 });
+      this.setState({ bit: 1, loading: false });
       toast.success("End of year successfully made. Enjoy the holidays.");
     } catch (ex) {
       toast.error(ex.response.data);
@@ -21,7 +24,9 @@ class AdminEndYear extends Component {
   };
 
   render() {
-    return (
+    return this.state.loading ? (
+      <Spinner />
+    ) : (
       <React.Fragment>
         <div className="card height-auto">
           {this.state.bit === 1 && (

@@ -3,7 +3,7 @@ import Joi from "joi-browser";
 import Form from "./reusableComponent/form";
 import { addStudent, getOneStudent } from "../services/teacherService";
 import { getTerms } from "../services/adminService";
-import Loader from "react-loader-spinner";
+import Spinner from "./reusableComponent/spinner";
 import { toast } from "react-toastify";
 
 class AddStudent extends Form {
@@ -70,13 +70,7 @@ class AddStudent extends Form {
 
   render() {
     return this.state.loading ? (
-      <Loader
-        type="Oval"
-        color="#042954"
-        height={100}
-        width={100}
-        timeout={10000} //3 secs
-      />
+      <Spinner />
     ) : (
       <div className="card height-auto">
         <div className="card-body">

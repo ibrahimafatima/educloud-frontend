@@ -4,6 +4,7 @@ import { addClass, getClass, getCls, getLevel } from "../services/adminService";
 import { Link } from "react-router-dom";
 import Joi from "joi-browser";
 import { toast } from "react-toastify";
+import Spinner from "./reusableComponent/spinner";
 
 class AddClass extends Form {
   state = {
@@ -17,6 +18,7 @@ class AddClass extends Form {
     classe: [],
     level: [],
     isInCharge: ["false", "true"],
+    loading: true,
     error: {},
   };
 
@@ -34,6 +36,32 @@ class AddClass extends Form {
     level: Joi.string().required(),
     isInCharge: Joi.bool(),
   };
+
+  async componentDidMount() {
+    const { data: classe } = await getCls();
+    this.setState({ classe });
+    const { data: level } = await getLevel();
+    this.setState({ level });
+    if (this.props.location.pathname === "/add-class/new") {
+      this.setState({ loading: false });
+      return;
+    }
+    try {
+      const { data: clas } = await getClass(this.props.match.params.id);
+      const data = {
+        _id: clas._id,
+        className: clas.className,
+        classe: clas.classe,
+        amount_to_pay: clas.amount_to_pay,
+        level: clas.level,
+        isInCharge: clas.isInCharge,
+      };
+      this.setState({ data, loading: false });
+    } catch (ex) {
+      if (ex.response && ex.response.status === 404)
+        return this.props.history.replace("/not-found");
+    }
+  }
 
   doSubmit = async () => {
     try {
@@ -61,32 +89,12 @@ class AddClass extends Form {
     }
   };
 
-  async componentDidMount() {
-    const { data: classe } = await getCls();
-    this.setState({ classe });
-    const { data: level } = await getLevel();
-    this.setState({ level });
-    if (this.props.location.pathname === "/add-class/new") return;
-    try {
-      const { data: clas } = await getClass(this.props.match.params.id);
-      const data = {
-        _id: clas._id,
-        className: clas.className,
-        classe: clas.classe,
-        amount_to_pay: clas.amount_to_pay,
-        level: clas.level,
-        isInCharge: clas.isInCharge,
-      };
-      this.setState({ data });
-    } catch (ex) {
-      if (ex.response && ex.response.status === 404)
-        return this.props.history.replace("/not-found");
-    }
-  }
   render() {
-    const { classe, level, isInCharge } = this.state;
+    const { classe, level, isInCharge, loading } = this.state;
     const { location } = this.props;
-    return (
+    return loading ? (
+      <Spinner />
+    ) : (
       <React.Fragment>
         <div>
           <h4>

@@ -4,11 +4,13 @@ import Form from "./reusableComponent/form";
 import { toast } from "react-toastify";
 import { getClasses } from "../services/adminService";
 import { addCourse, getCourseByID } from "../services/teacherService";
+import Spinner from "./reusableComponent/spinner";
 
 class AddSubject extends Form {
   state = {
     data: { name: "", className: "" },
     classes: [],
+    loading: true,
     error: {},
   };
 
@@ -22,7 +24,10 @@ class AddSubject extends Form {
     const { data } = await getClasses();
     this.setState({ classes: data });
 
-    if (this.props.location.pathname === "/add-subject/new") return;
+    if (this.props.location.pathname === "/add-subject/new") {
+      this.setState({ loading: false });
+      return;
+    }
     try {
       const { data: subject } = await getCourseByID(this.props.match.params.id);
 
@@ -32,7 +37,7 @@ class AddSubject extends Form {
         className: subject.className,
       };
 
-      this.setState({ data });
+      this.setState({ data, loading: false });
     } catch (ex) {
       if (ex.response && ex.response.status === 404) {
         return this.props.history.replace("/not-found");
@@ -55,7 +60,9 @@ class AddSubject extends Form {
     }
   };
   render() {
-    return (
+    return this.state.loading ? (
+      <Spinner />
+    ) : (
       <div className="card height-auto">
         <div className="card-body">
           <div className="heading-layout1">

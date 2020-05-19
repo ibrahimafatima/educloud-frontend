@@ -6,6 +6,7 @@ import { getClasses } from "../services/adminService";
 import { scheduleExam } from "../services/teacherService";
 import { toast } from "react-toastify";
 import { getExam } from "./../services/teacherService";
+import Spinner from "./reusableComponent/spinner";
 
 class AddExams extends Form {
   state = {
@@ -32,6 +33,7 @@ class AddExams extends Form {
       "10:30 AM",
       "11:00 AM",
     ],
+    loading: true,
     error: {},
   };
 
@@ -48,7 +50,10 @@ class AddExams extends Form {
   async componentDidMount() {
     const { data: classes } = await getClasses();
     this.setState({ classes });
-    if (this.props.location.pathname === "/add-exams/new") return;
+    if (this.props.location.pathname === "/add-exams/new") {
+      this.setState({ loading: false });
+      return;
+    }
     try {
       const { data: exam } = await getExam(this.props.match.params.id);
       const data = {
@@ -60,7 +65,7 @@ class AddExams extends Form {
         schedule_time: exam.schedule_time,
         duration: exam.duration,
       };
-      this.setState({ data });
+      this.setState({ data, loading: false });
     } catch (ex) {
       if (ex.response && ex.response.status === 404) {
         return this.props.history.replace("/not-found");
@@ -96,7 +101,9 @@ class AddExams extends Form {
 
   render() {
     const { location } = this.props;
-    return (
+    return this.state.loading ? (
+      <Spinner />
+    ) : (
       <React.Fragment>
         <div>
           <h4>
