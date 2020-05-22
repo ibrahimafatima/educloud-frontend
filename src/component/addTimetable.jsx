@@ -85,12 +85,15 @@ class AddTimetable extends Form {
 
   doSubmit = async () => {
     try {
+      this.setState({ loading: true });
       await addTimetable(this.state.data);
       this.setState({
         data: { className: "", name: "", day: "", startTime: "", endTime: "" },
       });
       toast.success("Timetable updated successfully...");
+      this.setState({ loading: false });
     } catch (ex) {
+      this.setState({ loading: false });
       if (ex.response && ex.response.status === 400) {
         const error = { ...this.state.error };
         error.startTime = ex.response.data;

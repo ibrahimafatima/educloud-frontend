@@ -55,7 +55,7 @@ class AddStudent extends Form {
       toast.success("Student added successfully...");
       this.setState({ loading: false });
     } catch (ex) {
-      this.setState({ loading: true });
+      this.setState({ loading: false });
       if (ex.response && ex.response.status === 401) {
         toast(`You can only add student in ${this.props.user.className}`);
         const error = { ...this.state.error };

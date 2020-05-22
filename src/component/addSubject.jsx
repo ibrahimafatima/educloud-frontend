@@ -53,7 +53,7 @@ class AddSubject extends Form {
       toast.success("Subject successfully added...");
       this.setState({ loading: false });
     } catch (ex) {
-      this.setState({ loading: true });
+      this.setState({ loading: false });
       if (ex.response && ex.response.status === 400) {
         const error = { ...this.state.error };
         error.name = ex.response.data;
@@ -81,7 +81,7 @@ class AddSubject extends Form {
               </div>
               <div className="col-xl-3 col-lg-6 col-12 form-group">
                 <label>Class Name *</label>
-                {this.renderSelect("className", this.state.classes)}
+                {this.renderSelect("className", ["", ...this.state.classes])}
               </div>
               <div className="col-12 form-group mg-t-8">
                 {this.renderButton(
