@@ -47,12 +47,15 @@ class AddStudent extends Form {
 
   doSubmit = async () => {
     try {
+      this.setState({ loading: true });
       await addStudent(this.state.data);
       this.setState({
         data: { registration_number: "", class_name: "", term: "", name: "" },
       });
       toast.success("Student added successfully...");
+      this.setState({ loading: false });
     } catch (ex) {
+      this.setState({ loading: true });
       if (ex.response && ex.response.status === 401) {
         toast(`You can only add student in ${this.props.user.className}`);
         const error = { ...this.state.error };

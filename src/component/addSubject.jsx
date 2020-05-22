@@ -47,10 +47,13 @@ class AddSubject extends Form {
 
   doSubmit = async () => {
     try {
+      this.setState({ loading: true });
       await addCourse(this.state.data);
       this.setState({ data: { name: "", className: "" } });
       toast.success("Subject successfully added...");
+      this.setState({ loading: false });
     } catch (ex) {
+      this.setState({ loading: true });
       if (ex.response && ex.response.status === 400) {
         const error = { ...this.state.error };
         error.name = ex.response.data;
