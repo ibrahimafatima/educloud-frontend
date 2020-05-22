@@ -11,6 +11,7 @@ const Spinner = () => {
         width={100}
         timeout={10000} //3 secs
       />
+      <p style={{ color: "#FFA801" }}>Please wait...</p>
     </div>
   );
 };

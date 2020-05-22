@@ -50,6 +50,7 @@ import AdminEndYear from "./adminEndYear";
 import PrintFeesReport from "./printFeesReport";
 import StudentAssignment from "./studentsAssignment";
 import Footer from "./reusableComponent/footer";
+import PreChat from "./reusableComponent/preChat";
 import Logout from "./logout";
 import Chat from "./chat";
 
@@ -70,7 +71,7 @@ class Dashboard extends Component {
         user.schoolSecretKey === data.schoolSecretKey &&
         user.class_name === data.classe
       ) {
-        this.setState({ chats: [...this.state.chats, data], message: "" });
+        this.setState({ chats: [...this.state.chats, data] });
 
         if (
           this.props.match.path !== "/chat" &&
@@ -95,6 +96,7 @@ class Dashboard extends Component {
   handleTextChange = async (e) => {
     if (e.keyCode === 13) {
       this.post_message();
+      this.setState({ message: "" });
     } else {
       this.setState({ message: e.target.value });
     }
@@ -102,6 +104,7 @@ class Dashboard extends Component {
 
   handleClick = async () => {
     this.post_message();
+    this.setState({ message: "" });
   };
 
   expandSidebar = (sidebarName) => {
@@ -187,6 +190,7 @@ class Dashboard extends Component {
                 <Route path="/discussion/:id" component={Discussion} />
                 <Route path="/admin-end-year" component={AdminEndYear} />
                 <Route path="/teacher-end-year" component={TeacherEndYear} />
+                <Route path="/pre-chat" component={PreChat} />
                 <Route
                   path="/chat"
                   render={(props) => (

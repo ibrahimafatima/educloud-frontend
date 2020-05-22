@@ -65,6 +65,7 @@ class AddClass extends Form {
 
   doSubmit = async () => {
     try {
+      this.setState({ loading: true });
       await addClass(this.state.data);
       this.setState({
         data: {
@@ -76,7 +77,9 @@ class AddClass extends Form {
         },
       });
       toast.success("Class added successfully...");
+      this.setState({ loading: false });
     } catch (ex) {
+      this.setState({ loading: false });
       if (
         ex.response &&
         (ex.response.status === 400 || ex.response.status === 404)

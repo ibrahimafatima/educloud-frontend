@@ -164,7 +164,7 @@ class StudentSidebar extends Component {
             <SidebarModule
               expandClass="nav-item"
               logo={FaFacebookMessenger}
-              link="/chat"
+              link="/pre-chat"
               title="My Chatroom"
               toggleSidebar={toggleSidebar}
             />

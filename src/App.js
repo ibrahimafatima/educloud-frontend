@@ -126,6 +126,7 @@ class App extends Component {
           <Route path="/discussion/:id" component={Dashbord} />
           <Route path="/admin-end-year" component={Dashbord} />
           <Route path="/teacher-end-year" component={Dashbord} />
+          <Route path="/pre-chat" component={Dashbord} />
           <ProtectedRoute path="/" currentUser={user} component={Home} />
           <Route path="/not-found" component={Dashbord} />
           <Redirect to="not-found" />
