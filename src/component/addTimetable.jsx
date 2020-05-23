@@ -96,7 +96,7 @@ class AddTimetable extends Form {
       this.setState({ loading: false });
       if (ex.response && ex.response.status === 400) {
         const error = { ...this.state.error };
-        error.startTime = ex.response.data;
+        error.subject = ex.response.data;
         this.setState({ error });
       }
     }
