@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 
 class AddStudent extends Form {
   state = {
-    data: { registration_number: "", term: "", name: "" },
+    data: { registration_number: "", class_name: "", term: "", name: "" },
     term: [],
     loading: true,
     error: {},
@@ -18,7 +18,7 @@ class AddStudent extends Form {
     _id: Joi.string(),
     name: Joi.string().min(3).max(25).required().label("Name"),
     registration_number: Joi.string().required().label("Registration number"),
-    //class_name: Joi.string().max(12).required().label("Class name"),
+    class_name: Joi.string().max(12).required().label("Class name"),
     term: Joi.string().max(30).required().label("Term"),
   };
 
@@ -34,7 +34,7 @@ class AddStudent extends Form {
       const data = {
         _id: student._id,
         registration_number: student.registration_number,
-        //class_name: student.class_name,
+        class_name: student.class_name,
         term: student.term,
         name: student.name,
       };
@@ -50,7 +50,7 @@ class AddStudent extends Form {
       this.setState({ loading: true });
       await addStudent(this.state.data);
       this.setState({
-        data: { registration_number: "", term: "", name: "" },
+        data: { registration_number: "", class_name: "", term: "", name: "" },
       });
       toast.success("Student added successfully...");
       this.setState({ loading: false });
@@ -65,7 +65,7 @@ class AddStudent extends Form {
       if (ex.response && ex.response.status === 400) {
         toast(ex.response.data);
         const error = { ...this.state.error };
-        error.registration_number = ex.response.data;
+        error.class_name = ex.response.data;
         this.setState({ error });
       }
     }
@@ -97,10 +97,10 @@ class AddStudent extends Form {
                 <label>Student name *</label>
                 {this.renderInput("", "name", "text", "form-control")}
               </div>
-              {/* <div className="col-xl-3 col-lg-6 col-12 form-group">
+              <div className="col-xl-3 col-lg-6 col-12 form-group">
                 <label>Class Name *</label>
                 {this.renderInput("", "class_name", "text", "form-control")}
-              </div> */}
+              </div>
               <div className="col-xl-3 col-lg-6 col-12 form-group">
                 <label>Term *</label>
                 {this.renderSelect("term", this.state.term)}

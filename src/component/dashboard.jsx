@@ -87,10 +87,16 @@ class Dashboard extends Component {
   }
 
   async post_message() {
-    const payload = {
-      message: this.state.message,
-    };
-    await sendMessage(payload);
+    const originalState = this.state.chats;
+    try {
+      this.setState({ chats: [...this.state.chats, this.state.message] });
+      const payload = {
+        message: this.state.message,
+      };
+      await sendMessage(payload);
+    } catch (ex) {
+      this.setState({ chats: originalState });
+    }
   }
 
   handleTextChange = async (e) => {
