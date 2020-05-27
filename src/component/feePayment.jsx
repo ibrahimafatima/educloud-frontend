@@ -3,8 +3,8 @@ import { payFee } from "../services/adminService";
 import { toast } from "react-toastify";
 import Form from "./reusableComponent/form";
 import { Link } from "react-router-dom";
+import Spinner from "./reusableComponent/spinner";
 import Joi from "joi-browser";
-import { Loader } from "react-loader-spinner";
 
 class FeePayment extends Form {
   state = {
@@ -40,7 +40,9 @@ class FeePayment extends Form {
   };
 
   render() {
-    return (
+    return this.state.loading ? (
+      <Spinner />
+    ) : (
       <React.Fragment>
         <div>
           <h4>
