@@ -41,10 +41,13 @@ class AddToNoticeBoard extends Form {
 
   doSubmit = async () => {
     try {
+      this.setState({ loading: true });
       await addToNoticeBoard(this.state.data);
       this.setState({ data: { event_date: "", event_message: "" } });
       toast.success("Notice board updated successfully");
+      this.setState({ loading: false });
     } catch (ex) {
+      this.setState({ loading: false });
       if (ex.response && ex.response.status === 400) {
         const error = { ...this.state.error };
         error.event_date = ex.response.data;

@@ -4,34 +4,33 @@ import { toast } from "react-toastify";
 import Form from "./reusableComponent/form";
 import { Link } from "react-router-dom";
 import Joi from "joi-browser";
+import { Loader } from "react-loader-spinner";
 
 class FeePayment extends Form {
   state = {
     data: { registration_number: this.props.match.params.id, amountPaid: "" },
-    error: {}
+    loading: false,
+    error: {},
   };
 
   schema = {
     _id: Joi.string(),
-    registration_number: Joi.string()
-      .required()
-      .label("Registration number"),
-    amountPaid: Joi.number()
-      .min(0)
-      .required()
-      .label("Amount Paid")
+    registration_number: Joi.string().required().label("Registration number"),
+    amountPaid: Joi.number().min(0).required().label("Amount Paid"),
   };
 
   doSubmit = async () => {
     try {
+      this.setState({ loading: true });
       const { data: paymentDetails } = await payFee(this.state.data);
       this.setState({
-        data: { registration_number: "", amountPaid: 0 }
+        data: { registration_number: "", amountPaid: 0, Loader: false },
       });
       toast.success("Payment made successfully...");
       localStorage.setItem("receiptID", paymentDetails._id);
       this.props.history.push("/print");
     } catch (ex) {
+      this.setState({ loading: false });
       if (ex.response && ex.response.status === 400) {
         const error = { ...this.state.error };
         error.registration_number = ex.response.data;

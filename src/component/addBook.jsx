@@ -43,12 +43,15 @@ class AddBook extends Form {
 
   doSubmit = async () => {
     try {
+      this.setState({ loading: true });
       await addBook(this.state.data);
       this.setState({
         data: { bookTitle: "", author: "", totalQty: 0 },
       });
       toast.success("Library updated successfully...");
+      this.setState({ loading: false });
     } catch (ex) {
+      this.setState({ loading: false });
       if (ex.response && ex.response.status === 400) {
         const error = { ...this.state.error };
         error.author = ex.response.data;
