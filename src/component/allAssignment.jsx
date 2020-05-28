@@ -44,6 +44,9 @@ class AllAssignment extends Component {
             <div className="heading-layout1">
               <div className="item-title">
                 <h3>All Assignments</h3>
+                <span>
+                  <i>Questions are sepearated with semi-colon</i>
+                </span>
               </div>
             </div>
             {assignments.length === 0 ? (

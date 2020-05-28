@@ -3,6 +3,7 @@ import Joi from "joi-browser";
 import Form from "./reusableComponent/form";
 import { getCourses, getExams, postMark } from "../services/teacherService";
 import { toast } from "react-toastify";
+import Spinner from "./reusableComponent/spinner";
 
 class PostMark extends Form {
   state = {
@@ -11,39 +12,30 @@ class PostMark extends Form {
       exam_name: "",
       mark: "",
       grade: "",
-      remark: ""
+      remark: "",
     },
     subject: [],
     exams: [],
-    error: {}
+    loading: true,
+    error: {},
   };
 
   schema = {
     _id: Joi.string(),
-    name: Joi.string()
-      .required()
-      .label("Subject"),
-    exam_name: Joi.string()
-      .required()
-      .label("Exam name"),
-    mark: Joi.number()
-      .min(0)
-      .required()
-      .label("Mark"),
-    grade: Joi.string()
-      .max(12)
-      .label("Grade"),
-    remark: Joi.string()
-      .max(25)
-      .label("Remark")
+    name: Joi.string().required().label("Subject"),
+    exam_name: Joi.string().required().label("Exam name"),
+    mark: Joi.number().min(0).required().label("Mark"),
+    grade: Joi.string().max(12).label("Grade"),
+    remark: Joi.string().max(25).label("Remark"),
   };
 
   async componentDidMount() {
     try {
       const { data } = await getCourses();
       const { data: exams } = await getExams();
-      this.setState({ subject: data, exams });
+      this.setState({ subject: data, exams, loading: false });
     } catch (ex) {
+      this.setState({ loading: false });
       if (ex.response && ex.response.status === 404)
         return this.props.history.replace("/not-found");
     }
@@ -51,13 +43,16 @@ class PostMark extends Form {
 
   doSubmit = async () => {
     try {
+      this.setState({ loading: true });
       const { data } = await postMark(
         this.props.match.params.id,
         this.state.data
       );
       toast.success("Mark successfully posted for " + data.student_name);
+      this.setState({ loading: false });
       this.props.history.goBack();
     } catch (ex) {
+      this.setState({ loading: false });
       if (ex.response && ex.response.status === 404) {
         const error = { ...this.state.error };
         error.grade = ex.response.data;
@@ -69,7 +64,9 @@ class PostMark extends Form {
   render() {
     const { subject, exams } = this.state;
     const { location } = this.props;
-    return (
+    return this.state.loading ? (
+      <Spinner />
+    ) : (
       <React.Fragment>
         <div></div>
         <div className="card height-auto">
@@ -87,11 +84,11 @@ class PostMark extends Form {
               <div className="row">
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
                   <label>Subject *</label>
-                  {this.renderSelect("name", subject)}
+                  {this.renderSelect("name", ["", ...subject])}
                 </div>
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
                   <label>Exam name *</label>
-                  {this.renderSelect("exam_name", exams)}
+                  {this.renderSelect("exam_name", ["", ...exams])}
                 </div>
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
                   <label>Score *</label>

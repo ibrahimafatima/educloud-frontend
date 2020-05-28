@@ -66,6 +66,9 @@ class AddAssignment extends Form {
             <div className="heading-layout1">
               <div className="item-title">
                 <h3>Add New Assignment</h3>
+                <span>
+                  <i>Kindly, sepearate the questions with semi-colon</i>
+                </span>
               </div>
             </div>
             <form onSubmit={this.handleSubmit}>
