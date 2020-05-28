@@ -6,6 +6,7 @@ import Joi from "joi-browser";
 import { moveTerm } from "../services/teacherService";
 import { getTerms } from "../services/adminService";
 import { toast } from "react-toastify";
+import Spinner from "./reusableComponent/spinner";
 
 class NewTerm extends Form {
   state = {
@@ -14,6 +15,7 @@ class NewTerm extends Form {
       term: "",
     },
     term: [],
+    loading: false,
     error: {},
   };
 
@@ -24,6 +26,7 @@ class NewTerm extends Form {
 
   doSubmit = async () => {
     try {
+      this.setState({ loading: true });
       await moveTerm(this.state.data);
       toast.success("Class successfully moved to next term");
       this.setState({
@@ -31,8 +34,10 @@ class NewTerm extends Form {
           className: "",
           term: "",
         },
+        loading: false,
       });
     } catch (ex) {
+      this.setState({ loading: false });
       toast.error(ex.response.data);
     }
   };
@@ -45,7 +50,9 @@ class NewTerm extends Form {
   render() {
     const { term } = this.state;
     const classe = auth.getCurrentUser().className;
-    return (
+    return this.state.loading ? (
+      <Spinner />
+    ) : (
       <React.Fragment>
         <div>
           <h4>

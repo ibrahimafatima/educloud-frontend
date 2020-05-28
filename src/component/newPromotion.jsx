@@ -4,6 +4,7 @@ import Joi from "joi-browser";
 import { toast } from "react-toastify";
 import { moveYear } from "../services/teacherService";
 import { getClasses, getTerms } from "../services/adminService";
+import Spinner from "./reusableComponent/spinner";
 
 class NewPromotion extends Form {
   state = {
@@ -14,6 +15,7 @@ class NewPromotion extends Form {
     },
     classes: [],
     term: [],
+    loading: false,
     error: {},
   };
 
@@ -31,13 +33,16 @@ class NewPromotion extends Form {
 
   doSubmit = async () => {
     try {
+      this.setState({ loading: true });
       await moveYear(this.state.data);
       this.setState({
         data: { term: "", className: "", registration_number: "" },
+        loading: false,
       });
       toast.success("Student successfully promoted...");
       this.props.history.goBack();
     } catch (ex) {
+      this.setState({ loading: false });
       if (ex.response && ex.response.status === 404) {
         const error = { ...this.state.error };
         error.className = ex.response.data;
@@ -48,7 +53,9 @@ class NewPromotion extends Form {
   };
 
   render() {
-    return (
+    return this.state.loading ? (
+      <Spinner />
+    ) : (
       <div className="card height-auto">
         <div className="card-body">
           <div className="heading-layout1">

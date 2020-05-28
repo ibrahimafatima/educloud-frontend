@@ -24,7 +24,8 @@ class FeePayment extends Form {
       this.setState({ loading: true });
       const { data: paymentDetails } = await payFee(this.state.data);
       this.setState({
-        data: { registration_number: "", amountPaid: 0, Loader: false },
+        data: { registration_number: "", amountPaid: 0 },
+        loading: false,
       });
       toast.success("Payment made successfully...");
       localStorage.setItem("receiptID", paymentDetails._id);

@@ -75,6 +75,7 @@ class AddExams extends Form {
 
   doSubmit = async () => {
     try {
+      this.setState({ loading: true });
       await scheduleExam(this.state.data);
       this.setState({
         data: {
@@ -86,8 +87,10 @@ class AddExams extends Form {
           duration: "",
         },
       });
+      this.setState({ loading: false });
       toast("Exam scheduled successfully");
     } catch (ex) {
+      this.setState({ loading: false });
       if (
         ex.response &&
         (ex.response.status === 400 || ex.response.status === 401)

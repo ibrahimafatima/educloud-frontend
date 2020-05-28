@@ -1,14 +1,16 @@
 import React from "react";
-import { postAssignment } from "../services/teacherService";
-import { getClasses } from "../services/adminService";
-import Form from "./reusableComponent/form";
-import { toast } from "react-toastify";
 import Joi from "joi-browser";
+import { toast } from "react-toastify";
+import Form from "./reusableComponent/form";
+import Spinner from "./reusableComponent/spinner";
+import { getClasses } from "../services/adminService";
+import { postAssignment } from "../services/teacherService";
 
 class AddAssignment extends Form {
   state = {
     data: { title: "", className: "", toBeSubmittedOn: "", aMessage: "" },
     classes: [],
+    loading: false,
     error: {},
   };
 
@@ -35,13 +37,16 @@ class AddAssignment extends Form {
 
   doSubmit = async () => {
     try {
+      this.setState({ loading: true });
       await postAssignment(this.state.data);
       this.setState({
         data: { title: "", className: "", toBeSubmittedOn: "", aMessage: "" },
+        loading: false,
       });
       toast.success("Assignment successfully posted...");
       window.location = "dashboard";
     } catch (ex) {
+      this.setState({ loading: false });
       if (ex.response && ex.response.status === 400) {
         const error = { ...this.state.error };
         error.className = ex.response.data;
@@ -51,7 +56,9 @@ class AddAssignment extends Form {
   };
 
   render() {
-    return (
+    return this.state.loading ? (
+      <Spinner />
+    ) : (
       <React.Fragment>
         <div></div>
         <div className="card height-auto">
