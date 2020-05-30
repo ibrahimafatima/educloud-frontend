@@ -5,10 +5,16 @@ const UpcomingExams = () => {
     <div className="col-lg-3 job-opportunity">
       <aside className="sidebar static">
         <div className="widget">
-          <h4 className="widget-title">Upcoming Exams</h4>
+          <h4 className="widget-title">
+            <b>Upcoming Exams</b>
+          </h4>
           <div className="your-page">
             <div className="page-meta">
-              <span title="" style={{ fontSize: "14px" }} className="underline">
+              <span
+                title=""
+                style={{ fontSize: "14px", color: "#088DCD" }}
+                className="underline"
+              >
                 The Craddle of Knowledge
               </span>
               <span>
