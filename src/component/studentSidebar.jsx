@@ -207,13 +207,7 @@ class StudentSidebar extends Component {
                 style={{
                   display: isSidebarExpanded ? "block" : "none",
                 }}
-              >
-                <SidebarSubModule
-                  link="/all-notice"
-                  title="All Notice"
-                  toggleSidebar={toggleSidebar}
-                />
-              </ul>
+              ></ul>
             </li>
           </ul>
         </div>

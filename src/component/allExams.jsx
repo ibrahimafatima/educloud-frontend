@@ -2,16 +2,18 @@ import React, { Component } from "react";
 import {
   getExams,
   removeExam,
-  updateExamStatus
+  updateExamStatus,
 } from "../services/teacherService";
 import ExamTable from "./examTable";
 import auth from "../services/authService";
 import { toast } from "react-toastify";
+import Spinner from "./reusableComponent/spinner";
 
 class AllExams extends Component {
   state = {
     exams: [],
-    user: {}
+    loading: false,
+    user: {},
   };
 
   async componentDidMount() {
@@ -25,10 +27,10 @@ class AllExams extends Component {
     }
   }
 
-  handleDelete = async exam => {
+  handleDelete = async (exam) => {
     const originalState = this.state.exams;
     this.setState({
-      exams: this.state.exams.filter(e => e._id !== exam._id)
+      exams: this.state.exams.filter((e) => e._id !== exam._id),
     });
     try {
       await removeExam(exam._id);
@@ -39,19 +41,24 @@ class AllExams extends Component {
     }
   };
 
-  handleExamUpdate = async exam => {
+  handleExamUpdate = async (exam) => {
     try {
+      this.setState({ loading: true });
       await updateExamStatus(exam);
       toast.success("Successfully update exam status.");
+      this.setState({ loading: false });
       window.location = "/all-exams";
     } catch (ex) {
+      this.setState({ loading: false });
       toast.error("Error occured couldnt update...");
     }
   };
 
   render() {
     const { exams } = this.state;
-    return (
+    return this.state.loading ? (
+      <Spinner />
+    ) : (
       <React.Fragment>
         <div className="card height-auto">
           <div className="card-body">

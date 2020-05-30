@@ -7,7 +7,6 @@ import ConfirmAdmin from "./component/confirmAdmin";
 import ConfirmTeacher from "./component/confirmTeacher";
 import ResetPassword from "./component/resetPassword";
 import TeacherRegistration from "./component/teacherRegistration";
-import Home from "./component/home";
 import TeacherLogin from "./component/teacherLogin";
 import ProtectedRoute from "./component/reusableComponent/protectedRoute";
 import StudentLogin from "./component/studentLogin";
@@ -18,6 +17,7 @@ import ResetTeacherPassword from "./component/resetTeacherPassword";
 import "react-toastify/dist/ReactToastify.css";
 import jwtDecode from "jwt-decode";
 import "./App.css";
+import NewsFeed from "./pages/news-feed/newsFeed";
 
 class App extends Component {
   state = {};
@@ -127,7 +127,7 @@ class App extends Component {
           <Route path="/admin-end-year" component={Dashbord} />
           <Route path="/teacher-end-year" component={Dashbord} />
           <Route path="/pre-chat" component={Dashbord} />
-          <ProtectedRoute path="/" currentUser={user} component={Home} />
+          <ProtectedRoute path="/" currentUser={user} component={NewsFeed} />
           <Route path="/not-found" component={Dashbord} />
           <Redirect to="not-found" />
         </Switch>

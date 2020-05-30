@@ -111,6 +111,10 @@ export function getNoticeBoard() {
   return http.get(adminEventEndpoint);
 }
 
+export function getSchoolsEvent() {
+  return http.get(adminEventEndpoint + "/all-events");
+}
+
 export function getANotice(id) {
   return http.get(adminEventEndpoint + "/get/" + id);
 }
