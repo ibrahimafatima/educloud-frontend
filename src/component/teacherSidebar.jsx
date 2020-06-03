@@ -45,7 +45,7 @@ class TeacherSidebar extends Component {
               expandClass="nav-item"
               toggleSidebar={toggleSidebar}
               logo={TiNews}
-              link="/"
+              link="/pre-chat/sidebar"
               title="Newsfeed"
             />
             <li className={iconClass} onClick={onSidebarExpand}>
