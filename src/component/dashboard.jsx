@@ -53,6 +53,7 @@ import Footer from "./reusableComponent/footer";
 import PreChat from "./reusableComponent/preChat";
 import Logout from "./logout";
 import Chat from "./chat";
+import { toast } from "react-toastify";
 
 class Dashboard extends Component {
   state = {
@@ -87,15 +88,13 @@ class Dashboard extends Component {
   }
 
   async post_message() {
-    const originalState = this.state.chats;
     try {
-      this.setState({ chats: [...this.state.chats, this.state.message] });
       const payload = {
         message: this.state.message,
       };
       await sendMessage(payload);
     } catch (ex) {
-      this.setState({ chats: originalState });
+      toast.error(ex.response.data);
     }
   }
 
@@ -156,7 +155,10 @@ class Dashboard extends Component {
                 toggleSidebar={this.toggleSidebar}
               />
             )}
-            <div className="dashboard-content-one">
+            <div
+              className="dashboard-content-one"
+              style={{ marginTop: "65px" }}
+            >
               <Breadcubs user={user} />
               <Switch>
                 <Route path="/add-teacher/:id" component={AddTeacher} />
@@ -196,7 +198,7 @@ class Dashboard extends Component {
                 <Route path="/discussion/:id" component={Discussion} />
                 <Route path="/admin-end-year" component={AdminEndYear} />
                 <Route path="/teacher-end-year" component={TeacherEndYear} />
-                <Route path="/pre-chat" component={PreChat} />
+                <Route path="/pre-chat/:id" component={PreChat} />
                 <Route
                   path="/chat"
                   render={(props) => (

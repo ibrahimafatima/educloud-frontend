@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import admin from "../../images/admin.jpg";
 import { toast } from "react-toastify";
+import { addNews } from "../../services/studentService";
+import auth from "../../services/authService";
 
 class PostArea extends Component {
   state = {
@@ -12,17 +14,29 @@ class PostArea extends Component {
     this.setState({ postText: event.target.value });
   };
 
-  handleClick = (event) => {
+  handleClick = async (event) => {
     event.preventDefault();
-    if (this.state.postText === "") {
+    const { postText } = this.state;
+    if (postText === "") {
       toast("Your post cannot be empty.");
       return;
     }
-    if (this.state.postText.length > 80) {
+    if (postText.length > 100) {
       toast("Your post exceeded total number of words");
       return;
     }
-    //send post to db
+    if (!auth.getCurrentUser()) {
+      toast("To post, you have to login first.");
+      return;
+    }
+    try {
+      await addNews({ post_text: postText });
+      window.location = "/";
+      this.setState({ postText: "" });
+      toast.success("Posted with success");
+    } catch (ex) {
+      toast.error(ex.response.data);
+    }
   };
 
   render() {
@@ -51,7 +65,7 @@ class PostArea extends Component {
                   </li>
                 </ul>
               </div>
-              {postText.length > 80 ? (
+              {postText.length > 100 ? (
                 <span>
                   <i style={{ color: "red", fontSize: "12px" }}>
                     You exceed the number of word.

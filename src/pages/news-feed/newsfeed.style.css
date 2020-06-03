@@ -2,7 +2,7 @@
 
 [Master Stylesheet]
 
-Project Name: winku (HMTL Template)
+Project Name: winku (HMTL Template)  stick
 Version:    1.2
 Last change:  26/August/19
 
@@ -481,15 +481,20 @@ iframe {
 
 /*--- sticky header ---*/
 
-header.stick {
+.stick {
   z-index: 99;
-  position: absolute;
+  position: fixed;
+  width: 100%;
   top: 0;
   left: 0;
 }
 
 header.sticky {
   position: fixed;
+}
+
+.body-top-margin {
+  margin-top: 50px;
 }
 
 /*--- landing page ---*/
@@ -10116,4 +10121,9 @@ Event section
 .dropdwn {
   display: none;
   transition: opacity 2s ease-in-out;
+}
+
+.header-dropdown {
+  margin-left: 30px;
+  margin-top: 50px;
 }

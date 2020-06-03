@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import sidebarLogo from "../images/sidebar_logo.jpeg";
 import { MdInsertInvitation } from "react-icons/md";
 import {
   FaCalculator,
@@ -10,25 +9,28 @@ import {
   FaRegNewspaper,
   FaChalkboardTeacher,
 } from "react-icons/fa";
+import { TiNews } from "react-icons/ti";
 import { GoDashboard } from "react-icons/go";
 import { GiTeacher, GiClosedDoors } from "react-icons/gi";
 import SidebarSubModule from "./reusableComponent/sidebarSubModule";
 import SidebarModule from "./reusableComponent/sidebarModule";
-import { NavLink } from "react-router-dom";
 
 class AdminSidebar extends Component {
   render() {
     let { iconClass, menuClass } = this.props.onMenuExpand();
     const { onSidebarExpand, isSidebarExpanded, toggleSidebar } = this.props;
     return (
-      <div className="sidebar-main sidebar-menu-one sidebar-expand-md sidebar-color">
-        <div className="mobile-sidebar-header d-md-none">
+      <div
+        className="sidebar-main sidebar-menu-one sidebar-expand-md sidebar-color"
+        style={{ marginTop: "65px" }}
+      >
+        {/* <div className="mobile-sidebar-header d-md-none">
           <div className="header-logo">
             <NavLink to="/dashboard">
               <img src={sidebarLogo} alt="logo" />
             </NavLink>
           </div>
-        </div>
+        </div> */}
         <div className="sidebar-menu-content">
           <ul className="nav nav-sidebar-menu sidebar-toggle-view">
             <SidebarModule
@@ -37,6 +39,13 @@ class AdminSidebar extends Component {
               logo={GoDashboard}
               link="/dashboard"
               title="Dashboard"
+            />
+            <SidebarModule
+              expandClass="nav-item"
+              toggleSidebar={toggleSidebar}
+              logo={TiNews}
+              link="/pre-chat/sidebar"
+              title="Newsfeed"
             />
             <li className={iconClass} onClick={onSidebarExpand}>
               <span className="nav-link cur">

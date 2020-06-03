@@ -4,6 +4,7 @@ import ChatBox from "./reusableComponent/chatBox";
 import { getDiscussions, saveDiscussions } from "../services/studentService";
 import auth from "../services/authService";
 import { pusherChannel } from "../reusableFunctions/pusher";
+import { toast } from "react-toastify";
 
 class Discussion extends Component {
   state = {
@@ -23,7 +24,7 @@ class Discussion extends Component {
         (user.schoolSecretKey === data.schoolSecretKey &&
           user.role === "Teacher")
       ) {
-        this.setState({ chats: [...this.state.chats, data], message: "" });
+        this.setState({ chats: [...this.state.chats, data] });
 
         if (user.username !== data.sender && user.role !== "Teacher") {
           Notification.requestPermission();
@@ -36,10 +37,14 @@ class Discussion extends Component {
   }
 
   async post_message() {
-    const payload = {
-      message: this.state.message,
-    };
-    await saveDiscussions(this.props.match.params.id, payload);
+    try {
+      const payload = {
+        message: this.state.message,
+      };
+      await saveDiscussions(this.props.match.params.id, payload);
+    } catch (ex) {
+      toast.error(ex.response.data);
+    }
   }
 
   handleTextChange = async (e) => {
@@ -52,6 +57,7 @@ class Discussion extends Component {
 
   handleClick = async () => {
     this.post_message();
+    this.setState({ message: "" });
   };
 
   render() {

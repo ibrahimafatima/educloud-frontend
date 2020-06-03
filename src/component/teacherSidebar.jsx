@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import sidebarLogo from "../images/sidebar_logo.jpeg";
 import {
   FaUserGraduate,
   FaEdit,
@@ -9,12 +8,12 @@ import {
   FaBookReader,
 } from "react-icons/fa";
 import { GiClosedDoors } from "react-icons/gi";
+import { TiNews } from "react-icons/ti";
 import { MdInsertInvitation } from "react-icons/md";
 import { GoDashboard } from "react-icons/go";
 import { GiTeacher } from "react-icons/gi";
 import SidebarSubModule from "./reusableComponent/sidebarSubModule";
 import SidebarModule from "./reusableComponent/sidebarModule";
-import { NavLink } from "react-router-dom";
 import auth from "../services/authService";
 
 class TeacherSidebar extends Component {
@@ -22,14 +21,17 @@ class TeacherSidebar extends Component {
     let { iconClass, menuClass } = this.props.onMenuExpand();
     const { onSidebarExpand, isSidebarExpanded, toggleSidebar } = this.props;
     return (
-      <div className="sidebar-main sidebar-menu-one sidebar-expand-md sidebar-color">
-        <div className="mobile-sidebar-header d-md-none">
+      <div
+        className="sidebar-main sidebar-menu-one sidebar-expand-md sidebar-color"
+        style={{ marginTop: "65px" }}
+      >
+        {/* <div className="mobile-sidebar-header d-md-none">
           <div className="header-logo">
             <NavLink to="/dashboard">
               <img src={sidebarLogo} alt="logo" />
             </NavLink>
           </div>
-        </div>
+        </div> */}
         <div className="sidebar-menu-content">
           <ul className="nav nav-sidebar-menu sidebar-toggle-view">
             <SidebarModule
@@ -38,6 +40,13 @@ class TeacherSidebar extends Component {
               logo={GoDashboard}
               link="/dashboard"
               title="Dashboard"
+            />
+            <SidebarModule
+              expandClass="nav-item"
+              toggleSidebar={toggleSidebar}
+              logo={TiNews}
+              link="/"
+              title="Newsfeed"
             />
             <li className={iconClass} onClick={onSidebarExpand}>
               <span className="nav-link cur">

@@ -12,13 +12,6 @@ const RecentEvent = () => {
           className="sidebar static wide-screen-feed"
           style={{ display: "block" }}
         >
-          <div className="widget recent_activities">
-            <h4 className="widget-title">
-              <b>Recent Event</b>
-            </h4>
-            <Events />
-          </div>
-          {/* <!-- recent activites --> */}
           <div className="widget education-banner">
             <div className="banner medium-opacity bluesh">
               <div
@@ -39,6 +32,13 @@ const RecentEvent = () => {
               </div>
             </div>
           </div>
+          <div className="widget recent_activities">
+            <h4 className="widget-title">
+              <b>Recent Event</b>
+            </h4>
+            <Events />
+          </div>
+          {/* <!-- recent activites --> */}
         </aside>
       </div>
     </div>

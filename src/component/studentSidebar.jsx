@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import sidebarLogo from "../images/sidebar_logo.jpeg";
 import Auth from "../services/authService";
 import { MdInsertInvitation } from "react-icons/md";
 import {
@@ -11,12 +10,12 @@ import {
   FaUserFriends,
   FaChalkboardTeacher,
 } from "react-icons/fa";
+import { TiNews } from "react-icons/ti";
 import { GoDashboard } from "react-icons/go";
 import { IoMdChatbubbles } from "react-icons/io";
 import SidebarSubModule from "./reusableComponent/sidebarSubModule";
 import SidebarModule from "./reusableComponent/sidebarModule";
 import { getStudentAssignment } from "../services/teacherService";
-import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 
 class StudentSidebar extends Component {
@@ -40,14 +39,18 @@ class StudentSidebar extends Component {
     const { class_name, registration_number } = Auth.getCurrentUser();
     const { onSidebarExpand, isSidebarExpanded, toggleSidebar } = this.props;
     return (
-      <div className="sidebar-main sidebar-menu-one sidebar-expand-md sidebar-color">
-        <div className="mobile-sidebar-header d-md-none">
+      <div
+        className="sidebar-main sidebar-menu-one sidebar-expand-md sidebar-color"
+        style={{ marginTop: "65px" }}
+      >
+        {/* <div className="mobile-sidebar-header d-md-none">
           <div className="header-logo">
             <NavLink to="/dashboard">
               <img src={sidebarLogo} alt="logo" />
             </NavLink>
           </div>
-        </div>
+        </div> */}
+        {/* commented because of sticky header */}
         <div className="sidebar-menu-content">
           <ul className="nav nav-sidebar-menu sidebar-toggle-view">
             <SidebarModule
@@ -56,6 +59,13 @@ class StudentSidebar extends Component {
               logo={GoDashboard}
               link="/dashboard"
               title="Dashboard"
+            />
+            <SidebarModule
+              expandClass="nav-item"
+              toggleSidebar={toggleSidebar}
+              logo={TiNews}
+              link="/pre-chat/sidebar"
+              title="Newsfeed"
             />
             <li className={iconClass} onClick={onSidebarExpand}>
               <span className="nav-link cur">
@@ -164,7 +174,7 @@ class StudentSidebar extends Component {
             <SidebarModule
               expandClass="nav-item"
               logo={FaFacebookMessenger}
-              link="/pre-chat"
+              link="/pre-chat/chat"
               title="My Chatroom"
               toggleSidebar={toggleSidebar}
             />

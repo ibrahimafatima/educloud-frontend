@@ -1,9 +1,10 @@
 import React from "react";
 import Header from "../../component/news-feed.component/header";
+import AllFeed from "../../component/news-feed.component/all-feed";
 import PostArea from "./../../component/news-feed.component/post-area";
 import FirstNews from "./../../component/news-feed.component/first-news";
 import RecentEvent from "./../../component/news-feed.component/recent-event";
-import NewsfeedItem from "./../../component/news-feed.component/newsfeed-item";
+import MiddleFeed from "./../../component/news-feed.component/middle-feed";
 import UpcomingExams from "./../../component/news-feed.component/upcming-exams";
 import NewsFeedFooter from "./../../component/news-feed.component/newsfeed-footer";
 import ResponsiveHeader from "../../component/news-feed.component/responsive-header";
@@ -19,7 +20,7 @@ const NewsFeed = () => {
     <div className="theme-layout">
       <ResponsiveHeader />
       <Header />
-      <section>
+      <section className="body-top-margin">
         <div className="gap gray-bg">
           <div className="container">
             <div className="row">
@@ -30,8 +31,9 @@ const NewsFeed = () => {
                     <PostArea />
                     <FirstNews />
                     <RecentEventMobile />
-                    <NewsfeedItem />
+                    <MiddleFeed />
                     <UpcomingExamsMobile />
+                    <AllFeed />
                   </div>
                   <UpcomingExams />
                 </div>

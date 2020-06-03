@@ -1,86 +1,77 @@
-import React from "react";
+import React, { Component } from "react";
+import { GoDiffRenamed } from "react-icons/go";
+import { GiBookCover } from "react-icons/gi";
+import { MdDateRange } from "react-icons/md";
+import { getSchoolExams } from "../../services/teacherService";
+import Moment from "react-moment";
 
-const UpcomingExams = () => {
-  return (
-    <div className="col-lg-3 job-opportunity">
-      <aside className="sidebar static">
-        <div className="widget">
-          <h4 className="widget-title">
-            <b>Upcoming Exams</b>
-          </h4>
-          <div className="your-page">
-            <div className="page-meta">
-              <span
-                title=""
-                style={{ fontSize: "14px", color: "#088DCD" }}
-                className="underline"
-              >
-                The Craddle of Knowledge
-              </span>
-              <span>
-                <i className="ti-agenda"></i>
-                <span>Vacant Accountant Post</span>
-              </span>
-              <span>
-                We are looking for a competant accountant at the craddle of
-                knowledge
-              </span>
-            </div>
-            <div className="page-likes">
-              <ul className="nav nav-tabs likes-btn">
-                <li className="nav-item">
-                  <hr />
-                </li>
-              </ul>
-            </div>
+class UpcomingExams extends Component {
+  state = {
+    allExams: [],
+  };
 
-            <div className="page-meta">
-              <span style={{ fontSize: "14px" }} className="underline">
-                NIIT College
-              </span>
-              <span>
-                <i className="ti-agenda"></i>
-                <span>Vacant Teacher Post</span>
-              </span>
-              <span>
-                NIIT College is looking for a Java teacher, interview will be
-                scheduled right after CV is submitted. Thank you!
-              </span>
-            </div>
-            <div className="page-likes">
-              <ul className="nav nav-tabs likes-btn">
-                <li className="nav-item">
-                  <hr />
-                </li>
-              </ul>
-            </div>
+  async componentDidMount() {
+    const { data: allExams } = await getSchoolExams();
+    this.setState({ allExams });
+  }
 
-            <div className="page-meta">
-              <span style={{ fontSize: "14px" }} className="underline">
-                Victoria JHS School
-              </span>
-              <span>
-                <i className="ti-agenda"></i>
-                <span>Vacant Teacher Post</span>
-              </span>
-              <span>
-                Victoria JHS School has a vacant post, hence we are looking
-                foris looking for a French teacher.
-              </span>
-            </div>
-            <div className="page-likes">
-              <ul className="nav nav-tabs likes-btn">
-                <li className="nav-item">
-                  <hr />
-                </li>
-              </ul>
+  render() {
+    const { allExams } = this.state;
+    return (
+      <div className="col-lg-3 job-opportunity">
+        <aside className="sidebar static">
+          <div className="widget">
+            <h4 className="widget-title">
+              <b>Upcoming Exams</b>
+            </h4>
+            <div className="your-page">
+              {allExams.length === 0 ? (
+                <h4>
+                  <i>No Exams yet posted!</i>
+                </h4>
+              ) : (
+                allExams.map((exam) => (
+                  <div className="page-meta" key={exam._id}>
+                    <span
+                      title=""
+                      style={{ fontSize: "14px", color: "#088DCD" }}
+                      className="underline"
+                    >
+                      {exam.schoolName} ({exam.className})
+                    </span>
+                    <span>
+                      <i>
+                        <GoDiffRenamed />
+                      </i>
+                      <span>{exam.exam_name}</span>
+                    </span>
+                    <span>
+                      <i>
+                        <GiBookCover />
+                      </i>
+                      <span>{exam.subject}</span>
+                    </span>
+                    <span>
+                      <i>
+                        <MdDateRange />
+                      </i>
+                      <span>
+                        <Moment format="Do MMMM YYYY">
+                          {exam.schedule_date}
+                        </Moment>
+                      </span>
+                    </span>
+                    <hr />
+                  </div>
+                ))
+              )}
             </div>
           </div>
-        </div>
-        {/* <!-- page like widget --> */}
-      </aside>
-    </div>
-  );
-};
+          {/* <!-- page like widget --> */}
+        </aside>
+      </div>
+    );
+  }
+}
 
 export default UpcomingExams;

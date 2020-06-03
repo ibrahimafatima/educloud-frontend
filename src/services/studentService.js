@@ -8,6 +8,23 @@ const studentAccountConfirmation = "/student/auth";
 const studentBirthday = "/student/birthday";
 const studentChat = "/student/message";
 const discussion = "/discussion";
+const newsfeed = "/newsfeed";
+
+export function getFirstNewsfeed() {
+  return http.get(newsfeed + "/first-news");
+}
+
+export function getMiddleNewsfeed() {
+  return http.get(newsfeed + "/middle-news");
+}
+
+export function getAllNewsfeed() {
+  return http.get(newsfeed + "/all-news");
+}
+
+export function addNews(newsInfo) {
+  return http.post(newsfeed, newsInfo);
+}
 
 export function getStudent(id) {
   return http.get(studentProfile + "/reg/" + id);

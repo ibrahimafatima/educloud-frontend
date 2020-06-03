@@ -98,6 +98,10 @@ export function getExam(id) {
   return http.get(teacherExamApiEndpoint + "/get/" + id);
 }
 
+export function getSchoolExams() {
+  return http.get(teacherExamApiEndpoint + "/all-exams");
+}
+
 export function removeExam(id) {
   return http.delete(teacherExamApiEndpoint + "/delete/" + id);
 }

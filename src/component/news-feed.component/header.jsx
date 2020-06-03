@@ -1,21 +1,24 @@
 import React from "react";
-import { FaRegBell } from "react-icons/fa";
 import admin from "../../images/admin.jpg";
 import { NavLink } from "react-router-dom";
 
 const Header = () => {
   return (
     <React.Fragment>
-      <div className="topbar stick">
+      <div
+        className="topbar"
+        style={{ position: "fixed", width: "100%", top: 0 }}
+      >
         <div className="logo">
           {/* <a title="" href="newsfeed.html">
             <img src="images/logo.png" alt="" />
           </a> */}
+          <span>The education we deserve...</span>
         </div>
         <div className="top-area">
           <ul className="">
             <li>
-              <NavLink to="/">Home</NavLink>
+              <NavLink to="/dashboard">Dasboard</NavLink>
             </li>
             <li>
               <NavLink to="admin-login">Admin</NavLink>
@@ -28,7 +31,7 @@ const Header = () => {
             </li>
           </ul>
           <ul className="setting-area">
-            <li>
+            {/* <li>
               <span>
                 <i>
                   <FaRegBell className="bell-style" />
@@ -40,11 +43,9 @@ const Header = () => {
                   20
                 </span>
               </span>
-              {/* <!-- Notification start here  --> */}
               <div className="dropdowns">
                 <span>4 New Notifications</span>
                 <ul className="drops-menu">
-                  {/* <!-- Notification loop start --> */}
                   <li>
                     <span>
                       <img src={admin} alt="" />
@@ -58,14 +59,15 @@ const Header = () => {
                   </li>
                 </ul>
               </div>
-              {/* <!-- Notification end here  --> */}
             </li>
-            <li></li>
+            <li></li> */}
+            <li>
+              <div className="user-img">
+                <img src={admin} alt="" />
+                {/* <!--<span className="status f-online"></span>--> */}
+              </div>
+            </li>
           </ul>
-          <div className="user-img">
-            <img src={admin} alt="" />
-            {/* <!--<span className="status f-online"></span>--> */}
-          </div>
         </div>
       </div>
       <div className="fixed-sidebar right">

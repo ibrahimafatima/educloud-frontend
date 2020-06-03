@@ -1,14 +1,14 @@
 import React, { Component } from "react";
-import { getFirstNewsfeed } from "../../services/studentService";
+import { getAllNewsfeed } from "../../services/studentService";
 import FeedItem from "./feed-item";
 
-class FirstNews extends Component {
+class AllFeed extends Component {
   state = {
     newsfeed: [],
   };
 
   async componentDidMount() {
-    const { data: newsfeed } = await getFirstNewsfeed();
+    const { data: newsfeed } = await getAllNewsfeed();
     this.setState({ newsfeed });
   }
 
@@ -18,4 +18,4 @@ class FirstNews extends Component {
   }
 }
 
-export default FirstNews;
+export default AllFeed;

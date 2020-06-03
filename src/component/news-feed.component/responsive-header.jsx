@@ -16,7 +16,10 @@ class ResponsiveHeader extends Component {
     const { dropdownToggled } = this.state;
     return (
       <div className="responsive-header">
-        <div className="mh-head first Sticky">
+        <div
+          className="mh-head first"
+          style={{ position: "fixed", top: 0, width: "100%", zIndex: 100 }}
+        >
           <span className="mh-btns-left">
             <span>
               <i>
@@ -29,45 +32,43 @@ class ResponsiveHeader extends Component {
               <img src={logo2} alt="" />
             </span>
           </span>
+          <nav id="menu" className={this.showDropdown(dropdownToggled)}>
+            <ul>
+              <li>
+                <span>
+                  <NavLink to="/dashboard">Dasboard</NavLink>
+                </span>
+                <hr />
+              </li>
+              <li>
+                <span>
+                  <NavLink to="admin-login">Admin</NavLink>
+                </span>
+                <hr />
+              </li>
+              <li>
+                <span>
+                  <NavLink to="teacher-login">Teachers</NavLink>
+                </span>
+                <hr />
+              </li>
+              <li>
+                <span>
+                  <NavLink to="student-login">Students</NavLink>
+                </span>
+                <hr />
+              </li>
+            </ul>
+          </nav>
         </div>
-        <nav
-          id="menu"
-          className={this.showDropdown(dropdownToggled)}
-          style={{ marginLeft: "30px" }}
-        >
-          <ul>
-            <li>
-              <span>
-                <NavLink to="/">Home</NavLink>
-              </span>
-              <hr />
-            </li>
-            <li>
-              <span>
-                <NavLink to="admin-login">Admin</NavLink>
-              </span>
-              <hr />
-            </li>
-            <li>
-              <span>
-                <NavLink to="teacher-login">Teachers</NavLink>
-              </span>
-              <hr />
-            </li>
-            <li>
-              <span>
-                <NavLink to="student-login">Students</NavLink>
-              </span>
-              <hr />
-            </li>
-          </ul>
-        </nav>
       </div>
     );
   }
 
   showDropdown(dropdownToggled) {
-    return dropdownToggled ? "res-menu" : "res-menu dropdwn";
+    return dropdownToggled
+      ? "res-menu header-dropdown"
+      : "res-menu dropdwn header-dropdown";
   }
 }
 
