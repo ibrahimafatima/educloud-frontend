@@ -13,7 +13,6 @@ const Header = () => {
           {/* <a title="" href="newsfeed.html">
             <img src="images/logo.png" alt="" />
           </a> */}
-          <span>The education we deserve...</span>
         </div>
         <div className="top-area">
           <ul className="">

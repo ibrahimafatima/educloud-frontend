@@ -23,7 +23,7 @@ class ResponsiveHeader extends Component {
           <span className="mh-btns-left">
             <span>
               <i>
-                <BsJustifyRight onClick={this.toggleDropdown} />
+                <BsJustifyRight size="26px" onClick={this.toggleDropdown} />
               </i>
             </span>
           </span>

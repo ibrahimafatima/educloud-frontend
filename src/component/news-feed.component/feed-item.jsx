@@ -48,14 +48,14 @@ const FeedItem = ({ newsfeed }) => {
                   <div className="we-video-info">
                     <ul>
                       {/* <!-- post comment icon start --> */}
-                      <Comment />
-                      <Like />
+                      <Comment id={singleNews._id} />
+                      <Like id={singleNews._id} />
                     </ul>
                   </div>
                 </div>
               </div>
               <div className="coment-area">
-                <PostComment />
+                <PostComment newsfeed={singleNews} />
               </div>
             </div>
           </div>

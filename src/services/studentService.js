@@ -9,6 +9,8 @@ const studentBirthday = "/student/birthday";
 const studentChat = "/student/message";
 const discussion = "/discussion";
 const newsfeed = "/newsfeed";
+const comment = "/comment";
+const like = "/like";
 
 export function getFirstNewsfeed() {
   return http.get(newsfeed + "/first-news");
@@ -24,6 +26,26 @@ export function getAllNewsfeed() {
 
 export function addNews(newsInfo) {
   return http.post(newsfeed, newsInfo);
+}
+
+export function postLike(postId) {
+  return http.post(like + "/post/" + postId);
+}
+
+export function getPostLike(postId) {
+  return http.get(like + "/post/" + postId);
+}
+
+export function getLikedPost(postId) {
+  return http.get(like + "/liked-post/" + postId);
+}
+
+export function addComment(newComment) {
+  return http.post(comment, newComment);
+}
+
+export function getComments(id) {
+  return http.get(comment + "/all-comment/" + id);
 }
 
 export function getStudent(id) {
