@@ -136,141 +136,154 @@ class Dashboard extends Component {
     if (!auth.getCurrentUser()) return <Redirect to="/" />;
     return (
       <BrowserRouter>
-        {/* <Online> */}
-        <div id="wrapper" className={this.renderWrapperClass()}>
-          <Navbar onBarClick={this.toggleSidebar} user={user} />
-          <div className="dashboard-page-one">
-            {auth.getCurrentUser().isAdmin && (
-              <AdminSidebar
-                onSidebarExpand={this.expandSidebar}
-                onMenuExpand={this.expandMenu}
-                toggleSidebar={this.toggleSidebar}
-                teachers={this.state.teachers}
-                finances={this.state.finances}
-                class={this.state.class}
-                subject={this.state.subject}
-                timetable={this.state.timetable}
-                exams={this.state.exams}
-                noticeBoard={this.state.noticeBoard}
-                library={this.state.library}
-              />
-            )}
-            {auth.getCurrentUser().isTeacher && (
-              <TeacherSidebar
-                onSidebarExpand={this.expandSidebar}
-                onMenuExpand={this.expandMenu}
-                toggleSidebar={this.toggleSidebar}
-                student={this.state.student}
-                class={this.state.class}
-                subject={this.state.subject}
-                timetable={this.state.timetable}
-                exams={this.state.exams}
-                assignment={this.state.assignment}
-                library={this.state.library}
-              />
-            )}
-            {auth.getCurrentUser().isStudent && (
-              <StudentSidebar
-                onSidebarExpand={this.expandSidebar}
-                onMenuExpand={this.expandMenu}
-                toggleSidebar={this.toggleSidebar}
-                finances={this.state.finances}
-                timetable={this.state.timetable}
-                assignment={this.state.assignment}
-                exams={this.state.exams}
-                noticeBoard={this.state.noticeBoard}
-                library={this.state.library}
-              />
-            )}
-            <div
-              className="dashboard-content-one"
-              style={{ marginTop: "65px" }}
-            >
-              <Breadcubs user={user} />
-              <Switch>
-                <Route path="/add-teacher/:id" component={AddTeacher} />
-                <Route path="/all-teacher" component={AllTeacher} />
-                <Route path="/teacher/:id" component={TeacherDetails} />
-                <Route path="/student/:id" component={StudentProfile} />
-                <Route path="/account/:id" component={TeacherAccount} />
-                <Route path="/admin/:id" component={AdminProfile} />
-                <Route path="/student-account/:id" component={StudentAccount} />
-                <Route path="/logout" component={Logout} />
-                <Route path="/add-class/:id" component={AddClass} />
-                <Route path="/all-class" component={AllClasses} />
-                <Route path="/add-subject/:id" component={AddSubject} />
-                <Route path="/all-subject" component={AllSubject} />
-                <Route path="/students-fee" component={StudentFee} />
-                <Route path="/payment/:id" component={FeePayment} />
-                <Route path="/payment-details/:id" component={FeeDetails} />
-                <Route path="/all-student/:id" component={AllStudent} />
-                <Route path="/notice-board/:id" component={AddToNoticeBoard} />
-                <Route path="/all-notice" component={AllNoticeBoard} />
-                <Route path="/add-exams/:id" component={AddExams} />
-                <Route path="/add-timetable/:id" component={AddTimetable} />
-                <Route path="/my-timetable" component={MyTimetable} />
-                <Route path="/add-book/:id" component={AddBook} />
-                <Route path="/all-books" component={AllBooks} />
-                <Route path="/post-mark/:id" component={PostMark} />
-                <Route path="/view-mark/:id" component={ViewMark} />
-                <Route path="/added-student/:id" component={AddedStudent} />
-                <Route path="/new-promotion/:id" component={NewPromotion} />
-                <Route path="/new-term/:id" component={NewTerm} />
-                <Route
-                  path="/promote-student/:id"
-                  component={StudentPromotion}
+        <Online>
+          <div id="wrapper" className={this.renderWrapperClass()}>
+            <Navbar onBarClick={this.toggleSidebar} user={user} />
+            <div className="dashboard-page-one">
+              {auth.getCurrentUser().isAdmin && (
+                <AdminSidebar
+                  onSidebarExpand={this.expandSidebar}
+                  onMenuExpand={this.expandMenu}
+                  toggleSidebar={this.toggleSidebar}
+                  teachers={this.state.teachers}
+                  finances={this.state.finances}
+                  class={this.state.class}
+                  subject={this.state.subject}
+                  timetable={this.state.timetable}
+                  exams={this.state.exams}
+                  noticeBoard={this.state.noticeBoard}
+                  library={this.state.library}
                 />
-                <Route path="/add-assignment" component={AddAssignment} />
-                <Route path="/fees-reporting" component={FeesReporting} />
-                <Route path="/print-fees-report" component={FeeReportPrinter} />
-                <Route path="/discussion/:id" component={Discussion} />
-                <Route path="/admin-end-year" component={AdminEndYear} />
-                <Route path="/teacher-end-year" component={TeacherEndYear} />
-                <Route path="/pre-chat/:id" component={PreChat} />
-                <Route
-                  path="/chat"
-                  render={(props) => (
-                    <Chat
-                      {...props}
-                      onTextChange={this.handleTextChange}
-                      onClick={this.handleClick}
-                      message={this.state.message}
-                      chats={this.state.chats}
-                    />
-                  )}
+              )}
+              {auth.getCurrentUser().isTeacher && (
+                <TeacherSidebar
+                  onSidebarExpand={this.expandSidebar}
+                  onMenuExpand={this.expandMenu}
+                  toggleSidebar={this.toggleSidebar}
+                  student={this.state.student}
+                  class={this.state.class}
+                  subject={this.state.subject}
+                  timetable={this.state.timetable}
+                  exams={this.state.exams}
+                  assignment={this.state.assignment}
+                  library={this.state.library}
                 />
-                <Route
-                  path="/my-assignment/:id"
-                  component={StudentAssignment}
+              )}
+              {auth.getCurrentUser().isStudent && (
+                <StudentSidebar
+                  onSidebarExpand={this.expandSidebar}
+                  onMenuExpand={this.expandMenu}
+                  toggleSidebar={this.toggleSidebar}
+                  finances={this.state.finances}
+                  timetable={this.state.timetable}
+                  assignment={this.state.assignment}
+                  exams={this.state.exams}
+                  noticeBoard={this.state.noticeBoard}
+                  library={this.state.library}
                 />
-                <Route path="/all-assignment" component={AllAssignment} />
-                <Route
-                  path="/all-exams"
-                  render={(props) => <AllExams {...props} user={user} />}
-                />
-                <Route
-                  path="/print"
-                  render={(props) => <ReceiptPrinter user={user} {...props} />}
-                />
-                <Route
-                  path="/add-student/:id"
-                  render={(props) => <AddStudent {...props} user={user} />}
-                />
-                <Route
-                  path="/dashboard"
-                  render={(props) => <AdminDashboard {...props} user={user} />}
-                />
-                <Route path="/not-found" component={NotFound} />
-                <Redirect to="not-found" />
-              </Switch>
+              )}
+              <div
+                className="dashboard-content-one"
+                style={{ marginTop: "65px" }}
+              >
+                <Breadcubs user={user} />
+                <Switch>
+                  <Route path="/add-teacher/:id" component={AddTeacher} />
+                  <Route path="/all-teacher" component={AllTeacher} />
+                  <Route path="/teacher/:id" component={TeacherDetails} />
+                  <Route path="/student/:id" component={StudentProfile} />
+                  <Route path="/account/:id" component={TeacherAccount} />
+                  <Route path="/admin/:id" component={AdminProfile} />
+                  <Route
+                    path="/student-account/:id"
+                    component={StudentAccount}
+                  />
+                  <Route path="/logout" component={Logout} />
+                  <Route path="/add-class/:id" component={AddClass} />
+                  <Route path="/all-class" component={AllClasses} />
+                  <Route path="/add-subject/:id" component={AddSubject} />
+                  <Route path="/all-subject" component={AllSubject} />
+                  <Route path="/students-fee" component={StudentFee} />
+                  <Route path="/payment/:id" component={FeePayment} />
+                  <Route path="/payment-details/:id" component={FeeDetails} />
+                  <Route path="/all-student/:id" component={AllStudent} />
+                  <Route
+                    path="/notice-board/:id"
+                    component={AddToNoticeBoard}
+                  />
+                  <Route path="/all-notice" component={AllNoticeBoard} />
+                  <Route path="/add-exams/:id" component={AddExams} />
+                  <Route path="/add-timetable/:id" component={AddTimetable} />
+                  <Route path="/my-timetable" component={MyTimetable} />
+                  <Route path="/add-book/:id" component={AddBook} />
+                  <Route path="/all-books" component={AllBooks} />
+                  <Route path="/post-mark/:id" component={PostMark} />
+                  <Route path="/view-mark/:id" component={ViewMark} />
+                  <Route path="/added-student/:id" component={AddedStudent} />
+                  <Route path="/new-promotion/:id" component={NewPromotion} />
+                  <Route path="/new-term/:id" component={NewTerm} />
+                  <Route
+                    path="/promote-student/:id"
+                    component={StudentPromotion}
+                  />
+                  <Route path="/add-assignment" component={AddAssignment} />
+                  <Route path="/fees-reporting" component={FeesReporting} />
+                  <Route
+                    path="/print-fees-report"
+                    component={FeeReportPrinter}
+                  />
+                  <Route path="/discussion/:id" component={Discussion} />
+                  <Route path="/admin-end-year" component={AdminEndYear} />
+                  <Route path="/teacher-end-year" component={TeacherEndYear} />
+                  <Route path="/pre-chat/:id" component={PreChat} />
+                  <Route
+                    path="/chat"
+                    render={(props) => (
+                      <Chat
+                        {...props}
+                        onTextChange={this.handleTextChange}
+                        onClick={this.handleClick}
+                        message={this.state.message}
+                        chats={this.state.chats}
+                      />
+                    )}
+                  />
+                  <Route
+                    path="/my-assignment/:id"
+                    component={StudentAssignment}
+                  />
+                  <Route path="/all-assignment" component={AllAssignment} />
+                  <Route
+                    path="/all-exams"
+                    render={(props) => <AllExams {...props} user={user} />}
+                  />
+                  <Route
+                    path="/print"
+                    render={(props) => (
+                      <ReceiptPrinter user={user} {...props} />
+                    )}
+                  />
+                  <Route
+                    path="/add-student/:id"
+                    render={(props) => <AddStudent {...props} user={user} />}
+                  />
+                  <Route
+                    path="/dashboard"
+                    render={(props) => (
+                      <AdminDashboard {...props} user={user} />
+                    )}
+                  />
+                  <Route path="/not-found" component={NotFound} />
+                  <Redirect to="not-found" />
+                </Switch>
+              </div>
             </div>
+            <Footer />
           </div>
-          <Footer />
-        </div>
-        {/* </Online>
+        </Online>
         <Offline>
-          <NoInternet/>
-        </Offline> */}
+          <NoInternet />
+        </Offline>
       </BrowserRouter>
     );
   }
