@@ -55,6 +55,7 @@ import { toast } from "react-toastify";
 import ReceiptPrinter from "./ReceiptPrinter";
 import FeeReportPrinter from "./feesReportPrinter";
 import AdminProfile from "./adminProfile";
+import NoInternet from "./noInternet";
 
 class Dashboard extends Component {
   state = {
