@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import my404 from "../images/my404.jpg"
 
 class NotFound extends Component {
   state = {};
@@ -8,18 +9,11 @@ class NotFound extends Component {
       <React.Fragment>
         <div>
           <h4>
-            Go To <Link to="/">Dashboard</Link>
+            Go To <Link to="/dashboard">Dashboard</Link>
           </h4>
         </div>
-        <div className="card height-auto">
-          <div className="card-body">
-            <div className="heading-layout1">
-              <div className="item-title">
-                <h1>Page not Found</h1>
-              </div>
-            </div>
-          </div>
-        </div>
+        <img src={my404} alt="logo" style={{ height:"300px" }}/>
+
       </React.Fragment>
     );
   }

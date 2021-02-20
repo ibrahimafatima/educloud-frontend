@@ -1,20 +1,25 @@
 import http from "../services/httpService";
 import jwtDecode from "jwt-decode";
 
-const adminApiEndpoint = "/admin/auth/login";
-const teacherApiEndpoint = "/teacher/auth/login";
-const studentApiEndpoint = "/student/auth/login";
+const login = "/auth/login";
+const register = "/auth/register";
+const confirm = "/auth/confirm-account";
+const resetPassword = "/auth/reset-password";
 
-export function adminLogin(admin) {
-  return http.post(adminApiEndpoint, admin);
+export function authLogin(user) {
+  return http.post(login, user);
 }
 
-export function teacherLogin(teacher) {
-  return http.post(teacherApiEndpoint, teacher);
+export function authRegistration(user) {
+  return http.post(register, user);
 }
 
-export function studentLogin(registration_number, password) {
-  return http.post(studentApiEndpoint, { registration_number, password });
+export function authConfirmAccount(user) {
+  return http.post(confirm, user);
+}
+
+export function authPasswordReset(user) {
+  return http.post(resetPassword, user);
 }
 
 export function getCurrentUser() {

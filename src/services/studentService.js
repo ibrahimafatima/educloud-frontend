@@ -1,10 +1,9 @@
 import http from "./httpService";
 
-const studentProfile = "/teacher/student";
+const studentProfile = "/students";
 const studentProfileUpdate = "/student/profile";
 const studentCourse = "/teacher/course";
-const studentMark = "/teacher/post-mark";
-const studentAccountConfirmation = "/student/auth";
+const studentMark = "/post-mark";
 const studentBirthday = "/student/birthday";
 const studentChat = "/student/message";
 const discussion = "/discussion";
@@ -52,8 +51,16 @@ export function getStudent(id) {
   return http.get(studentProfile + "/reg/" + id);
 }
 
+export function getAStudent(id) {
+  return http.get(studentProfile + "/ID/" + id);
+}
+
 export function completeProfile(profile) {
   return http.put(studentProfileUpdate + "/me/", profile);
+}
+
+export function updateProfilePicture(pic) {
+  return http.post(studentProfile + "/upload", pic);
 }
 
 export function getCourses(id) {
@@ -70,17 +77,6 @@ export function getMark(id) {
 
 export function removeMark(id) {
   return http.delete(studentMark + "/delete/" + id);
-}
-
-export function confirmAccount(confirmationInfo) {
-  return http.post(
-    studentAccountConfirmation + "/confirm-account",
-    confirmationInfo
-  );
-}
-
-export function resetPassword(username) {
-  return http.post(studentAccountConfirmation + "/reset-password", username);
 }
 
 export function getStudentBirthday() {

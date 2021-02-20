@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { getTimetable, removeTimetable } from "../services/teacherService";
 import auth from "../services/authService";
-import TimeTable from "./timeTable";
+import TimeTable from "./tables/timeTable";
 import Search from "./reusableComponent/search";
 import { toast } from "react-toastify";
 

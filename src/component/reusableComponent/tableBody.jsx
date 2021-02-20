@@ -6,10 +6,12 @@ import auth from "../../services/authService";
 class TableBody extends Component {
   renderColumn(element, column) {
     if (column.content) return column.content(element["className"]);
-    if (column.teacher) return column.teacher(element["teacherID"]);
-    if (column.payment) return column.payment(element["registration_number"]);
+    if (column.teacher) return column.teacher(element["registrationID"]);
+    if (column.payment) return column.payment(element["registrationID"]);
     if (column.value) return column.value(element);
-    if (column.path === "schedule_date")
+    if (column.path === "scheduledDate")
+      return <Moment format="Do MMMM YYYY">{element[column.path]}</Moment>;
+    if (column.path === "eventDate")
       return <Moment format="Do MMMM YYYY">{element[column.path]}</Moment>;
     return element[column.path];
   }
@@ -20,8 +22,8 @@ class TableBody extends Component {
         {elements.map(element => (
           <tr key={element._id}>
             {columns.map(column =>
-              (column.path === "name" && !auth.getCurrentUser().isStudent) ||
-              column.path === "username" ||
+              (column.title === "name" && !auth.getCurrentUser().isStudent) ||
+            (column.path === "username" && column.title !== "Student username" && column.title !== "Teacher" ) ||
               (column.path === "className" &&
                 !auth.getCurrentUser().isStudent) ||
               column.path === "post_date" ||

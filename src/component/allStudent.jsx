@@ -1,22 +1,21 @@
 import React, { Component } from "react";
 import { getStudent } from "../services/teacherService";
 import Search from "./reusableComponent/search";
-import StudentTable from "./studentTable";
+import StudentTable from "./tables/studentTable";
 import auth from "../services/authService";
 
 class AllStudent extends Component {
   state = {
-    students: []
+    students: [],
+    virtualStudents: []
   };
 
   async componentDidMount() {
     try {
       const { data } = await getStudent(this.props.match.params.id);
+      const filteredStudents = data.filter( s => s.registrationID !== auth.getCurrentUser().registrationID)
       this.setState({
-        students: data.filter(
-          s =>
-            s.registration_number !== auth.getCurrentUser().registration_number
-        )
+        students: filteredStudents, virtualStudents: filteredStudents
       });
     } catch (ex) {
       if (ex.response && ex.response.status === 404)
@@ -26,16 +25,11 @@ class AllStudent extends Component {
 
   handleChange = async e => {
     const currentInput = e.currentTarget.value;
-    if (currentInput === "") {
-      const { data } = await getStudent(this.props.match.params.id);
-      this.setState({ students: data });
-    } else {
       this.setState({
-        students: this.state.students.filter(s =>
-          s.name.toLowerCase().startsWith(currentInput.toLowerCase())
+        students: this.state.virtualStudents.filter(s =>
+          s.username.toLowerCase().startsWith(currentInput.toLowerCase())
         )
       });
-    }
   };
 
   render() {

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import Table from "./reusableComponent/table";
-import Delete from "./reusableComponent/delete";
+import Table from "../reusableComponent/table";
+import Delete from "../reusableComponent/delete";
 import { FaUserTie } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
@@ -8,7 +8,7 @@ class TeacherTable extends Component {
   state = {
     columns: [
       { path: "username", title: "Username" }, //MORE COLUMN WILL COME LIKE: number of class teaching,
-      { path: "teacherID", title: "Teacher ID" }, // number of student per class, subject teaching,
+      { path: "registrationID", title: "Registration ID" }, // number of student per class, subject teaching,
       { path: "className", title: "Class In Charge" }, // number of assignment given
       { path: "numberOfSubject", title: "Subject" },
       { path: "addedBy", title: "Added By" },

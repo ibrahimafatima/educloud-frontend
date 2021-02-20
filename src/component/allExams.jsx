@@ -4,7 +4,7 @@ import {
   removeExam,
   updateExamStatus,
 } from "../services/teacherService";
-import ExamTable from "./examTable";
+import ExamTable from "./tables/examTable";
 import auth from "../services/authService";
 import { toast } from "react-toastify";
 import Spinner from "./reusableComponent/spinner";

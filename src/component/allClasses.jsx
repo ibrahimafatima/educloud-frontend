@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ClassTable from "./classTable";
+import ClassTable from "./tables/classTable";
 import { getClasses, removeClass } from "../services/adminService";
 import { toast } from "react-toastify";
 import Search from "./reusableComponent/search";
@@ -7,12 +7,13 @@ import Search from "./reusableComponent/search";
 class AllClasses extends Component {
   state = {
     classes: [],
+    virtualClasses: []
   };
 
   async componentDidMount() {
     try {
       const { data } = await getClasses();
-      this.setState({ classes: data });
+      this.setState({ classes: data, virtualClasses: data });
     } catch (ex) {
       if (ex.response && ex.response.status === 400)
         toast.error("Couldnt load class data");
@@ -35,16 +36,11 @@ class AllClasses extends Component {
 
   handleChange = async (e) => {
     const currentInput = e.currentTarget.value;
-    if (currentInput === "") {
-      const { data } = await getClasses();
-      this.setState({ classes: data });
-    } else {
       this.setState({
-        classes: this.state.classes.filter((c) =>
+        classes: this.state.virtualClasses.filter((c) =>
           c.className.toLowerCase().startsWith(currentInput.toLowerCase())
         ),
       });
-    }
   };
 
   render() {

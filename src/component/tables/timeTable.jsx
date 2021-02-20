@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import Table from "./reusableComponent/table";
-import Delete from "./reusableComponent/delete";
-import auth from "../services/authService";
+import Table from "../reusableComponent/table";
+import Delete from "../reusableComponent/delete";
+import auth from "../../services/authService";
 
 class TimeTable extends Component {
   columns = [
@@ -10,7 +10,7 @@ class TimeTable extends Component {
     { path: "day", title: "Day" },
     { path: "startTime", title: "Start At" },
     { path: "endTime", title: "End At" },
-    { path: "teacherUsername", title: "Teacher" }
+    { path: "username", title: "Teacher" }
   ];
 
   deleteBtn = {

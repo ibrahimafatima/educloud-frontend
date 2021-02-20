@@ -7,32 +7,21 @@ import { scheduleExam } from "../services/teacherService";
 import { toast } from "react-toastify";
 import { getExam } from "./../services/teacherService";
 import Spinner from "./reusableComponent/spinner";
+import TimePicker from "react-time-picker";
+import DatePicker from "react-date-picker";
+
 
 class AddExams extends Form {
   state = {
     data: {
       className: "",
       subject: "",
-      exam_name: "",
-      schedule_date: "",
-      schedule_time: "",
+      examName: "",
+      scheduledDate: new Date(),
+      scheduledTime: "",
       duration: "",
     },
     classes: [],
-    time: [
-      "00:00 AM",
-      "6:00 AM",
-      "6:30 AM",
-      "7:00 AM",
-      "7:30 AM",
-      "8:00 AM",
-      "8:30 AM",
-      "9:00 AM",
-      "9:30 AM",
-      "10:00 AM",
-      "10:30 AM",
-      "11:00 AM",
-    ],
     loading: true,
     error: {},
   };
@@ -41,9 +30,9 @@ class AddExams extends Form {
     _id: Joi.string(),
     className: Joi.string().required().label("Class name"),
     subject: Joi.string().min(3).required(),
-    exam_name: Joi.string().min(3).max(20).required().label("Exam name"),
-    schedule_date: Joi.string().required().label("Schedule date"),
-    schedule_time: Joi.string().required().label("Schedule time"),
+    examName: Joi.string().min(3).max(20).required().label("Exam name"),
+    scheduledDate: Joi.required().label("Schedule date"),
+    scheduledTime: Joi.string().required().label("Schedule time"),
     duration: Joi.string().required().label("Duration"),
   };
 
@@ -60,9 +49,9 @@ class AddExams extends Form {
         _id: exam._id,
         subject: exam.subject,
         className: exam.className,
-        exam_name: exam.exam_name,
-        schedule_date: exam.schedule_date,
-        schedule_time: exam.schedule_time,
+        examName: exam.examName,
+        scheduledDate: exam.scheduledDate,
+        scheduledTime: exam.scheduledTime,
         duration: exam.duration,
       };
       this.setState({ data, loading: false });
@@ -81,9 +70,9 @@ class AddExams extends Form {
         data: {
           className: "",
           subject: "",
-          exam_name: "",
-          schedule_date: "",
-          schedule_time: "",
+          examName: "",
+          scheduledDate: "",
+          scheduledTime: "",
           duration: "",
         },
       });
@@ -96,7 +85,7 @@ class AddExams extends Form {
         (ex.response.status === 400 || ex.response.status === 401)
       ) {
         const error = { ...this.state.error };
-        error.schedule_time = ex.response.data;
+        error.scheduledTime = ex.response.data;
         this.setState({ error });
       }
     }
@@ -132,24 +121,27 @@ class AddExams extends Form {
                 </div>
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
                   <label>Exam name *</label>
-                  {this.renderInput("", "exam_name", "text", "form-control")}
+                  {this.renderInput("", "examName", "text", "form-control")}
                 </div>
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
                   <label>Class *</label>
                   {this.renderSelect("className", ["", ...this.state.classes])}
                 </div>
-                <div className="col-xl-3 col-lg-6 col-12 form-group">
+                <div style={{marginTop:"80px", marginRight: "20px"}}>
                   <label>Exam Schedule Date *</label>
-                  {this.renderInput(
+                  {/* {this.renderInput(
                     "mm/dd/yyyy",
-                    "schedule_date",
+                    "scheduledDate",
                     "text",
                     "form-control"
-                  )}
+                  )} */}
+                  <DatePicker onChange={(scheduledDate) => {this.setState({ data: { ...this.state.data, scheduledDate} })} } value={this.state.data.scheduledDate} />
+
                 </div>
-                <div className="col-xl-3 col-lg-6 col-12 form-group">
-                  <label>Schedule Time *</label>
-                  {this.renderSelect("schedule_time", this.state.time)}
+                <div style={{marginTop:"80px", marginBottom: "20px", marginRight: "20px"}}>
+                  <label>Schedule Time *   </label>
+                  {/* {this.renderSelect("scheduledTime", this.state.time)} */}
+                  <TimePicker onChange={(scheduledTime) => this.setState({data: {...this.state.data, scheduledTime}})} value="00:00" />
                 </div>
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
                   <label>Exam duration *</label>

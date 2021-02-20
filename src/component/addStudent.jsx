@@ -5,10 +5,11 @@ import { addStudent, getOneStudent } from "../services/teacherService";
 import { getTerms } from "../services/adminService";
 import Spinner from "./reusableComponent/spinner";
 import { toast } from "react-toastify";
+import auth from "../services/authService";
 
 class AddStudent extends Form {
   state = {
-    data: { registration_number: "", class_name: "", term: "", name: "" },
+    data: { registrationID: "", className: "", term: "", username: "" },
     term: [],
     loading: true,
     error: {},
@@ -16,9 +17,9 @@ class AddStudent extends Form {
 
   schema = {
     _id: Joi.string(),
-    name: Joi.string().min(3).max(25).required().label("Name"),
-    registration_number: Joi.string().required().label("Registration number"),
-    class_name: Joi.string().max(12).required().label("Class name"),
+    username: Joi.string().min(3).max(15).required().label("username"),
+    registrationID: Joi.string().required().label("Registration ID"),
+    className: Joi.string().max(12).required().label("Class name"),
     term: Joi.string().max(30).required().label("Term"),
   };
 
@@ -33,10 +34,10 @@ class AddStudent extends Form {
       const { data: student } = await getOneStudent(this.props.match.params.id);
       const data = {
         _id: student._id,
-        registration_number: student.registration_number,
-        class_name: student.class_name,
+        registrationID: student.registrationID,
+        className: student.className,
         term: student.term,
-        name: student.name,
+        username: student.username,
       };
       this.setState({ data, loading: false });
     } catch (ex) {
@@ -50,31 +51,35 @@ class AddStudent extends Form {
       this.setState({ loading: true });
       await addStudent(this.state.data);
       this.setState({
-        data: { registration_number: "", class_name: "", term: "", name: "" },
+        data: { registrationID: "", className: "", term: "", username: "" },
       });
       toast.success("Student added successfully...");
       this.setState({ loading: false });
     } catch (ex) {
+      console.log(this.props)
       this.setState({ loading: false });
       if (ex.response && ex.response.status === 401) {
-        toast(`You can only add student in ${this.props.user.className}`);
+        toast(`You can only add student in ${auth.getCurrentUser().className}`);
         const error = { ...this.state.error };
-        error.registration_number = ex.response.data;
+        error.registrationID = ex.response.data;
         this.setState({ error });
       }
       if (ex.response && ex.response.status === 400) {
         toast(ex.response.data);
         const error = { ...this.state.error };
-        error.class_name = ex.response.data;
+        error.className = ex.response.data;
         this.setState({ error });
       }
     }
   };
 
   render() {
-    return this.state.loading ? (
+    const {loading, term} = this.state;
+    return loading ? (
       <Spinner />
     ) : (
+      <React.Fragment>
+        
       <div className="card height-auto">
         <div className="card-body">
           <div className="heading-layout1">
@@ -85,25 +90,25 @@ class AddStudent extends Form {
           <form onSubmit={this.handleSubmit}>
             <div className="row">
               <div className="col-xl-3 col-lg-6 col-12 form-group">
-                <label>Registration Number *</label>
+                <label>Registration ID *</label>
                 {this.renderInput(
                   "",
-                  "registration_number",
+                  "registrationID",
                   "text",
                   "form-control"
                 )}
               </div>
               <div className="col-xl-3 col-lg-6 col-12 form-group">
-                <label>Student name *</label>
-                {this.renderInput("", "name", "text", "form-control")}
+                <label>Student username *</label>
+                {this.renderInput("", "username", "text", "form-control")}
               </div>
               <div className="col-xl-3 col-lg-6 col-12 form-group">
                 <label>Class Name *</label>
-                {this.renderInput("", "class_name", "text", "form-control")}
+                {this.renderInput("", "className", "text", "form-control")}
               </div>
               <div className="col-xl-3 col-lg-6 col-12 form-group">
                 <label>Term *</label>
-                {this.renderSelect("term", this.state.term)}
+                {this.renderSelect("term", ["", ...term])}
               </div>
               <div className="col-12 form-group mg-t-8">
                 {this.renderButton(
@@ -115,6 +120,7 @@ class AddStudent extends Form {
           </form>
         </div>
       </div>
+      </React.Fragment>
     );
   }
 }

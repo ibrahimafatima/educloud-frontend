@@ -1,16 +1,16 @@
 import React, { Component } from "react";
-import Table from "./reusableComponent/table";
-import Delete from "./reusableComponent/delete";
-import auth from "../services/authService";
+import Table from "../reusableComponent/table";
+import Delete from "../reusableComponent/delete";
+import auth from "../../services/authService";
 
 class ExamTable extends Component {
   state = {
     columns: [
-      { path: "exam_name", title: "Exam name" },
+      { path: "examName", title: "Exam name" },
       { path: "subject", title: "Subject" },
       { path: "className", title: "Class name" },
-      { path: "schedule_date", title: "Schedule date" },
-      { path: "schedule_time", title: "Start Time" },
+      { path: "scheduledDate", title: "Schedule date" },
+      { path: "scheduledTime", title: "Start Time" },
       { path: "duration", title: "Duration" },
       { path: "state", title: "Exam state" },
     ],

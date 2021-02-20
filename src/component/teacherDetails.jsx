@@ -1,20 +1,25 @@
 import React, { Component } from "react";
-import teacher from "../images/teacher.jpg";
-import teacher1 from "../images/teacher1.jpg";
+import upload from "../images/upload.png";
 import { getTeacher } from "../services/adminService";
-import { getCourse } from "../services/teacherService";
+import { getCourse, updateProfilePicture } from "../services/teacherService";
+import { toast } from "react-toastify";
+import Spinner from "./reusableComponent/spinner";
+import { getCurrentUser } from "../services/authService"
 
 class TeacherDetails extends Component {
   state = {
     data: {},
     subjects: [],
+    picture: false,
+    src: false,
+    loading: false,
     values: [
       { title: "Username", path: "username" },
       { title: "First name", path: "firstName" },
       { title: "Last name", path: "lastName" },
       { title: "Gender", path: "gender" },
       { title: "Date of Birth", path: "dob" },
-      { title: "Teacher ID", path: "teacherID" },
+      { title: "Teacher ID", path: "registrationID" },
       { title: "Email", path: "email" },
       { title: "Phone", path: "phone" },
       { title: "Address", path: "address" },
@@ -25,7 +30,7 @@ class TeacherDetails extends Component {
   async componentDidMount() {
     try {
       const { data } = await getTeacher(this.props.match.params.id);
-      const { data: subjects } = await getCourse(data.teacherID);
+      const { data: subjects } = await getCourse(data.registrationID);
       this.setState({ data, subjects });
     } catch (ex) {
       if (ex.response && ex.response.status === 404)
@@ -33,9 +38,31 @@ class TeacherDetails extends Component {
     }
   }
 
+  handlePictureSelect = (e) => {
+    var picture = e.target.files[0]
+    var src = URL.createObjectURL(picture)
+    this.setState({ picture, src })
+  }
+
+  handleUpload = async () => {
+    try {
+      this.setState({ loading: true })
+      const formData = new FormData()
+    formData.append('file', this.state.picture, `${this.state.data.username}.png`)
+    await updateProfilePicture(formData)
+    toast.success("Profile picture successfully updated...");
+    this.setState({ loading: false })
+    } catch (ex) {
+      if (ex.response && ex.response.status === 400)
+      toast(ex.response.data);
+      this.setState({ loading: false})
+    }
+  }
+
   render() {
-    const { data, values, subjects } = this.state;
+    const { data, values, subjects, src, loading } = this.state;
     return (
+      loading ? <Spinner /> :
       <React.Fragment>
         <div></div>
 
@@ -47,11 +74,36 @@ class TeacherDetails extends Component {
               </div>
             </div>
             <div className="single-info-details">
-              <div className="item-img">
-                <img
+              <div className="item-img" style={{marginRight: "200px"}}>
+                {/* <img
                   src={data.gender === "Female" ? teacher : teacher1}
                   alt="teacher"
-                ></img>
+                ></img> */}
+
+<div className="column">
+                <div className="row">
+   <div className="small-12 medium-2 large-2 columns">
+     <div className="circle">
+       { src ? <img className="profile-pic" src={src} alt=""/> : 
+         <img className="profile-pic" src={data.profileURL} alt=""/> }
+     </div>
+     { getCurrentUser().isTeacher && <div className="p-image">
+       <label htmlFor="image">
+         <img src={upload} alt="" width="40px" height="40px" />
+         </label>
+        <input type="file" id="image" onChange = {this.handlePictureSelect} hidden />
+     </div>}
+  </div>
+</div>
+<div className="upload-btn">
+          <button className="btn btn-primary"
+          onClick={this.handleUpload}
+           style={{visibility: src ? "visible":"hidden"}}>
+            Update Profile
+          </button>
+        </div>
+                </div>
+
               </div>
               <div className="item-content">
                 <div className="header-inline item-header">

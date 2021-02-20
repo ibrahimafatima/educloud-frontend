@@ -11,13 +11,13 @@ class AddClass extends Form {
     data: {
       className: "",
       classe: "",
-      amount_to_pay: 0,
+      amountToPay: 0,
       level: "",
-      isInCharge: "false",
+      isInCharge: "",
     },
     classe: [],
     level: [],
-    isInCharge: ["false", "true"],
+    isInCharge: ["", "false", "true"],
     loading: true,
     error: {},
   };
@@ -32,12 +32,13 @@ class AddClass extends Form {
       .required()
       .label("Class name"),
     classe: Joi.string().required(),
-    amount_to_pay: Joi.number().min(0).required().label("School fee"),
+    amountToPay: Joi.number().min(0).required().label("School fee"),
     level: Joi.string().required(),
     isInCharge: Joi.bool(),
   };
 
   async componentDidMount() {
+    console.log(this.props)
     const { data: classe } = await getCls();
     this.setState({ classe });
     const { data: level } = await getLevel();
@@ -52,7 +53,7 @@ class AddClass extends Form {
         _id: clas._id,
         className: clas.className,
         classe: clas.classe,
-        amount_to_pay: clas.amount_to_pay,
+        amountToPay: clas.amountToPay,
         level: clas.level,
         isInCharge: clas.isInCharge,
       };
@@ -71,7 +72,7 @@ class AddClass extends Form {
         data: {
           className: "",
           classe: "",
-          amount_to_pay: 0,
+          amountToPay: 0,
           level: "",
           isInCharge: "false",
         },
@@ -123,20 +124,20 @@ class AddClass extends Form {
                 </div>
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
                   <label>Class *</label>
-                  {this.renderSelect("classe", classe)}
+                  {this.renderSelect("classe", ["", ...classe])}
                 </div>
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
                   <label>Amount (School fee) *</label>
                   {this.renderInput(
                     "",
-                    "amount_to_pay",
+                    "amountToPay",
                     "text",
                     "form-control"
                   )}
                 </div>
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
                   <label>Level *</label>
-                  {this.renderSelect("level", level)}
+                  {this.renderSelect("level", ["", ...level])}
                 </div>
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
                   <label>Is In Charge *</label>

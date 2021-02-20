@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { getNoticeBoard, removeNotice } from "../services/adminService";
-import NoticeBoardTable from "./noticeBoardTable";
+import NoticeBoardTable from "./tables/noticeBoardTable";
 import { toast } from "react-toastify";
 
 class AllNoticeBoard extends Component {

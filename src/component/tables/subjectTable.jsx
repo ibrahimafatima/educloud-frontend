@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 import { FaUserGraduate, FaFacebookMessenger } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import Table from "./reusableComponent/table";
-import auth from "../services/authService";
-import Delete from "./reusableComponent/delete";
+import Table from "../reusableComponent/table";
+import auth from "../../services/authService";
+import Delete from "../reusableComponent/delete";
 
 class SubjectTable extends Component {
   state = {
     columns: [
       { path: "name", title: "Subject Name" }, //MORE COLUMN WILL COME LIKE: number of student for sub,
       { path: "className", title: "Class Name" }, // number of exam, number of assignment,
-      { path: "teacherID", title: "Teacher ID" },
+      { path: "registrationID", title: "Registration ID" },
     ],
   };
 

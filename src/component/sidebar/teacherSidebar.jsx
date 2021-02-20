@@ -8,47 +8,41 @@ import {
   FaBookReader,
 } from "react-icons/fa";
 import { GiClosedDoors } from "react-icons/gi";
-import { TiNews } from "react-icons/ti";
+//import { TiNews } from "react-icons/ti";
 import { MdInsertInvitation } from "react-icons/md";
 import { GoDashboard } from "react-icons/go";
 import { GiTeacher } from "react-icons/gi";
-import SidebarSubModule from "./reusableComponent/sidebarSubModule";
-import SidebarModule from "./reusableComponent/sidebarModule";
-import auth from "../services/authService";
+import SidebarSubModule from "../../component/reusableComponent/sidebarSubModule";
+import SidebarModule from "../../component/reusableComponent/sidebarModule";
+import auth from "../../services/authService";
 
 class TeacherSidebar extends Component {
   render() {
-    let { iconClass, menuClass } = this.props.onMenuExpand();
-    const { onSidebarExpand, isSidebarExpanded, toggleSidebar } = this.props;
+    //let { iconClass, menuClass } = this.props.onMenuExpand("student");
+    const { onSidebarExpand, toggleSidebar} = this.props;
     return (
       <div
         className="sidebar-main sidebar-menu-one sidebar-expand-md sidebar-color"
         style={{ marginTop: "65px" }}
       >
-        {/* <div className="mobile-sidebar-header d-md-none">
-          <div className="header-logo">
-            <NavLink to="/dashboard">
-              <img src={sidebarLogo} alt="logo" />
-            </NavLink>
-          </div>
-        </div> */}
         <div className="sidebar-menu-content">
           <ul className="nav nav-sidebar-menu sidebar-toggle-view">
-            <SidebarModule
+            <SidebarModule 
               expandClass="nav-item"
               toggleSidebar={toggleSidebar}
               logo={GoDashboard}
               link="/dashboard"
               title="Dashboard"
             />
-            <SidebarModule
+            {/* <SidebarModule 
               expandClass="nav-item"
               toggleSidebar={toggleSidebar}
               logo={TiNews}
               link="/pre-chat/sidebar"
               title="Newsfeed"
-            />
-            <li className={iconClass} onClick={onSidebarExpand}>
+            /> */}
+            <li className={this.props.onMenuExpand("student").iconClass}
+             onClick={ () => onSidebarExpand("student")} >
               <span className="nav-link cur">
                 <i>
                   <FaUserGraduate color="#ffa501" />{" "}
@@ -56,9 +50,9 @@ class TeacherSidebar extends Component {
                 <span>Students</span>
               </span>
               <ul
-                className={menuClass}
+                className={this.props.onMenuExpand("student").menuClass}
                 style={{
-                  display: isSidebarExpanded ? "block" : "none",
+                  display: this.props.student ? "block" : "none",
                 }}
               >
                 <SidebarSubModule
@@ -73,7 +67,7 @@ class TeacherSidebar extends Component {
                 />
               </ul>
             </li>
-            <li className={iconClass} onClick={onSidebarExpand}>
+            <li className={this.props.onMenuExpand("class").iconClass} onClick={() => onSidebarExpand("class")}>
               <span className="nav-link cur">
                 <i>
                   <GiTeacher color="#ffa501" />{" "}
@@ -81,9 +75,9 @@ class TeacherSidebar extends Component {
                 <span>Class</span>
               </span>
               <ul
-                className={menuClass}
+                className={this.props.onMenuExpand("class").menuClass}
                 style={{
-                  display: isSidebarExpanded ? "block" : "none",
+                  display: this.props.class ? "block" : "none",
                 }}
               >
                 <SidebarSubModule
@@ -93,7 +87,7 @@ class TeacherSidebar extends Component {
                 />
               </ul>
             </li>
-            <li className={iconClass} onClick={onSidebarExpand}>
+            <li className={this.props.onMenuExpand("subject").iconClass} onClick={() => onSidebarExpand("subject")}>
               <span className="nav-link cur">
                 <i>
                   <FaBuromobelexperte color="#ffa501" />{" "}
@@ -101,9 +95,9 @@ class TeacherSidebar extends Component {
                 <span>Subject</span>
               </span>
               <ul
-                className={menuClass}
+                className={this.props.onMenuExpand("subject").menuClass}
                 style={{
-                  display: isSidebarExpanded ? "block" : "none",
+                  display: this.props.subject ? "block" : "none",
                 }}
               >
                 <SidebarSubModule
@@ -118,7 +112,7 @@ class TeacherSidebar extends Component {
                 />
               </ul>
             </li>
-            <li className={iconClass} onClick={onSidebarExpand}>
+            <li className={this.props.onMenuExpand("timetable").iconClass} onClick={() => onSidebarExpand("timetable")}>
               <span className="nav-link cur">
                 <i>
                   <MdInsertInvitation color="#ffa501" />{" "}
@@ -126,9 +120,9 @@ class TeacherSidebar extends Component {
                 <span>Timetable</span>
               </span>
               <ul
-                className={menuClass}
+                className={this.props.onMenuExpand("timetable").menuClass}
                 style={{
-                  display: isSidebarExpanded ? "block" : "none",
+                  display: this.props.timetable ? "block" : "none",
                 }}
               >
                 <SidebarSubModule
@@ -143,7 +137,7 @@ class TeacherSidebar extends Component {
                 />
               </ul>
             </li>
-            <li className={iconClass} onClick={onSidebarExpand}>
+            <li className={this.props.onMenuExpand("exams").iconClass} onClick={() => onSidebarExpand("exams")}>
               <span className="nav-link cur">
                 <i>
                   <FaEdit color="#ffa501" />{" "}
@@ -151,9 +145,9 @@ class TeacherSidebar extends Component {
                 <span>Exams</span>
               </span>
               <ul
-                className={menuClass}
+                className={this.props.onMenuExpand("exams").menuClass}
                 style={{
-                  display: isSidebarExpanded ? "block" : "none",
+                  display: this.props.exams ? "block" : "none",
                 }}
               >
                 <SidebarSubModule
@@ -168,7 +162,7 @@ class TeacherSidebar extends Component {
                 />
               </ul>
             </li>
-            <li className={iconClass} onClick={onSidebarExpand}>
+            <li className={this.props.onMenuExpand("assignment").iconClass} onClick={() => onSidebarExpand("assignment")}>
               <span className="nav-link cur">
                 <i>
                   <FaBook color="#ffa501" />{" "}
@@ -176,13 +170,13 @@ class TeacherSidebar extends Component {
                 <span>Assignment</span>
               </span>
               <ul
-                className={menuClass}
+                className={this.props.onMenuExpand("assignment").menuClass}
                 style={{
-                  display: isSidebarExpanded ? "block" : "none",
+                  display: this.props.assignment ? "block" : "none",
                 }}
               >
                 <SidebarSubModule
-                  link={`/all-assignment/${auth.getCurrentUser().teacherID}`}
+                  link={`/all-assignment`}
                   title="All Assignment"
                   toggleSidebar={toggleSidebar}
                 />
@@ -193,7 +187,7 @@ class TeacherSidebar extends Component {
                 />
               </ul>
             </li>
-            <li className={iconClass} onClick={onSidebarExpand}>
+            <li className={this.props.onMenuExpand("library").iconClass} onClick={() => onSidebarExpand("library")}>
               <span className="nav-link cur">
                 <i>
                   <FaBookReader color="#ffa501" />{" "}
@@ -201,9 +195,9 @@ class TeacherSidebar extends Component {
                 <span>Library</span>
               </span>
               <ul
-                className={menuClass}
+                className={this.props.onMenuExpand("library").menuClass}
                 style={{
-                  display: isSidebarExpanded ? "block" : "none",
+                  display: this.props.library ? "block" : "none",
                 }}
               >
                 <SidebarSubModule

@@ -10,6 +10,8 @@ import {
 } from "../services/teacherService";
 import { toast } from "react-toastify";
 import Spinner from "./reusableComponent/spinner";
+import TimePicker from "react-time-picker";
+
 
 class AddTimetable extends Form {
   state = {
@@ -25,20 +27,6 @@ class AddTimetable extends Form {
       "Friday",
       "Saturday",
     ],
-    time: [
-      "00:00 AM",
-      "6:00 AM",
-      "6:30 AM",
-      "7:00 AM",
-      "7:30 AM",
-      "8:00 AM",
-      "8:30 AM",
-      "9:00 AM",
-      "9:30 AM",
-      "10:00 AM",
-      "10:30 AM",
-      "11:00 AM",
-    ],
     loading: true,
     error: {},
   };
@@ -47,12 +35,9 @@ class AddTimetable extends Form {
     _id: Joi.string(),
     className: Joi.string().min(3).max(12).required().label("Class name"),
     name: Joi.string().max(20).required().label("Subject"),
-    day: Joi.string()
-
-      .required()
-      .label("Day"),
-    startTime: Joi.string().required(),
-    endTime: Joi.string().required(),
+    day: Joi.string().required().label("Day"),
+    startTime: Joi.string(),
+    endTime: Joi.string(),
   };
 
   async componentDidMount() {
@@ -83,6 +68,8 @@ class AddTimetable extends Form {
     }
   }
 
+  onChange = (e) => this.setState({startTime: e})
+
   doSubmit = async () => {
     try {
       this.setState({ loading: true });
@@ -97,13 +84,14 @@ class AddTimetable extends Form {
       if (ex.response && ex.response.status === 400) {
         const error = { ...this.state.error };
         error.subject = ex.response.data;
+        toast.error(ex.response.data)
         this.setState({ error });
       }
     }
   };
 
   render() {
-    const { classe, subject, day, time } = this.state;
+    const { classe, subject, day } = this.state;
     const { location } = this.props;
     return this.state.loading ? (
       <Spinner />
@@ -138,14 +126,17 @@ class AddTimetable extends Form {
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
                   <label>Day *</label>
                   {this.renderSelect("day", day)}
+                </div> 
+                <div style={{marginTop:"40px", marginBottom: "20px", marginRight: "40px"}}>
+                  <label>Start Time :  </label>
+                  {/* {this.renderSelect("startTime", time)} */}
+                  <TimePicker onChange={(startTime) => this.setState({data: {...this.state.data, startTime}})} value="00:00" />
+
                 </div>
-                <div className="col-xl-3 col-lg-6 col-12 form-group">
-                  <label>Start Time *</label>
-                  {this.renderSelect("startTime", time)}
-                </div>
-                <div className="col-xl-3 col-lg-6 col-12 form-group">
-                  <label>End Time *</label>
-                  {this.renderSelect("endTime", time)}
+                <div style={{marginTop:"40px", marginBottom: "20px"}}>
+                  <label>End Time :  </label>
+                  <TimePicker onChange={(endTime) => this.setState({data: {...this.state.data, endTime}})} value="00:00" />
+
                 </div>
                 <div className="col-12 form-group mg-t-8">
                   {this.renderButton(

@@ -1,39 +1,43 @@
 import React from "react";
-import Joi from "joi-browser";
 import Form from "./reusableComponent/form";
-import { adminLogin } from "../services/authService";
+import Joi from "joi-browser";
+import { authLogin } from "../services/authService";
 import FormLandingPage from "./reusableComponent/formLandingPage";
-import { NavLink } from "react-router-dom";
+import { NavLink } from 'react-router-dom';
+import Spinner from './reusableComponent/spinner';
 
-class AdminLogin extends Form {
+class Login extends Form {
+
   state = {
-    data: { username: "", schoolSecretKey: "", password: "" },
+    data: { username: "", password: "" },
+    loading: false,
     error: {},
   };
 
   schema = {
-    username: Joi.string().label("Username").min(3).max(12).required(),
-    schoolSecretKey: Joi.string().required().label("School Secret Key"),
-    password: Joi.string().min(8).required().label("Password"),
+    username: Joi.string().min(3).max(15).required().label("Username"),
+    password: Joi.string().min(8).max(20).required().label("Password"),
   };
 
   doSubmit = async () => {
     try {
-      const { data: jwt } = await adminLogin(this.state.data);
+      this.setState({ loading: true});
+      const { data: jwt } = await authLogin(this.state.data);
       localStorage.setItem("token", jwt);
       localStorage.removeItem("restored");
-      window.location = "dashboard";
+      window.location = "/dashboard";
     } catch (ex) {
-      if (ex.response && ex.response.status === 404) {
+      if (ex.response && ex.response.status === 400) {
         const error = { ...this.state.error };
         error.username = ex.response.data;
-        this.setState({ error });
+        this.setState({ error, loading: false });
       }
     }
   };
 
   render() {
-    return (
+    const {loading} = this.state;
+    return loading ? <Spinner/> : (
       <div className="theme-layout">
         <div className="pdng0">
           <div className="row merged">
@@ -41,23 +45,24 @@ class AdminLogin extends Form {
             <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div className="login-reg-bg">
                 <div className="log-reg-area sign">
-                  <h2>School Admin Login</h2>
-                  <p className="subtitle">
+                  <h2 className="log-title">Login</h2>
+                  <p>
                     {localStorage.getItem("restored")
-                      ? "You can now Login with the restored password"
-                      : "The Login button will be enabled on valid credentials"}
+                      ? "Now you can login with the restored password"
+                      : null}{" "}
                   </p>
+                  {localStorage.getItem("restored") ? null : (
+                    <p className="subtitle">
+                      Don't have an account yet ?{" "}
+                      <NavLink to="/registration">Register</NavLink>
+                    </p>
+                  )}
                   <form onSubmit={this.handleSubmit}>
                     {this.renderInput("Username", "username", "text")}
-                    {this.renderInput(
-                      "School SecretKey",
-                      "schoolSecretKey",
-                      "password"
-                    )}
                     {this.renderInput("Password", "password", "password")}
 
                     <div>
-                      <NavLink to="/confirm-admin" className="forgot-pwd">
+                      <NavLink to="/confirm-account" className="forgot-pwd">
                         Forgot Password ?
                       </NavLink>
                     </div>
@@ -74,4 +79,4 @@ class AdminLogin extends Form {
   }
 }
 
-export default AdminLogin;
+export default Login;

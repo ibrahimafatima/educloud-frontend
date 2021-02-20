@@ -8,14 +8,14 @@ import Joi from "joi-browser";
 
 class FeePayment extends Form {
   state = {
-    data: { registration_number: this.props.match.params.id, amountPaid: "" },
+    data: { registrationID: this.props.match.params.id, amountPaid: "" },
     loading: false,
     error: {},
   };
 
   schema = {
     _id: Joi.string(),
-    registration_number: Joi.string().required().label("Registration number"),
+    registrationID: Joi.string().required().label("Registration ID"),
     amountPaid: Joi.number().min(0).required().label("Amount Paid"),
   };
 
@@ -24,7 +24,7 @@ class FeePayment extends Form {
       this.setState({ loading: true });
       const { data: paymentDetails } = await payFee(this.state.data);
       this.setState({
-        data: { registration_number: "", amountPaid: 0 },
+        data: { registrationID: "", amountPaid: 0 },
         loading: false,
       });
       toast.success("Payment made successfully...");
@@ -34,7 +34,7 @@ class FeePayment extends Form {
       this.setState({ loading: false });
       if (ex.response && ex.response.status === 400) {
         const error = { ...this.state.error };
-        error.registration_number = ex.response.data;
+        error.registrationID = ex.response.data;
         this.setState({ error });
       }
     }
@@ -60,10 +60,10 @@ class FeePayment extends Form {
             <form onSubmit={this.handleSubmit}>
               <div className="row">
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
-                  <label>Registration Number *</label>
+                  <label>Registration ID *</label>
                   {this.renderInput(
                     "",
-                    "registration_number",
+                    "registrationID",
                     "text",
                     "form-control"
                   )}

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { toast } from "react-toastify";
 import { getCourses, removeSubject } from "../services/teacherService";
-import SubjectTable from "../component/subjectTable";
+import SubjectTable from "./tables/subjectTable";
 
 class AllSubject extends Component {
   state = {

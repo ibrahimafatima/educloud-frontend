@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import Table from "./reusableComponent/table";
-import Delete from "./reusableComponent/delete";
+import Table from "../reusableComponent/table";
+import Delete from "../reusableComponent/delete";
 
 class NoticeBoardTable extends Component {
   state = {
     columns: [
-      { path: "posted_by", title: "Posted By" },
-      { path: "post_date", title: "Post date" },
-      { path: "event_date", title: "Event date" },
+      { path: "postedBy", title: "Posted By" },
+      { path: "postDate", title: "Post date" },
+      { path: "eventDate", title: "Event date" },
       {
         path: "event",
         value: notice => (

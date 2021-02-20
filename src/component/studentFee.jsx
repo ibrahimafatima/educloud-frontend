@@ -2,17 +2,18 @@ import React, { Component } from "react";
 import { getStudents } from "../services/adminService";
 import { toast } from "react-toastify";
 import Search from "./reusableComponent/search";
-import StudentTable from "./studentTable";
+import StudentTable from "./tables/studentTable";
 
 class StudentFee extends Component {
   state = {
-    students: []
+    students: [],
+    virtualStudent: []
   };
 
   async componentDidMount() {
     try {
       const { data: students } = await getStudents();
-      this.setState({ students });
+      this.setState({ students, virtualStudent: students });
     } catch (ex) {
       if (ex.response && ex.response.status === 400)
         toast.error(ex.reponse.data);
@@ -21,18 +22,13 @@ class StudentFee extends Component {
 
   handleChange = async e => {
     const currentInput = e.currentTarget.value;
-    if (currentInput === "") {
-      const { data } = await getStudents();
-      this.setState({ students: data });
-    } else {
       this.setState({
-        students: this.state.students.filter(s =>
-          s.registration_number
+        students: this.state.virtualStudent.filter(s =>
+          s.registrationID
             .toLowerCase()
             .startsWith(currentInput.toLowerCase())
         )
       });
-    }
   };
 
   render() {

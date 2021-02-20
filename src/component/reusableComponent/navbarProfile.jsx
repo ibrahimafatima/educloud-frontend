@@ -1,13 +1,14 @@
 import React, { Component } from "react";
-import admin from "../../images/admin.jpg";
-import admin1 from "../../images/admin1.png";
 import { NavLink } from "react-router-dom";
 import Auth from "../../services/authService";
+import { getAdminDetails, getATeacher } from "../../services/adminService"
+import { getAStudent } from "../../services/studentService"
 import { FaRegUserCircle, FaRegSun, FaToggleOff } from "react-icons/fa";
 
 class NavbarProfile extends Component {
   state = {
     profileToggled: false,
+    profileURL: "",
     user: {},
   };
   toggleProfile = () => {
@@ -16,10 +17,23 @@ class NavbarProfile extends Component {
 
   async componentDidMount() {
     this.setState({ user: Auth.getCurrentUser() });
+    const user = Auth.getCurrentUser();
+    if(user.isAdmin) {
+      const {data} = await getAdminDetails(user._id);
+      this.setState({ profileURL: data.profileURL })
+    }
+    if(user.isTeacher) {
+      const {data} = await getATeacher(user._id);
+      this.setState({ profileURL: data.profileURL })
+    }
+    if(user.isStudent) {
+      const {data} = await getAStudent(user._id);
+      this.setState({ profileURL: data.profileURL })
+    }
   }
 
   render() {
-    const { user } = this.state;
+    const { user, profileURL } = this.state;
     const username = user ? user.username : "username";
     const { profileToggled } = this.state;
     return (
@@ -35,10 +49,15 @@ class NavbarProfile extends Component {
             <span>{user ? user.role : "Role"}</span>
           </div>
           <div className="admin-img">
-            <img
-              src={user.gender === "Female" ? admin1 : admin}
+            { profileURL === "" ? <img
+              src={user.profileURL}
+              className="nav-img"
               alt="Admin"
-            ></img>
+            ></img> : <img
+            src={profileURL}
+            className="nav-img"
+            alt="Admin"
+          ></img>}
           </div>
         </span>
         <div className={this.showProfile(profileToggled)}>
@@ -53,9 +72,22 @@ class NavbarProfile extends Component {
                     onClick={this.toggleProfile}
                     to={
                       user.isTeacher
-                        ? `/teacher/${user.teacherID}`
-                        : `/student/${user.registration_number}`
+                        ? `/teacher/${user.registrationID}`
+                        : `/student/${user.registrationID}`
                     }
+                  >
+                    <i>
+                      <FaRegUserCircle />{" "}
+                    </i>
+                    My Profile
+                  </NavLink>
+                </li>
+              )}
+              {user.isAdmin && (
+                <li>
+                  <NavLink
+                    onClick={this.toggleProfile}
+                    to={ `/admin/${user._id}`}
                   >
                     <i>
                       <FaRegUserCircle />{" "}
@@ -70,8 +102,8 @@ class NavbarProfile extends Component {
                     onClick={this.toggleProfile}
                     to={
                       user.isTeacher
-                        ? `/account/${user.teacherID}`
-                        : `/student-account/${user.registration_number}`
+                        ? `/account/${user.registrationID}`
+                        : `/student-account/${user.registrationID}`
                     }
                   >
                     <i>

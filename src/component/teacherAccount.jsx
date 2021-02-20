@@ -82,7 +82,7 @@ class TeacherAccount extends Form {
         <div>
           <h4>
             Go To{" "}
-            <Link to={`/teacher/${Auth.getCurrentUser().teacherID}`}>
+            <Link to={`/teacher/${Auth.getCurrentUser().registrationID}`}>
               My Profile
             </Link>
           </h4>

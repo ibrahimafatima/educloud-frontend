@@ -8,7 +8,7 @@ import Spinner from "./reusableComponent/spinner";
 
 class AddTeacher extends Form {
   state = {
-    data: { teacherID: "", username: "", className: "" },
+    data: { registrationID: "", username: "", className: "" },
     classInCharge: [], //CLASSNAME HERE IS CLASS IN CHARGE
     loading: true,
     error: {},
@@ -16,7 +16,7 @@ class AddTeacher extends Form {
 
   schema = {
     _id: Joi.string(),
-    teacherID: Joi.string().required(),
+    registrationID: Joi.string().required(),
     username: Joi.string().min(3).required(),
     className: Joi.string(),
   };
@@ -34,7 +34,7 @@ class AddTeacher extends Form {
       const data = {
         _id: teacher._id,
         username: teacher.username,
-        teacherID: teacher.teacherID,
+        registrationID: teacher.registrationID,
         className: teacher.className,
       };
 
@@ -51,7 +51,7 @@ class AddTeacher extends Form {
       this.setState({ loading: true });
       await addTeacher(this.state.data);
       this.setState({
-        data: { teacherID: "", username: "", className: "" },
+        data: { registrationID: "", username: "", className: "" },
       });
       toast.success("Teacher successfully added...");
       this.setState({ loading: false });
@@ -94,8 +94,8 @@ class AddTeacher extends Form {
             <form onSubmit={this.handleSubmit}>
               <div className="row">
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
-                  <label>Teacher ID *</label>
-                  {this.renderInput("", "teacherID", "text", "form-control")}
+                  <label>Registration ID *</label>
+                  {this.renderInput("", "registrationID", "text", "form-control")}
                 </div>
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
                   <label>Username *</label>

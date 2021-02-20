@@ -9,7 +9,7 @@ class PostMark extends Form {
   state = {
     data: {
       name: "",
-      exam_name: "",
+      examName: "",
       mark: "",
       grade: "",
       remark: "",
@@ -23,7 +23,7 @@ class PostMark extends Form {
   schema = {
     _id: Joi.string(),
     name: Joi.string().required().label("Subject"),
-    exam_name: Joi.string().required().label("Exam name"),
+    examName: Joi.string().required().label("Exam name"),
     mark: Joi.number().min(0).required().label("Mark"),
     grade: Joi.string().max(12).label("Grade"),
     remark: Joi.string().max(25).label("Remark"),
@@ -48,7 +48,7 @@ class PostMark extends Form {
         this.props.match.params.id,
         this.state.data
       );
-      toast.success("Mark successfully posted for " + data.student_name);
+      toast.success("Mark successfully posted for " + data.studentName);
       this.setState({ loading: false });
       this.props.history.goBack();
     } catch (ex) {
@@ -88,7 +88,7 @@ class PostMark extends Form {
                 </div>
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
                   <label>Exam name *</label>
-                  {this.renderSelect("exam_name", ["", ...exams])}
+                  {this.renderSelect("examName", ["", ...exams])}
                 </div>
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
                   <label>Score *</label>

@@ -1,12 +1,13 @@
 import React, { Component } from "react";
-import Delete from "./reusableComponent/delete";
-import Table from "./reusableComponent/table";
+import Delete from "../reusableComponent/delete";
+import Table from "../reusableComponent/table";
 
 class AssignmentTable extends Component {
   columns = [
     { path: "title", title: "Title" },
     { path: "className", title: "Class" },
     { path: "postedOn", title: "Post date" },
+    { path: "name", title: "Subject" },
     {
       path: "delete",
       value: (assign) => (

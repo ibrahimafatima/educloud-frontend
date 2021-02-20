@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { getTeachers } from "../services/adminService";
-import TeacherTable from "../component/teacherTable";
+import TeacherTable from "./tables/teacherTable";
 import { toast } from "react-toastify";
 import Search from "./reusableComponent/search";
 import { removeTeacher } from "../services/adminService";
@@ -8,12 +8,13 @@ import { removeTeacher } from "../services/adminService";
 class AllTeacher extends Component {
   state = {
     teachers: [],
+    virtualTeachers: []
   };
 
   async componentDidMount() {
     try {
       const { data } = await getTeachers();
-      this.setState({ teachers: data });
+      this.setState({ teachers: data, virtualTeachers: data });
     } catch (ex) {
       if (ex.response && ex.response.status === 400)
         toast.error(ex.response.data);
@@ -36,16 +37,11 @@ class AllTeacher extends Component {
 
   handleChange = async (e) => {
     const currentInput = e.currentTarget.value;
-    if (currentInput === "") {
-      const { data } = await getTeachers();
-      this.setState({ teachers: data });
-    } else {
       this.setState({
-        teachers: this.state.teachers.filter((t) =>
+        teachers: this.state.virtualTeachers.filter((t) =>
           t.username.toLowerCase().startsWith(currentInput.toLowerCase())
         ),
       });
-    }
   };
 
   render() {

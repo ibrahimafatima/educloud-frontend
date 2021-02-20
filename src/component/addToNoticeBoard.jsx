@@ -3,20 +3,22 @@ import Joi from "joi-browser";
 import Form from "./reusableComponent/form";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import { addToNoticeBoard, getANotice } from "../services/adminService";
+import { addToNoticeBoard, getANotice, sendEventMail } from "../services/adminService";
 import Spinner from "./reusableComponent/spinner";
+import DatePicker from "react-date-picker";
 
 class AddToNoticeBoard extends Form {
   state = {
-    data: { event_date: "", event_message: "" },
+    data: { eventDate: new Date(), eventMessage: "" },
+    notify: false,
     loading: true,
     error: {},
   };
 
   schema = {
     _id: Joi.string(),
-    event_date: Joi.string().required().label("Event date"),
-    event_message: Joi.string().required().label("Event message"),
+    eventDate: Joi.required().label("Event date"),
+    eventMessage: Joi.string().required().label("Event message"),
   };
 
   async componentDidMount() {
@@ -28,8 +30,8 @@ class AddToNoticeBoard extends Form {
       const { data: notice } = await getANotice(this.props.match.params.id);
       const data = {
         _id: notice._id,
-        event_date: notice.event_date,
-        event_message: notice.event_message,
+        eventDate: notice.eventDate,
+        eventMessage: notice.eventMessage,
       };
       this.setState({ data, loading: false });
     } catch (ex) {
@@ -43,14 +45,19 @@ class AddToNoticeBoard extends Form {
     try {
       this.setState({ loading: true });
       await addToNoticeBoard(this.state.data);
-      this.setState({ data: { event_date: "", event_message: "" } });
+      var stateData = this.state.data
+      this.setState({ data: { eventDate: "", eventMessage: "" } });
       toast.success("Notice board updated successfully");
       this.setState({ loading: false });
+      if(this.state.notify){
+        await sendEventMail(stateData)
+      }
     } catch (ex) {
       this.setState({ loading: false });
       if (ex.response && ex.response.status === 400) {
         const error = { ...this.state.error };
-        error.event_date = ex.response.data;
+        toast.error(ex.response.data)
+        error.eventDate = ex.response.data;
         this.setState({ error });
       }
     }
@@ -75,24 +82,31 @@ class AddToNoticeBoard extends Form {
             </div>
             <form onSubmit={this.handleSubmit}>
               <div className="row">
-                <div className="col-xl-3 col-lg-6 col-12 form-group">
-                  <label>Event Date *</label>
+                <div style={{marginTop:"60px", marginRight: "40px"}}>
+                <label>Event Date *</label><br></br>
+                  <DatePicker onChange={(eventDate) => {this.setState({ data: { ...this.state.data, eventDate} })} } value={this.state.data.eventDate} />
+                  {/* <label>Event Date *</label>
                   {this.renderInput(
                     "mm/dd/yyyy",
-                    "event_date",
+                    "eventDate",
                     "text",
                     "form-control"
-                  )}
+                  )} */}
                 </div>
                 <div className="col-xl-3 col-lg-6 col-12">
                   <label>Event Message *</label>
                   {this.renderTextArea(
                     "",
-                    "event_message",
+                    "eventMessage",
                     "text",
                     "form-control"
                   )}
                 </div>
+                
+                <div className="col-xl-3 col-lg-6 col-12">
+                <label style={{marginTop:"50px"}}><input type="checkbox" defaultChecked={this.state.notify} onChange={() => this.setState({ notify: !this.state.notify })}/> Notify all students about this event.</label>
+                </div>
+                <br/>
                 <div className="col-12 form-group mg-t-8">
                   {this.renderButton(
                     "Save",

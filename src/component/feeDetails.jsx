@@ -33,10 +33,10 @@ class FeeDetails extends Component {
           <h4>
             Go To <Link to="/students-fee">All Students</Link>
           </h4>
-          <h6 style={{ color: "blue" }}>{student.name} fees payment history</h6>
+          <h6 style={{ color: "blue" }}>{student.username} fees payment history</h6>
           <h6>
             Total amount paid:{" "}
-            <span style={{ color: "green" }}>{student.fee_paid}</span>
+            <span style={{ color: "green" }}>{student.feePaid} {student.currency}</span>
           </h6>
         </div>
         {paymentDetails.length === 0 ? (
@@ -44,7 +44,7 @@ class FeeDetails extends Component {
             <div className="card-body">
               <div className="heading-layout1">
                 <div className="item-title">
-                  <h3>No Payment has been made by {student.name}</h3>
+                  <h3>No Payment has been made by {student.username}</h3>
                 </div>
               </div>
             </div>
@@ -63,13 +63,13 @@ class FeeDetails extends Component {
                       {" "}
                       Registration N^:{" "}
                       <i style={this.styleC}>
-                        {paymentDetail.registration_number}
+                        {paymentDetail.registrationID}
                       </i>
                     </h6>
                     <h6>
                       {" "}
                       Amount paid:{" "}
-                      <i style={this.styleC}>{paymentDetail.amountPaid}</i>
+                      <i style={this.styleC}> {paymentDetail.amountPaid}</i>
                     </h6>
                     <h6>
                       {" "}

@@ -3,43 +3,50 @@ import Joi from "joi-browser";
 import Form from "./reusableComponent/form";
 import FormLandingPage from "./reusableComponent/formLandingPage";
 import { NavLink } from "react-router-dom";
-import { confirmAccount } from "../services/studentService";
+import { authConfirmAccount } from "../services/authService";
+import Spinner from './reusableComponent/spinner';
 
-class ConfirmStudent extends Form {
+
+class ConfirmAccount extends Form {
   state = {
-    data: { name: "", registration_number: "" },
+    data: { username: "", registrationID: "" },
+    loading: false,
     error: {}
   };
 
   schema = {
-    name: Joi.string()
+    username: Joi.string()
       .label("Username")
       .min(3)
-      .max(12)
+      .max(15)
       .required(),
-    registration_number: Joi.string()
+    registrationID: Joi.string()
+      .max(30)
       .required()
-      .label("Registration number")
+      .label("Registration ID")
   };
 
   doSubmit = async () => {
     try {
-      const { data } = await confirmAccount(this.state.data);
+      this.setState({ loading: true })
+      const { data } = await authConfirmAccount(this.state.data);
       if (data) {
-        localStorage.setItem("registration", data.registration_number);
-        window.location = "reset-student-password";
+        localStorage.setItem("username", data.username);
+        window.location = "reset-password";
       }
     } catch (ex) {
       if (ex.response && ex.response.status === 404) {
         const error = { ...this.state.error };
-        error.name = ex.response.data;
-        this.setState({ error });
+        error.username = ex.response.data;
+        this.setState({ error, loading: false });
       }
     }
   };
 
   render() {
-    return (
+    const { loading } = this.state;
+    
+    return loading ? <Spinner/> : (
       <div className="theme-layout">
         <div className="pdng0">
           <div className="row merged">
@@ -47,17 +54,13 @@ class ConfirmStudent extends Form {
             <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div className="login-reg-bg">
                 <div className="log-reg-area sign">
-                  <h2>Student Account Confirmation</h2>
+                  <h2>Teacher Account Confirmation</h2>
                   <p>Provide these information to reset your password.</p>
                   <form onSubmit={this.handleSubmit}>
-                    {this.renderInput("Username", "name", "text")}
-                    {this.renderInput(
-                      "Registration number",
-                      "registration_number",
-                      "text"
-                    )}
+                    {this.renderInput("Username", "username", "text")}
+                    {this.renderInput("Registration ID", "registrationID", "text")}
                     <div>
-                      <NavLink to="/student-login" className="forgot-pwd">
+                      <NavLink to="/" className="forgot-pwd">
                         Back to Login
                       </NavLink>
                     </div>
@@ -74,4 +77,4 @@ class ConfirmStudent extends Form {
   }
 }
 
-export default ConfirmStudent;
+export default ConfirmAccount;

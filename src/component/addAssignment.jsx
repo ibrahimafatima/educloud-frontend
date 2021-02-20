@@ -4,12 +4,14 @@ import { toast } from "react-toastify";
 import Form from "./reusableComponent/form";
 import Spinner from "./reusableComponent/spinner";
 import { getClasses } from "../services/adminService";
-import { postAssignment } from "../services/teacherService";
+import { postAssignment, getCourses, uploadHomework } from "../services/teacherService";
 
 class AddAssignment extends Form {
   state = {
-    data: { title: "", className: "", toBeSubmittedOn: "", aMessage: "" },
+    data: { title: "", className: "", toBeSubmittedOn: "", name: ""},
     classes: [],
+    homeworkFile: false,
+    subjects: [],
     loading: false,
     error: {},
   };
@@ -18,38 +20,57 @@ class AddAssignment extends Form {
     _id: Joi.string(),
     className: Joi.string().required().label("Class name"),
     title: Joi.string().min(3).max(18).required().label("Title"),
+    name: Joi.string().required().label("Subject"),
     toBeSubmittedOn: Joi.string()
       .min(3)
       .max(20)
       .required()
       .label("Submit date"),
-    aMessage: Joi.string().required().label("Assignment text"),
+    //aMessage: Joi.string().required().label("Assignment text"),
   };
 
   async componentDidMount() {
     try {
       const { data: classes } = await getClasses();
-      this.setState({ classes });
+      const { data: subjects } = await getCourses();
+      this.setState({ classes, subjects });
     } catch (ex) {
       toast("Some error occured");
     }
   }
 
+  handleHomeworkSelect = (e) => {
+    var homeworkFile = e.target.files[0]
+    this.setState({ homeworkFile })
+  }
+
+  // doIt = async () => {
+  //   const formData = new FormData()
+  //     formData.append('file', this.state.homeworkFile, `${new Date()}.png`)
+  //     const {data} = await uploadHomework(formData)
+  //     console.log("DATA", data.fileLocation)
+  // } 
+
   doSubmit = async () => {
     try {
       this.setState({ loading: true });
-      await postAssignment(this.state.data);
+      const formData = new FormData()
+      formData.append('file', this.state.homeworkFile, `${new Date().getTime()}.file`)
+      const {data} = await uploadHomework(formData)
+
+      await postAssignment({...this.state.data, homeworkURL: data.fileLocation});
       this.setState({
-        data: { title: "", className: "", toBeSubmittedOn: "", aMessage: "" },
+        data: { title: "", className: "", toBeSubmittedOn: "", name: "" },
         loading: false,
       });
       toast.success("Assignment successfully posted...");
-      window.location = "dashboard";
+      //window.location = "dashboard";
     } catch (ex) {
       this.setState({ loading: false });
       if (ex.response && ex.response.status === 400) {
         const error = { ...this.state.error };
         error.className = ex.response.data;
+        toast.error(ex.response.data)
         this.setState({ error });
       }
     }
@@ -66,9 +87,6 @@ class AddAssignment extends Form {
             <div className="heading-layout1">
               <div className="item-title">
                 <h3>Add New Assignment</h3>
-                <span>
-                  <i>Kindly, sepearate the questions with semi-colon</i>
-                </span>
               </div>
             </div>
             <form onSubmit={this.handleSubmit}>
@@ -78,12 +96,16 @@ class AddAssignment extends Form {
                   {this.renderInput("", "title", "text", "form-control")}
                 </div>
                 <div className="col-xl-3 col-lg-6 col-12">
-                  <label>Assignment text *</label>
-                  {this.renderTextArea("", "aMessage", "text", "form-control")}
+                  <label>Upload assignment *</label>
+                <input type="file" onChange={this.handleHomeworkSelect} />
                 </div>
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
                   <label>Class *</label>
                   {this.renderSelect("className", ["", ...this.state.classes])}
+                </div>
+                <div className="col-xl-3 col-lg-6 col-12 form-group">
+                  <label>Subject *</label>
+                  {this.renderSelect("name", ["", ...this.state.subjects])}
                 </div>
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
                   <label>Submit Date *</label>

@@ -38,15 +38,15 @@ class NoticeBoard extends Component {
                   <div key={event._id} className="notice-list">
                     <div className="post-date bg-skyblue">
                       <TiPin size="20" /> &nbsp;{" "}
-                      <Moment format="Do MMMM YYYY">{event.event_date}</Moment>
+                      <Moment format="Do MMMM YYYY">{event.eventDate}</Moment>
                     </div>
-                    <h6 className="notice-title">{event.event_message}</h6>
+                    <h6 className="notice-title">{event.eventMessage}</h6>
                     <div className="entry-meta">
-                      Posted By {event.posted_by} -
+                      Posted By {event.postedBy} -
                       <span>
                         {" "}
                         <GiStopwatch size="20" />{" "}
-                        <TimeAgo date={event.post_date} />
+                        <TimeAgo date={event.postDate} />
                       </span>
                     </div>
                   </div>

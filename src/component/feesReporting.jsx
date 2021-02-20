@@ -45,7 +45,7 @@ class FeesReporting extends Form {
               <div className="row">
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
                   <label>Class *</label>
-                  {this.renderSelect("className", this.state.classes)}
+                  {this.renderSelect("className", ["", ...this.state.classes])}
                 </div>
                 <div className="col-12 form-group mg-t-8">
                   {this.renderButton(

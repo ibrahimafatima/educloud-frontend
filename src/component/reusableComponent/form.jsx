@@ -89,6 +89,7 @@ class Form extends Component {
       />
     );
   }
+  
   renderSelect(name, options) {
     const { data, error } = this.state;
     return (

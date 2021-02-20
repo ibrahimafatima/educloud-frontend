@@ -1,18 +1,19 @@
 import React, { Component } from "react";
 import { getStudent, removeStudent } from "../services/teacherService";
-import AddedStudentTable from "./addedStudentTable";
+import AddedStudentTable from "../component/tables/addedStudentTable";
 import Search from "./reusableComponent/search";
 import { toast } from "react-toastify";
 
 class AddedStudent extends Component {
   state = {
     students: [],
+    virtualStudents: []
   };
 
   async componentDidMount() {
     try {
       const { data } = await getStudent(this.props.match.params.id);
-      this.setState({ students: data });
+      this.setState({ students: data, virtualStudents: data });
     } catch (ex) {
       if (ex.response && ex.response.status === 404)
         return this.props.history.replace("/not-found");
@@ -35,16 +36,11 @@ class AddedStudent extends Component {
 
   handleChange = async (e) => {
     const currentInput = e.currentTarget.value;
-    if (currentInput === "") {
-      const { data } = await getStudent(this.props.match.params.id);
-      this.setState({ students: data });
-    } else {
       this.setState({
-        students: this.state.students.filter((s) =>
-          s.name.toLowerCase().startsWith(currentInput.toLowerCase())
+        students: this.state.virtualStudents.filter((s) =>
+          s.username.toLowerCase().startsWith(currentInput.toLowerCase())
         ),
       });
-    }
   };
 
   render() {
@@ -57,7 +53,7 @@ class AddedStudent extends Component {
             <div className="col-4-xxxl col-xl-3 col-lg-3 col-12 form-group">
               <Search
                 onChange={this.handleChange}
-                placeholder="Search class by name ..."
+                placeholder="Search student by username ..."
               />
             </div>
           </div>

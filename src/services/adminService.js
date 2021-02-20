@@ -1,16 +1,16 @@
 import http from "./httpService";
 
-const adminAddTerm = "/term";
-const adminAddClasse = "/classe";
-const adminAddLevel = "/level";
-const adminAddClassEndpoint = "/add/class";
-const adminAddTeacherEndpoint = "/admin/teacher";
-const adminStudentEndpoint = "/teacher/student";
-const adminPaymentEndpoint = "/admin/payment";
-const adminEventEndpoint = "/admin/event";
-const adminExamEndpoint = "/schedule/exams";
+const adminAddTerm = "/terms";
+const adminAddClasse = "/classes";
+const adminAddLevel = "/levels";
+const adminAddClassEndpoint = "/all-classes";
+const adminAddTeacherEndpoint = "/teachers";
+const adminStudentEndpoint = "/students";
+const adminPaymentEndpoint = "/payment";
+const adminEventEndpoint = "/events";
+const adminExamEndpoint = "/exams";
 const adminBookEndpoint = "/books";
-const adminAccountConfirmation = "/admin/auth";
+const adminDetails = "/auth";
 
 export function addClass(classe) {
   if (classe._id) {
@@ -38,7 +38,15 @@ export function getClasses() {
 }
 
 export function getClass(id) {
-  return http.get(adminAddClassEndpoint + "/get/" + id);
+  return http.get(adminAddClassEndpoint + "/single/" + id);
+}
+
+export function getAdminDetails(id) {
+  return http.get(adminDetails + "/admin/" + id);
+}
+
+export function updateProfilePicture(pic) {
+  return http.post(adminDetails + "/upload", pic);
 }
 
 export function addTeacher(teacher) {
@@ -51,11 +59,11 @@ export function addTeacher(teacher) {
 }
 
 export function getTeacher(id) {
-  return http.get(adminAddTeacherEndpoint + "/get/" + id);
+  return http.get(adminAddTeacherEndpoint + "/registrationID/" + id);
 }
 
 export function getATeacher(id) {
-  return http.get(adminAddTeacherEndpoint + "/teacher/" + id);
+  return http.get(adminAddTeacherEndpoint + "/id/" + id);
 }
 
 export function getStudent(id) {
@@ -107,6 +115,10 @@ export function addToNoticeBoard(notice) {
   return http.post(adminEventEndpoint, notice);
 }
 
+export function sendEventMail(message) {
+  return http.post(adminEventEndpoint + '/mail', message)
+}
+
 export function getNoticeBoard() {
   return http.get(adminEventEndpoint);
 }
@@ -146,15 +158,4 @@ export function removeBook(id) {
 
 export function getBook(id) {
   return http.get(adminBookEndpoint + "/get/" + id);
-}
-
-export function confirmAccount(confirmationInfo) {
-  return http.post(
-    adminAccountConfirmation + "/confirm-account",
-    confirmationInfo
-  );
-}
-
-export function resetPassword(username) {
-  return http.post(adminAccountConfirmation + "/reset-password", username);
 }

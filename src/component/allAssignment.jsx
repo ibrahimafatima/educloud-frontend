@@ -4,7 +4,7 @@ import {
   getTeacherAssignment,
   removeAssignment,
 } from "../services/teacherService";
-import AssignmentTable from "./assignmentTable";
+import AssignmentTable from "./tables/assignmentTable";
 
 class AllAssignment extends Component {
   state = {
@@ -13,7 +13,7 @@ class AllAssignment extends Component {
 
   async componentDidMount() {
     try {
-      const { data } = await getTeacherAssignment(this.props.match.params.id);
+      const { data } = await getTeacherAssignment();
       this.setState({ assignments: data });
     } catch (ex) {
       if (ex.response && ex.response.status === 404)
@@ -44,9 +44,6 @@ class AllAssignment extends Component {
             <div className="heading-layout1">
               <div className="item-title">
                 <h3>All Assignments</h3>
-                <span>
-                  <i>Questions are sepearated with semi-colon</i>
-                </span>
               </div>
             </div>
             {assignments.length === 0 ? (

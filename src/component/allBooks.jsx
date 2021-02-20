@@ -6,13 +6,14 @@ import BookTable from "./bookTable";
 
 class AllBooks extends Component {
   state = {
-    books: []
+    books: [],
+    virtualBooks: []
   };
 
   async componentDidMount() {
     try {
       const { data } = await getBooks();
-      this.setState({ books: data });
+      this.setState({ books: data, virtualBooks: data });
     } catch (ex) {
       if (ex.response && ex.response.status === 404)
         toast.error("Couldnt load library");
@@ -35,16 +36,11 @@ class AllBooks extends Component {
 
   handleChange = async e => {
     const currentInput = e.currentTarget.value;
-    if (currentInput === "") {
-      const { data } = await getBooks();
-      this.setState({ books: data });
-    } else {
       this.setState({
-        books: this.state.books.filter(b =>
+        books: this.state.virtualBooks.filter(b =>
           b.bookTitle.toLowerCase().startsWith(currentInput.toLowerCase())
         )
       });
-    }
   };
 
   render() {

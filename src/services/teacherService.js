@@ -1,15 +1,15 @@
 import http from "../services/httpService";
 import auth from "./authService";
 
-const teacherStudentApiEndpoint = "/teacher/student";
-const teacherCourseApiEndpoint = "/teacher/course";
-const teacherExamApiEndpoint = "/schedule/exams";
-const teacherTimetableEndpoint = "/student/timetable";
+const teacherStudentApiEndpoint = "/students";
+const teacherCourseApiEndpoint = "/courses";
+const teacherExamApiEndpoint = "/exams";
+const teacherTimetableEndpoint = "/timetable";
 const teacherProfileEndpoint = "/teacher/update";
-const teacherPostMarkEndpoint = "/teacher/post-mark";
+const teacherPostMarkEndpoint = "/post-mark";
 const adminEndpoint = "/admin/auth";
-const teacherAccountConfirmation = "/teacher/auth";
-const teacherAssignment = "/teacher/assignment";
+const teacherAssignment = "/assignments";
+const teacherDetails = "/teachers";
 
 export function addStudent(student) {
   if (student._id) {
@@ -41,7 +41,11 @@ export function getCourses() {
 }
 
 export function getCourse(id) {
-  return http.get(teacherCourseApiEndpoint + "/teacherID/" + id);
+  return http.get(teacherCourseApiEndpoint + "/registrationID/" + id);
+}
+
+export function updateProfilePicture(pic) {
+  return http.post(teacherDetails + "/upload", pic);
 }
 
 export function getCourseByID(id) {
@@ -89,9 +93,9 @@ export function getExams() {
   if (auth.getCurrentUser().isAdmin)
     return http.get(teacherExamApiEndpoint + "/admin");
   if (auth.getCurrentUser().isTeacher)
-    return http.get(teacherExamApiEndpoint + "/teacher");
+    return http.get(teacherExamApiEndpoint + "/teachers");
   if (auth.getCurrentUser().isStudent)
-    return http.get(teacherExamApiEndpoint + "/student");
+    return http.get(teacherExamApiEndpoint + "/students");
 }
 
 export function getExam(id) {
@@ -155,27 +159,20 @@ export function postMark(reg_num, mark) {
   return http.post(teacherPostMarkEndpoint + "/" + reg_num, mark);
 }
 
-export function confirmAccount(confirmationInfo) {
-  return http.post(
-    teacherAccountConfirmation + "/confirm-account",
-    confirmationInfo
-  );
-}
-
-export function resetPassword(username) {
-  return http.post(teacherAccountConfirmation + "/reset-password", username);
-}
-
 export function postAssignment(assignment) {
   return http.post(teacherAssignment, assignment);
 }
 
-export function getTeacherAssignment(id) {
-  return http.get(teacherAssignment + "/teacherID/" + id);
+export function getTeacherAssignment() {
+  return http.get(teacherAssignment + "/teacher");
+}
+
+export function uploadHomework(homeworkFile) {
+  return http.post(teacherAssignment + "/upload", homeworkFile);
 }
 
 export function getStudentAssignment(id) {
-  return http.get(teacherAssignment + "/student/" + id);
+  return http.get(teacherAssignment + "/student");
 }
 
 export function getAllStudentAssignment() {

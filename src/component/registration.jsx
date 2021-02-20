@@ -1,27 +1,31 @@
 import React from "react";
 import Joi from "joi-browser";
 import Form from "./reusableComponent/form";
-import { registerTeacher } from "../services/userService";
+import { authRegistration } from "../services/authService";
 import FormLandingPage from "./reusableComponent/formLandingPage";
 import { NavLink } from "react-router-dom";
+import Spinner from './reusableComponent/spinner';
 
-class TeacherRegistration extends Form {
+
+class Registration extends Form {
   state = {
-    data: { username: "", teacherID: "", password: "", passwordAgain: "" },
+    data: { username: "", registrationID: "", password: "", passwordAgain: "" },
+    loading: false,
     error: {}
   };
 
   schema = {
     username: Joi.string()
-      .min(3)
-      .max(12)
+      .min(3)  
+      .max(15)
       .required()
       .label("Username"),
-    teacherID: Joi.string()
+    registrationID: Joi.string()
       .required()
-      .label("TeacherID"),
+      .label("RegistrationID"),
     password: Joi.string()
       .min(8)
+      .max(20)
       .required()
       .label("Password"),
     passwordAgain: Joi.ref("password")
@@ -29,10 +33,11 @@ class TeacherRegistration extends Form {
 
   doSubmit = async () => {
     try {
+      this.setState({ loading: true});
       const { data } = this.state;
-      const { data: jwt } = await registerTeacher({
+      const { data: jwt } = await authRegistration({
         username: data.username,
-        teacherID: data.teacherID,
+        registrationID: data.registrationID,
         password: data.passwordAgain
       });
       localStorage.setItem("token", jwt);
@@ -41,13 +46,14 @@ class TeacherRegistration extends Form {
       if (ex.response && ex.response.status === 400) {
         const error = { ...this.state.error };
         error.username = ex.response.data;
-        this.setState({ error });
+        this.setState({ error, loading: false });
       }
     }
   };
 
   render() {
-    return (
+    const {loading} = this.state;
+    return loading ? <Spinner/> : (
       <div className="theme-layout">
         <div className="pdng0">
           <div className="row merged">
@@ -58,11 +64,11 @@ class TeacherRegistration extends Form {
                   <h2 className="log-title">Registration</h2>
                   <p className="subtitle">
                     Already have an account ?{" "}
-                    <NavLink to="/teacher-login">Login</NavLink>
+                    <NavLink to="/">Login</NavLink>
                   </p>
                   <form onSubmit={this.handleSubmit}>
                     {this.renderInput("Username", "username", "text")}
-                    {this.renderInput("TeacherId", "teacherID", "text")}
+                    {this.renderInput("RegistrationID", "registrationID", "text")}
                     {this.renderInput("Password", "password", "password")}
                     {this.renderInput(
                       "Confirm password",
@@ -83,4 +89,4 @@ class TeacherRegistration extends Form {
   }
 }
 
-export default TeacherRegistration;
+export default Registration;

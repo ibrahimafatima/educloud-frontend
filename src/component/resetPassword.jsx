@@ -1,52 +1,58 @@
 import React from "react";
-import { resetPassword } from "../services/adminService";
+import { authPasswordReset } from "../services/authService";
 import Form from "./reusableComponent/form";
 import Joi from "joi-browser";
 import FormLandingPage from "./reusableComponent/formLandingPage";
 import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
+import Spinner from './reusableComponent/spinner';
+
 
 class ResetPassword extends Form {
   state = {
     data: { password: "", passwordAgain: "" },
+    loading: false,
     error: {},
   };
 
   schema = {
-    password: Joi.string().min(8).required().label("Password"),
+    password: Joi.string().min(8).max(20).required().label("Password"),
     passwordAgain: Joi.ref("password"),
   };
 
   componentDidMount() {
-    console.log(this.props.history.goBack);
     const username = localStorage.getItem("username");
     if (!username) this.props.history.goBack();
   }
 
   doSubmit = async () => {
     try {
+      this.setState({ loading: true });
       const { data } = this.state;
       const username = localStorage.getItem("username");
-      const { data: result } = await resetPassword({
+      const { data: result } = await authPasswordReset({
         username: username,
         password: data.password,
       });
       if (result === "Ok") {
+        this.setState({ loading: false });
         toast.success("Password successfully reset, Login now.");
         localStorage.removeItem("username");
         localStorage.setItem("restored", "true");
-        window.location = "admin-login";
+        window.location = "login";
       }
     } catch (ex) {
       if (ex.response && ex.response.status === 404) {
         const error = { ...this.state.error };
         error.password = ex.response.data;
-        this.setState({ error });
+        this.setState({ error, loading: false });
       }
     }
   };
   render() {
-    return (
+    const { loading } = this.state;
+
+    return loading ? <Spinner/> : (
       <div className="theme-layout">
         <div className="pdng0">
           <div className="row merged">
@@ -65,7 +71,7 @@ class ResetPassword extends Form {
                     )}
 
                     <div>
-                      <NavLink to="/admin-login" className="forgot-pwd">
+                      <NavLink to="/" className="forgot-pwd">
                         Back to Login
                       </NavLink>
                     </div>

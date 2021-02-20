@@ -1,17 +1,17 @@
 import React, { Component } from "react";
 import { getMarks, removeMark } from "../services/studentService";
-import MarkTable from "./markTable";
+import MarkTable from "./tables/markTable";
 import { toast } from "react-toastify";
 
 class ViewMark extends Component {
   state = {
-    marks: []
+    marks: [],
   };
 
-  handleDelete = async mark => {
+  handleDelete = async (mark) => {
     const originalState = this.state.marks;
     this.setState({
-      marks: this.state.marks.filter(m => m._id !== mark._id)
+      marks: this.state.marks.filter((m) => m._id !== mark._id),
     });
     try {
       await removeMark(mark._id);
@@ -40,7 +40,7 @@ class ViewMark extends Component {
           <div className="card-body">
             <div className="heading-layout1">
               <div className="item-title">
-                <h3>All {marks[0] ? marks[0].student_name : ""} marks</h3>
+                <h3>All {marks[0] ? marks[0].studentName : ""} marks</h3>
               </div>
             </div>
             {marks.length === 0 ? (

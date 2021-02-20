@@ -1,21 +1,21 @@
 import React, { Component } from "react";
-import Delete from "./reusableComponent/delete";
-import Table from "./reusableComponent/table";
-import auth from "../services/authService";
+import Delete from "../reusableComponent/delete";
+import Table from "../reusableComponent/table";
+import auth from "../../services/authService";
 
 class MarkTable extends Component {
   columns = [
-    { path: "student_name", title: "Student name" },
+    { path: "studentName", title: "Student name" },
     { path: "name", title: "Subject" },
-    { path: "exam_name", title: "Exam" },
+    { path: "examName", title: "Exam" },
     { path: "mark", title: "Score" },
     { path: "grade", title: "Grade" },
-    { path: "remark", title: "Remark" }
+    { path: "remark", title: "Remark" },
   ];
 
   deleteBtn = {
     path: "delete",
-    value: mark => <Delete onClick={() => this.props.onDelete(mark)} />
+    value: (mark) => <Delete onClick={() => this.props.onDelete(mark)} />,
   };
 
   constructor() {
