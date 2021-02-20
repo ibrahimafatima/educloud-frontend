@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { FaUserGraduate, FaFacebookMessenger } from "react-icons/fa";
+import { FaUserGraduate, FaFacebookMessenger, FaRegBell } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Table from "../reusableComponent/table";
 import auth from "../../services/authService";
@@ -12,6 +12,14 @@ class SubjectTable extends Component {
       { path: "className", title: "Class Name" }, // number of exam, number of assignment,
       { path: "registrationID", title: "Registration ID" },
     ],
+  };
+
+  notification = {
+    content: (path) => (
+      <Link to={`/notify/${path}`}>
+        <FaRegBell />
+      </Link>
+    ),
   };
 
   studentIcon = {
@@ -44,6 +52,7 @@ class SubjectTable extends Component {
   constructor() {
     super();
     if (auth.getCurrentUser().isTeacher) {
+      this.state.columns.push(this.notification);
       this.state.columns.push(this.discussionBtn);
       this.state.columns.push(this.studentIcon);
       this.state.columns.push(this.deleteIcon);

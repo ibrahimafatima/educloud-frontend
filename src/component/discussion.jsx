@@ -20,7 +20,7 @@ class Discussion extends Component {
     pusherChannel().bind("discussion", (data) => {
       if (
         (user.schoolSecretKey === data.schoolSecretKey &&
-          user.class_name === data.classe) ||
+          user.className === data.classe) ||
         (user.schoolSecretKey === data.schoolSecretKey &&
           user.role === "Teacher")
       ) {
@@ -50,6 +50,7 @@ class Discussion extends Component {
   handleTextChange = async (e) => {
     if (e.keyCode === 13) {
       this.post_message();
+      this.setState({ message: "" });
     } else {
       this.setState({ message: e.target.value });
     }
