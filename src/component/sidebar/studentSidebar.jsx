@@ -11,6 +11,7 @@ import {
 } from "react-icons/fa";
 //import { TiNews } from "react-icons/ti";
 import { GoDashboard } from "react-icons/go";
+import { RiArrowRightSLine } from "react-icons/ri";
 import { IoMdChatbubbles } from "react-icons/io";
 import SidebarSubModule from "../../component/reusableComponent/sidebarSubModule";
 import SidebarModule from "../../component/reusableComponent/sidebarModule";
@@ -74,6 +75,9 @@ class StudentSidebar extends Component {
                   <FaCalculator color="#ffa501" />{" "}
                 </i>
                 <span>Finances</span>
+                <span className="float-icon" style={{ float: "right" }}>
+                  <RiArrowRightSLine />{" "}
+                </span>
               </span>
               <ul
                 className={this.props.onMenuExpand("finances").menuClass}
@@ -106,6 +110,9 @@ class StudentSidebar extends Component {
                   <MdInsertInvitation color="#ffa501" />{" "}
                 </i>
                 <span>Timetable</span>
+                <span className="float-icon" style={{ float: "right" }}>
+                  <RiArrowRightSLine />{" "}
+                </span>
               </span>
               <ul
                 className={this.props.onMenuExpand("timetable").menuClass}
@@ -139,6 +146,9 @@ class StudentSidebar extends Component {
                     </span>
                   )}
                 </span>
+                <span className="float-icon" style={{ float: "right" }}>
+                  <RiArrowRightSLine />{" "}
+                </span>
               </span>
               <ul
                 className={this.props.onMenuExpand("assignment").menuClass}
@@ -162,6 +172,9 @@ class StudentSidebar extends Component {
                   <FaEdit color="#ffa501" />{" "}
                 </i>
                 <span>Exams</span>
+                <span className="float-icon" style={{ float: "right" }}>
+                  <RiArrowRightSLine />{" "}
+                </span>
               </span>
               <ul
                 className={this.props.onMenuExpand("exams").menuClass}
@@ -204,6 +217,9 @@ class StudentSidebar extends Component {
                   <FaBookReader color="#ffa501" />{" "}
                 </i>
                 <span>Library</span>
+                <span className="float-icon" style={{ float: "right" }}>
+                  <RiArrowRightSLine />{" "}
+                </span>
               </span>
               <ul
                 className={this.props.onMenuExpand("library").menuClass}

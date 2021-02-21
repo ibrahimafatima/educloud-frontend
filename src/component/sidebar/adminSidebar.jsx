@@ -9,7 +9,7 @@ import {
   FaRegNewspaper,
   FaChalkboardTeacher,
 } from "react-icons/fa";
-//import { TiNews } from "react-icons/ti";
+import { RiArrowRightSLine } from "react-icons/ri";
 import { GoDashboard } from "react-icons/go";
 import { GiTeacher, GiClosedDoors } from "react-icons/gi";
 import SidebarSubModule from "../../component/reusableComponent/sidebarSubModule";
@@ -46,13 +46,18 @@ class AdminSidebar extends Component {
               link="/pre-chat/sidebar"
               title="Newsfeed"
             /> */}
-            <li className={this.props.onMenuExpand("teachers").iconClass}
-             onClick={() => onSidebarExpand("teachers")}>
+            <li
+              className={this.props.onMenuExpand("teachers").iconClass}
+              onClick={() => onSidebarExpand("teachers")}
+            >
               <span className="nav-link cur">
                 <i>
                   <FaUserTie color="#ffa501" />{" "}
                 </i>
                 <span>Teachers</span>
+                <span className="float-icon" style={{ float: "right" }}>
+                  <RiArrowRightSLine />{" "}
+                </span>
               </span>
               <ul
                 className={this.props.onMenuExpand("teachers").menuClass}
@@ -60,24 +65,23 @@ class AdminSidebar extends Component {
                   display: this.props.teachers ? "block" : "none",
                 }}
               >
-                <SidebarSubModule
-                  link="/all-teacher"
-                  title="All Teachers"
-                />
-                <SidebarSubModule
-                  link="/add-teacher/new"
-                  title="Add Teacher"
-                />
+                <SidebarSubModule link="/all-teacher" title="All Teachers" />
+                <SidebarSubModule link="/add-teacher/new" title="Add Teacher" />
               </ul>
             </li>
 
-            <li className={this.props.onMenuExpand("finances").iconClass} 
-            onClick={() => onSidebarExpand("finances")}>
+            <li
+              className={this.props.onMenuExpand("finances").iconClass}
+              onClick={() => onSidebarExpand("finances")}
+            >
               <span className="nav-link cur">
                 <i>
                   <FaCalculator color="#ffa501" />{" "}
                 </i>
                 <span>Finances</span>
+                <span className="float-icon" style={{ float: "right" }}>
+                  <RiArrowRightSLine />{" "}
+                </span>
               </span>
               <ul
                 className={this.props.onMenuExpand("finances").menuClass}
@@ -92,13 +96,18 @@ class AdminSidebar extends Component {
                 />
               </ul>
             </li>
-            <li className={this.props.onMenuExpand("class").iconClass}
-             onClick={() => onSidebarExpand("class")}>
+            <li
+              className={this.props.onMenuExpand("class").iconClass}
+              onClick={() => onSidebarExpand("class")}
+            >
               <span className="nav-link cur">
                 <i>
                   <GiTeacher color="#ffa501" />{" "}
                 </i>
                 <span>Class</span>
+                <span className="float-icon" style={{ float: "right" }}>
+                  <RiArrowRightSLine />{" "}
+                </span>
               </span>
               <ul
                 className={this.props.onMenuExpand("class").menuClass}
@@ -118,13 +127,18 @@ class AdminSidebar extends Component {
                 />
               </ul>
             </li>
-            <li className={this.props.onMenuExpand("subject").iconClass}
-             onClick={() => onSidebarExpand("subject")}>
+            <li
+              className={this.props.onMenuExpand("subject").iconClass}
+              onClick={() => onSidebarExpand("subject")}
+            >
               <span className="nav-link cur">
                 <i>
                   <FaBuromobelexperte color="#ffa501" />{" "}
                 </i>
                 <span>Subject</span>
+                <span className="float-icon" style={{ float: "right" }}>
+                  <RiArrowRightSLine />{" "}
+                </span>
               </span>
               <ul
                 className={this.props.onMenuExpand("subject").menuClass}
@@ -139,13 +153,18 @@ class AdminSidebar extends Component {
                 />
               </ul>
             </li>
-            <li className={this.props.onMenuExpand("timetable").iconClass} 
-            onClick={() => onSidebarExpand("timetable")}>
+            <li
+              className={this.props.onMenuExpand("timetable").iconClass}
+              onClick={() => onSidebarExpand("timetable")}
+            >
               <span className="nav-link cur">
                 <i>
                   <MdInsertInvitation color="#ffa501" />{" "}
                 </i>
                 <span>Timetable</span>
+                <span className="float-icon" style={{ float: "right" }}>
+                  <RiArrowRightSLine />{" "}
+                </span>
               </span>
               <ul
                 className={this.props.onMenuExpand("timetable").menuClass}
@@ -160,12 +179,18 @@ class AdminSidebar extends Component {
                 />
               </ul>
             </li>
-            <li className={this.props.onMenuExpand("exams").iconClass} onClick={() => onSidebarExpand("exams")}>
+            <li
+              className={this.props.onMenuExpand("exams").iconClass}
+              onClick={() => onSidebarExpand("exams")}
+            >
               <span className="nav-link cur">
                 <i>
                   <FaEdit color="#ffa501" />{" "}
                 </i>
                 <span>Exams</span>
+                <span className="float-icon" style={{ float: "right" }}>
+                  <RiArrowRightSLine />{" "}
+                </span>
               </span>
               <ul
                 className={this.props.onMenuExpand("exams").menuClass}
@@ -187,13 +212,18 @@ class AdminSidebar extends Component {
               title="Fees Reporting"
               toggleSidebar={toggleSidebar}
             />
-            <li className={this.props.onMenuExpand("library").iconClass}
-             onClick={() => onSidebarExpand("library")}>
+            <li
+              className={this.props.onMenuExpand("library").iconClass}
+              onClick={() => onSidebarExpand("library")}
+            >
               <span className="nav-link cur">
                 <i>
                   <FaBookReader color="#ffa501" />{" "}
                 </i>
                 <span>Library</span>
+                <span className="float-icon" style={{ float: "right" }}>
+                  <RiArrowRightSLine />{" "}
+                </span>
               </span>
               <ul
                 className={this.props.onMenuExpand("library").menuClass}
@@ -213,13 +243,18 @@ class AdminSidebar extends Component {
                 />
               </ul>
             </li>
-            <li className={this.props.onMenuExpand("noticeBoard").iconClass} 
-            onClick={() => onSidebarExpand("noticeBoard")}>
+            <li
+              className={this.props.onMenuExpand("noticeBoard").iconClass}
+              onClick={() => onSidebarExpand("noticeBoard")}
+            >
               <span className="nav-link cur">
                 <i>
                   <FaChalkboardTeacher color="#ffa501" />{" "}
                 </i>
                 <span>Notice Board</span>
+                <span className="float-icon" style={{ float: "right" }}>
+                  <RiArrowRightSLine />{" "}
+                </span>
               </span>
               <ul
                 className={this.props.onMenuExpand("noticeBoard").menuClass}

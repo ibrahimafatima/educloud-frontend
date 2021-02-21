@@ -5230,16 +5230,11 @@ ul {
   bottom: 0;
 }
 
-.admin-img {
-  /* max-width: 30px;
-  max-height: 30px;
-  margin: auto;
-  object-fit: cover;
-  border-radius: 50%; */
-  /* min-width: 100%;
+/* .admin-img {
+  min-width: 100%;
   min-height: 100%;
-  margin: auto; */
-}
+  margin: auto;
+} */
 
 .nav-img {
   border-radius: 1000px !important;
@@ -5255,15 +5250,12 @@ ul {
   margin-left: 20px;
 }
 
-.profile-pic {
-  /* max-width: 200px;
-  max-height: 200px;
-  display: block; */
+/* .profile-pic {
   min-width: 100%;
   min-height: 100%;
   position: absolute;
   margin: auto;
-}
+} */
 
 .file-upload {
   display: none;
@@ -5323,4 +5315,8 @@ img {
 .book {
   width: 200px;
   height: 200px;
+}
+
+float-icon {
+  float: right;
 }

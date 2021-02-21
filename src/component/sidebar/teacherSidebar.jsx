@@ -10,6 +10,7 @@ import {
 import { GiClosedDoors } from "react-icons/gi";
 //import { TiNews } from "react-icons/ti";
 import { MdInsertInvitation } from "react-icons/md";
+import { RiArrowRightSLine } from "react-icons/ri";
 import { GoDashboard } from "react-icons/go";
 import { GiTeacher } from "react-icons/gi";
 import SidebarSubModule from "../../component/reusableComponent/sidebarSubModule";
@@ -19,7 +20,7 @@ import auth from "../../services/authService";
 class TeacherSidebar extends Component {
   render() {
     //let { iconClass, menuClass } = this.props.onMenuExpand("student");
-    const { onSidebarExpand, toggleSidebar} = this.props;
+    const { onSidebarExpand, toggleSidebar } = this.props;
     return (
       <div
         className="sidebar-main sidebar-menu-one sidebar-expand-md sidebar-color"
@@ -27,7 +28,7 @@ class TeacherSidebar extends Component {
       >
         <div className="sidebar-menu-content">
           <ul className="nav nav-sidebar-menu sidebar-toggle-view">
-            <SidebarModule 
+            <SidebarModule
               expandClass="nav-item"
               toggleSidebar={toggleSidebar}
               logo={GoDashboard}
@@ -41,13 +42,18 @@ class TeacherSidebar extends Component {
               link="/pre-chat/sidebar"
               title="Newsfeed"
             /> */}
-            <li className={this.props.onMenuExpand("student").iconClass}
-             onClick={ () => onSidebarExpand("student")} >
+            <li
+              className={this.props.onMenuExpand("student").iconClass}
+              onClick={() => onSidebarExpand("student")}
+            >
               <span className="nav-link cur">
                 <i>
                   <FaUserGraduate color="#ffa501" />{" "}
                 </i>
                 <span>Students</span>
+                <span className="float-icon" style={{ float: "right" }}>
+                  <RiArrowRightSLine />{" "}
+                </span>
               </span>
               <ul
                 className={this.props.onMenuExpand("student").menuClass}
@@ -67,12 +73,18 @@ class TeacherSidebar extends Component {
                 />
               </ul>
             </li>
-            <li className={this.props.onMenuExpand("class").iconClass} onClick={() => onSidebarExpand("class")}>
+            <li
+              className={this.props.onMenuExpand("class").iconClass}
+              onClick={() => onSidebarExpand("class")}
+            >
               <span className="nav-link cur">
                 <i>
                   <GiTeacher color="#ffa501" />{" "}
                 </i>
                 <span>Class</span>
+                <span className="float-icon" style={{ float: "right" }}>
+                  <RiArrowRightSLine />{" "}
+                </span>
               </span>
               <ul
                 className={this.props.onMenuExpand("class").menuClass}
@@ -87,12 +99,18 @@ class TeacherSidebar extends Component {
                 />
               </ul>
             </li>
-            <li className={this.props.onMenuExpand("subject").iconClass} onClick={() => onSidebarExpand("subject")}>
+            <li
+              className={this.props.onMenuExpand("subject").iconClass}
+              onClick={() => onSidebarExpand("subject")}
+            >
               <span className="nav-link cur">
                 <i>
                   <FaBuromobelexperte color="#ffa501" />{" "}
                 </i>
                 <span>Subject</span>
+                <span className="float-icon" style={{ float: "right" }}>
+                  <RiArrowRightSLine />{" "}
+                </span>
               </span>
               <ul
                 className={this.props.onMenuExpand("subject").menuClass}
@@ -112,12 +130,18 @@ class TeacherSidebar extends Component {
                 />
               </ul>
             </li>
-            <li className={this.props.onMenuExpand("timetable").iconClass} onClick={() => onSidebarExpand("timetable")}>
+            <li
+              className={this.props.onMenuExpand("timetable").iconClass}
+              onClick={() => onSidebarExpand("timetable")}
+            >
               <span className="nav-link cur">
                 <i>
                   <MdInsertInvitation color="#ffa501" />{" "}
                 </i>
                 <span>Timetable</span>
+                <span className="float-icon" style={{ float: "right" }}>
+                  <RiArrowRightSLine />{" "}
+                </span>
               </span>
               <ul
                 className={this.props.onMenuExpand("timetable").menuClass}
@@ -137,12 +161,18 @@ class TeacherSidebar extends Component {
                 />
               </ul>
             </li>
-            <li className={this.props.onMenuExpand("exams").iconClass} onClick={() => onSidebarExpand("exams")}>
+            <li
+              className={this.props.onMenuExpand("exams").iconClass}
+              onClick={() => onSidebarExpand("exams")}
+            >
               <span className="nav-link cur">
                 <i>
                   <FaEdit color="#ffa501" />{" "}
                 </i>
                 <span>Exams</span>
+                <span className="float-icon" style={{ float: "right" }}>
+                  <RiArrowRightSLine />{" "}
+                </span>
               </span>
               <ul
                 className={this.props.onMenuExpand("exams").menuClass}
@@ -162,12 +192,18 @@ class TeacherSidebar extends Component {
                 />
               </ul>
             </li>
-            <li className={this.props.onMenuExpand("assignment").iconClass} onClick={() => onSidebarExpand("assignment")}>
+            <li
+              className={this.props.onMenuExpand("assignment").iconClass}
+              onClick={() => onSidebarExpand("assignment")}
+            >
               <span className="nav-link cur">
                 <i>
                   <FaBook color="#ffa501" />{" "}
                 </i>
                 <span>Assignment</span>
+                <span className="float-icon" style={{ float: "right" }}>
+                  <RiArrowRightSLine />{" "}
+                </span>
               </span>
               <ul
                 className={this.props.onMenuExpand("assignment").menuClass}
@@ -187,12 +223,18 @@ class TeacherSidebar extends Component {
                 />
               </ul>
             </li>
-            <li className={this.props.onMenuExpand("library").iconClass} onClick={() => onSidebarExpand("library")}>
+            <li
+              className={this.props.onMenuExpand("library").iconClass}
+              onClick={() => onSidebarExpand("library")}
+            >
               <span className="nav-link cur">
                 <i>
                   <FaBookReader color="#ffa501" />{" "}
                 </i>
                 <span>Library</span>
+                <span className="float-icon" style={{ float: "right" }}>
+                  <RiArrowRightSLine />{" "}
+                </span>
               </span>
               <ul
                 className={this.props.onMenuExpand("library").menuClass}
