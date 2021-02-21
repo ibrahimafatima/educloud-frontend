@@ -3,9 +3,15 @@ import Joi from "joi-browser";
 import Form from "./reusableComponent/form";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import { addToNoticeBoard, getANotice, sendEventMail } from "../services/adminService";
+import {
+  addToNoticeBoard,
+  getANotice,
+  sendEventMail,
+} from "../services/adminService";
 import Spinner from "./reusableComponent/spinner";
-import DatePicker from "react-date-picker";
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 class AddToNoticeBoard extends Form {
   state = {
@@ -45,18 +51,18 @@ class AddToNoticeBoard extends Form {
     try {
       this.setState({ loading: true });
       await addToNoticeBoard(this.state.data);
-      var stateData = this.state.data
+      var stateData = this.state.data;
       this.setState({ data: { eventDate: "", eventMessage: "" } });
       toast.success("Notice board updated successfully");
       this.setState({ loading: false });
-      if(this.state.notify){
-        await sendEventMail(stateData)
+      if (this.state.notify) {
+        await sendEventMail(stateData);
       }
     } catch (ex) {
       this.setState({ loading: false });
       if (ex.response && ex.response.status === 400) {
         const error = { ...this.state.error };
-        toast.error(ex.response.data)
+        toast.error(ex.response.data);
         error.eventDate = ex.response.data;
         this.setState({ error });
       }
@@ -82,9 +88,17 @@ class AddToNoticeBoard extends Form {
             </div>
             <form onSubmit={this.handleSubmit}>
               <div className="row">
-                <div style={{marginTop:"60px", marginRight: "40px"}}>
-                <label>Event Date *</label><br></br>
-                  <DatePicker onChange={(eventDate) => {this.setState({ data: { ...this.state.data, eventDate} })} } value={this.state.data.eventDate} />
+                <div style={{ marginTop: "60px", marginRight: "40px" }}>
+                  <label>Event Date *</label>
+                  <br></br>
+                  <DatePicker
+                    onChange={(eventDate) => {
+                      this.setState({
+                        data: { ...this.state.data, eventDate },
+                      });
+                    }}
+                    selected={this.state.data.eventDate}
+                  />
                   {/* <label>Event Date *</label>
                   {this.renderInput(
                     "mm/dd/yyyy",
@@ -102,11 +116,20 @@ class AddToNoticeBoard extends Form {
                     "form-control"
                   )}
                 </div>
-                
+
                 <div className="col-xl-3 col-lg-6 col-12">
-                <label style={{marginTop:"50px"}}><input type="checkbox" defaultChecked={this.state.notify} onChange={() => this.setState({ notify: !this.state.notify })}/> Notify all students about this event.</label>
+                  <label style={{ marginTop: "50px" }}>
+                    <input
+                      type="checkbox"
+                      defaultChecked={this.state.notify}
+                      onChange={() =>
+                        this.setState({ notify: !this.state.notify })
+                      }
+                    />{" "}
+                    Notify all students about this event.
+                  </label>
                 </div>
-                <br/>
+                <br />
                 <div className="col-12 form-group mg-t-8">
                   {this.renderButton(
                     "Save",

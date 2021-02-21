@@ -4,41 +4,30 @@ import Form from "./reusableComponent/form";
 import { authRegistration } from "../services/authService";
 import FormLandingPage from "./reusableComponent/formLandingPage";
 import { NavLink } from "react-router-dom";
-import Spinner from './reusableComponent/spinner';
-
+import Spinner from "./reusableComponent/spinner";
 
 class Registration extends Form {
   state = {
     data: { username: "", registrationID: "", password: "", passwordAgain: "" },
     loading: false,
-    error: {}
+    error: {},
   };
 
   schema = {
-    username: Joi.string()
-      .min(3)  
-      .max(15)
-      .required()
-      .label("Username"),
-    registrationID: Joi.string()
-      .required()
-      .label("RegistrationID"),
-    password: Joi.string()
-      .min(8)
-      .max(20)
-      .required()
-      .label("Password"),
-    passwordAgain: Joi.ref("password")
+    username: Joi.string().min(3).max(15).required().label("Username"),
+    registrationID: Joi.string().required().label("RegistrationID"),
+    password: Joi.string().min(8).max(20).required().label("Password"),
+    passwordAgain: Joi.ref("password"),
   };
 
   doSubmit = async () => {
     try {
-      this.setState({ loading: true});
+      this.setState({ loading: true });
       const { data } = this.state;
       const { data: jwt } = await authRegistration({
         username: data.username,
         registrationID: data.registrationID,
-        password: data.passwordAgain
+        password: data.passwordAgain,
       });
       localStorage.setItem("token", jwt);
       window.location = "/dashboard";
@@ -52,8 +41,10 @@ class Registration extends Form {
   };
 
   render() {
-    const {loading} = this.state;
-    return loading ? <Spinner/> : (
+    const { loading } = this.state;
+    return loading ? (
+      <Spinner />
+    ) : (
       <div className="theme-layout">
         <div className="pdng0">
           <div className="row merged">
@@ -63,12 +54,15 @@ class Registration extends Form {
                 <div className="log-reg-area sign">
                   <h2 className="log-title">Registration</h2>
                   <p className="subtitle">
-                    Already have an account ?{" "}
-                    <NavLink to="/">Login</NavLink>
+                    Already have an account ? <NavLink to="/">Login</NavLink>
                   </p>
                   <form onSubmit={this.handleSubmit}>
                     {this.renderInput("Username", "username", "text")}
-                    {this.renderInput("RegistrationID", "registrationID", "text")}
+                    {this.renderInput(
+                      "RegistrationID",
+                      "registrationID",
+                      "text"
+                    )}
                     {this.renderInput("Password", "password", "password")}
                     {this.renderInput(
                       "Confirm password",
@@ -76,6 +70,7 @@ class Registration extends Form {
                       "password"
                     )}
                     <div></div>
+                    <br />
                     <br />
                     {this.renderButton("Register", "btn btn-primary")}
                   </form>

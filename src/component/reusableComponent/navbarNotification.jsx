@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { FaRegBell, FaPaperPlane } from "react-icons/fa";
-//import { getStudentBirthday } from "../../services/studentService";
 import { getAllStudentAssignment } from "../../services/teacherService";
 import { toast } from "react-toastify";
 import TimeAgo from "react-timeago";
@@ -11,7 +10,6 @@ class NavbarNotification extends Component {
     notificationToggled: false,
     assignments: [],
     numberToDisplay: [1, 2, 3],
-    //students: [],
   };
   toggleNotification = () => {
     this.setState({ notificationToggled: !this.state.notificationToggled });
@@ -27,15 +25,6 @@ class NavbarNotification extends Component {
       }
     }
   }
-
-  // async componentDidMount() {
-  //   try {
-  //     const { data: students } = await getStudentBirthday();
-  //     this.setState({ students });
-  //   } catch (ex) {
-  //     toast.error(ex.response.data);
-  //   }
-  // }
 
   render() {
     const { assignments } = this.state;

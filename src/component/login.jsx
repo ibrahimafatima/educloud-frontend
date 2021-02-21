@@ -3,11 +3,10 @@ import Form from "./reusableComponent/form";
 import Joi from "joi-browser";
 import { authLogin } from "../services/authService";
 import FormLandingPage from "./reusableComponent/formLandingPage";
-import { NavLink } from 'react-router-dom';
-import Spinner from './reusableComponent/spinner';
+import { NavLink } from "react-router-dom";
+import Spinner from "./reusableComponent/spinner";
 
 class Login extends Form {
-
   state = {
     data: { username: "", password: "" },
     loading: false,
@@ -21,7 +20,7 @@ class Login extends Form {
 
   doSubmit = async () => {
     try {
-      this.setState({ loading: true});
+      this.setState({ loading: true });
       const { data: jwt } = await authLogin(this.state.data);
       localStorage.setItem("token", jwt);
       localStorage.removeItem("restored");
@@ -36,8 +35,10 @@ class Login extends Form {
   };
 
   render() {
-    const {loading} = this.state;
-    return loading ? <Spinner/> : (
+    const { loading } = this.state;
+    return loading ? (
+      <Spinner />
+    ) : (
       <div className="theme-layout">
         <div className="pdng0">
           <div className="row merged">
@@ -62,10 +63,12 @@ class Login extends Form {
                     {this.renderInput("Password", "password", "password")}
 
                     <div>
+                      <br />
                       <NavLink to="/confirm-account" className="forgot-pwd">
                         Forgot Password ?
                       </NavLink>
                     </div>
+                    <br />
                     <br />
                     {this.renderButton("Login", "btn btn-primary")}
                   </form>

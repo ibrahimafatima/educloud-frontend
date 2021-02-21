@@ -8,8 +8,9 @@ import { toast } from "react-toastify";
 import { getExam } from "./../services/teacherService";
 import Spinner from "./reusableComponent/spinner";
 import TimePicker from "react-time-picker";
-import DatePicker from "react-date-picker";
+import DatePicker from "react-datepicker";
 
+import "react-datepicker/dist/react-datepicker.css";
 
 class AddExams extends Form {
   state = {
@@ -127,7 +128,7 @@ class AddExams extends Form {
                   <label>Class *</label>
                   {this.renderSelect("className", ["", ...this.state.classes])}
                 </div>
-                <div style={{marginTop:"80px", marginRight: "20px"}}>
+                <div style={{ marginTop: "80px", marginRight: "20px" }}>
                   <label>Exam Schedule Date *</label>
                   {/* {this.renderInput(
                     "mm/dd/yyyy",
@@ -135,13 +136,33 @@ class AddExams extends Form {
                     "text",
                     "form-control"
                   )} */}
-                  <DatePicker onChange={(scheduledDate) => {this.setState({ data: { ...this.state.data, scheduledDate} })} } value={this.state.data.scheduledDate} />
-
+                  <DatePicker
+                    onChange={(scheduledDate) => {
+                      console.log(this.state.data);
+                      this.setState({
+                        data: { ...this.state.data, scheduledDate },
+                      });
+                    }}
+                    selected={this.state.data.scheduledDate}
+                  />
                 </div>
-                <div style={{marginTop:"80px", marginBottom: "20px", marginRight: "20px"}}>
-                  <label>Schedule Time *   </label>
+                <div
+                  style={{
+                    marginTop: "80px",
+                    marginBottom: "20px",
+                    marginRight: "20px",
+                  }}
+                >
+                  <label>Schedule Time * </label>
                   {/* {this.renderSelect("scheduledTime", this.state.time)} */}
-                  <TimePicker onChange={(scheduledTime) => this.setState({data: {...this.state.data, scheduledTime}})} value="00:00" />
+                  <TimePicker
+                    onChange={(scheduledTime) =>
+                      this.setState({
+                        data: { ...this.state.data, scheduledTime },
+                      })
+                    }
+                    value="00:00"
+                  />
                 </div>
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
                   <label>Exam duration *</label>

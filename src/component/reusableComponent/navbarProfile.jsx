@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import Auth from "../../services/authService";
-import { getAdminDetails, getATeacher } from "../../services/adminService"
-import { getAStudent } from "../../services/studentService"
+import { getAdminDetails, getATeacher } from "../../services/adminService";
+import { getAStudent } from "../../services/studentService";
 import { FaRegUserCircle, FaRegSun, FaToggleOff } from "react-icons/fa";
 
 class NavbarProfile extends Component {
@@ -18,17 +18,17 @@ class NavbarProfile extends Component {
   async componentDidMount() {
     this.setState({ user: Auth.getCurrentUser() });
     const user = Auth.getCurrentUser();
-    if(user.isAdmin) {
-      const {data} = await getAdminDetails(user._id);
-      this.setState({ profileURL: data.profileURL })
+    if (user.isAdmin) {
+      const { data } = await getAdminDetails(user._id);
+      this.setState({ profileURL: data.profileURL });
     }
-    if(user.isTeacher) {
-      const {data} = await getATeacher(user._id);
-      this.setState({ profileURL: data.profileURL })
+    if (user.isTeacher) {
+      const { data } = await getATeacher(user._id);
+      this.setState({ profileURL: data.profileURL });
     }
-    if(user.isStudent) {
-      const {data} = await getAStudent(user._id);
-      this.setState({ profileURL: data.profileURL })
+    if (user.isStudent) {
+      const { data } = await getAStudent(user._id);
+      this.setState({ profileURL: data.profileURL });
     }
   }
 
@@ -49,15 +49,11 @@ class NavbarProfile extends Component {
             <span>{user ? user.role : "Role"}</span>
           </div>
           <div className="admin-img">
-            { profileURL === "" ? <img
-              src={user.profileURL}
-              className="nav-img"
-              alt="Admin"
-            ></img> : <img
-            src={profileURL}
-            className="nav-img"
-            alt="Admin"
-          ></img>}
+            {profileURL === "" ? (
+              <img src={user.profileURL} className="nav-img" alt="Admin"></img>
+            ) : (
+              <img src={profileURL} className="nav-img" alt="Admin"></img>
+            )}
           </div>
         </span>
         <div className={this.showProfile(profileToggled)}>
@@ -87,7 +83,7 @@ class NavbarProfile extends Component {
                 <li>
                   <NavLink
                     onClick={this.toggleProfile}
-                    to={ `/admin/${user._id}`}
+                    to={`/admin/${user._id}`}
                   >
                     <i>
                       <FaRegUserCircle />{" "}
