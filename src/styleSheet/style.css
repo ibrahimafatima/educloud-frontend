@@ -1608,6 +1608,10 @@ ul {
   .copyright {
     text-align: center;
   }
+  .footer-wrap-layout1 {
+    padding: 2rem 0 4rem;
+    margin-top: 80px;
+  }
 }
 .copyright a {
   color: #111111;

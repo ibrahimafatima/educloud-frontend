@@ -87,6 +87,7 @@ class App extends Component {
           <Route path="/new-term/:id" component={Dashbord} />
           <Route path="/fees-reporting" component={Dashbord} />
           <Route path="/print-fees-report" component={Dashbord} />
+          <Route path="/notify/:id" component={Dashbord} />
           <Route path="/chat" component={Dashbord} />
           <Route path="/" component={Login} />
           <Route path="/discussion/:id" component={Dashbord} />

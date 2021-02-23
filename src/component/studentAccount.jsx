@@ -10,8 +10,8 @@ import { Link } from "react-router-dom";
 class StudentAccount extends Form {
   state = {
     data: {
-      father_name: "",
-      mother_name: "",
+      fatherName: "",
+      motherName: "",
       gender: "",
       dob: "",
       email: "",
@@ -23,8 +23,8 @@ class StudentAccount extends Form {
   };
 
   schema = {
-    father_name: Joi.string().min(3).max(18).label("Father name"),
-    mother_name: Joi.string().min(3).max(18).label("Mother name"),
+    fatherName: Joi.string().min(3).max(18).label("Father name"),
+    motherName: Joi.string().min(3).max(18).label("Mother name"),
     gender: Joi.string().label("Gender"),
     dob: Joi.string().label("Dob"),
     email: Joi.string().max(40).label("Email"),
@@ -37,8 +37,8 @@ class StudentAccount extends Form {
       await completeProfile(this.state.data);
       this.setState({
         data: {
-          father_name: "",
-          mother_name: "",
+          fatherName: "",
+          motherName: "",
           gender: "",
           dob: "",
           email: "",
@@ -50,7 +50,7 @@ class StudentAccount extends Form {
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const error = { ...this.state.error };
-        error.mother_name = ex.response.data;
+        error.motherName = ex.response.data;
         this.setState({ error });
       }
     }
@@ -61,8 +61,8 @@ class StudentAccount extends Form {
       const { data: student } = await getStudent(this.props.match.params.id);
       this.setState({
         data: {
-          father_name: student.father_name,
-          mother_name: student.mother_name,
+          fatherName: student.fatherName,
+          motherName: student.motherName,
           gender: student.gender,
           dob: student.dob,
           email: student.email,
@@ -82,7 +82,7 @@ class StudentAccount extends Form {
         <div>
           <h4>
             Go To{" "}
-            <Link to={`/student/${Auth.getCurrentUser().registration_number}`}>
+            <Link to={`/student/${Auth.getCurrentUser().registrationID}`}>
               My Profile
             </Link>
           </h4>
@@ -98,11 +98,11 @@ class StudentAccount extends Form {
               <div className="row">
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
                   <label>Father's name *</label>
-                  {this.renderInput("", "father_name", "text", "form-control")}
+                  {this.renderInput("", "fatherName", "text", "form-control")}
                 </div>
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
                   <label>Mother's name *</label>
-                  {this.renderInput("", "mother_name", "text", "form-control")}
+                  {this.renderInput("", "motherName", "text", "form-control")}
                 </div>
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
                   <label>Gender *</label>

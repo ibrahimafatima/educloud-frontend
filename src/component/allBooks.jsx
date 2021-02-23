@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import { getBooks, removeBook } from "../services/adminService";
 import { toast } from "react-toastify";
 import Search from "./reusableComponent/search";
-import BookTable from "./bookTable";
+import BookTable from "./tables/bookTable";
 
 class AllBooks extends Component {
   state = {
     books: [],
-    virtualBooks: []
+    virtualBooks: [],
   };
 
   async componentDidMount() {
@@ -20,10 +20,10 @@ class AllBooks extends Component {
     }
   }
 
-  handleDelete = async book => {
+  handleDelete = async (book) => {
     const originalState = this.state.books;
     this.setState({
-      books: this.state.books.filter(b => b._id !== book._id)
+      books: this.state.books.filter((b) => b._id !== book._id),
     });
     try {
       await removeBook(book._id);
@@ -34,13 +34,13 @@ class AllBooks extends Component {
     }
   };
 
-  handleChange = async e => {
+  handleChange = async (e) => {
     const currentInput = e.currentTarget.value;
-      this.setState({
-        books: this.state.virtualBooks.filter(b =>
-          b.bookTitle.toLowerCase().startsWith(currentInput.toLowerCase())
-        )
-      });
+    this.setState({
+      books: this.state.virtualBooks.filter((b) =>
+        b.bookTitle.toLowerCase().startsWith(currentInput.toLowerCase())
+      ),
+    });
   };
 
   render() {

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import Delete from "./reusableComponent/delete";
-import Table from "./reusableComponent/table";
+import Delete from "../reusableComponent/delete";
+import Table from "../reusableComponent/table";
 
 class BookTable extends Component {
   columns = [
@@ -11,10 +11,10 @@ class BookTable extends Component {
     { path: "_id", title: "Book ID" },
     {
       path: "like",
-      value: classe => (
+      value: (classe) => (
         <Delete onDoubleClick={() => this.props.onDelete(classe)} />
-      )
-    }
+      ),
+    },
   ];
   render() {
     const { books } = this.props;

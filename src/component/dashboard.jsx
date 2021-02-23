@@ -56,6 +56,7 @@ import ReceiptPrinter from "./ReceiptPrinter";
 import FeeReportPrinter from "./feesReportPrinter";
 import AdminProfile from "./adminProfile";
 import NoInternet from "./noInternet";
+import NotifyStudents from "./notify-students";
 
 class Dashboard extends Component {
   state = {
@@ -194,6 +195,7 @@ class Dashboard extends Component {
                 <Route path="/teacher/:id" component={TeacherDetails} />
                 <Route path="/student/:id" component={StudentProfile} />
                 <Route path="/account/:id" component={TeacherAccount} />
+                <Route path="/notify/:id" component={NotifyStudents} />
                 <Route path="/admin/:id" component={AdminProfile} />
                 <Route path="/student-account/:id" component={StudentAccount} />
                 <Route path="/logout" component={Logout} />
