@@ -9,7 +9,7 @@
     "axios": "^0.21.1",
     "html2canvas": "^1.0.0-rc.5",
     "joi-browser": "^13.4.0",
-    "jspdf": "^1.5.3",
+    "jspdf": "^2.3.1",
     "jwt-decode": "^2.2.0",
     "moment": "^2.24.0",
     "num-to-words": "^0.2.1",
